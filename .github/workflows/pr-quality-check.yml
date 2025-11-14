@@ -43,3 +43,5 @@ jobs:
             echo "⚠️ Dependencies changed! Review security, licenses, and bundle size."
           else
             echo "✅ No dependency changes detected."
+          fi
+
