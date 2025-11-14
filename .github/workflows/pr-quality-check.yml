@@ -1,0 +1,48 @@
+name: 🔍 Main Branch Checks
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  main-validation:
+    name: ✅ Main Branch Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 📝 Run lint
+        run: npm run lint
+
+      - name: 🧪 Run tests
+        run: npm test
+
+      - name: 🔍 Check for dependency changes
+        id: deps
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep 'package.json\|package-lock.json' || true)
+          if [ -n "$CHANGED" ]; then
+            echo "## 📦 Dependency Changes Detected" >> $GITHUB_STEP_SUMMARY
+            echo "Warning: package.json or package-lock.json changed. Make sure security audit, license check, and bundle size review are done." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No dependency changes detected."
+          fi
+
+      - name: 📊 Generate basic metrics
+        run: |
+          echo "## 📊 Push Metrics" >> $GITHUB_STEP_SUMMARY
+          echo "- Files changed: $(git diff --name-only HEAD~1 HEAD | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- Commits: $(git rev-list --count HEAD~1..HEAD)" >> $GITHUB_STEP_SUMMARY
