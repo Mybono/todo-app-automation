@@ -16,9 +16,9 @@ export const config = {
   capabilities: [
     {
       platformName: "Android",
-      deviceName: "Samsung Galaxy S21",
-      app: "./app/apk/app-debug.apk",
-      automationName: "UiAutomator2",
+      "appium:deviceName": "Samsung Galaxy S21",
+      "appium:app": "./app/apk/app-debug.apk",
+      "appium:automationName": "UiAutomator2",
     },
   ],
 

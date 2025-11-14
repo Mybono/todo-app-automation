@@ -1,12 +1,9 @@
-import { createDriver, driver } from "../utils/driver";
-import { MainScreen } from "../pages/MainScreen";
+import { createDriver, driver } from "../utils";
+import { screens } from "../screens";
 
 describe("Todo App", () => {
-  let mainScreen: MainScreen;
-
   before(async () => {
     await createDriver();
-    mainScreen = new MainScreen();
   });
 
   after(async () => {
@@ -14,8 +11,9 @@ describe("Todo App", () => {
   });
 
   it("should add a task", async () => {
-    await mainScreen.addTask("Buy milk");
-    const tasks = await mainScreen.getTasks();
-    console.log(tasks);
+    await screens.main.addTask(
+      "Buy milk",
+      "Remember to buy milk from the store",
+    );
   });
 });
