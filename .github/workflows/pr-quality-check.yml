@@ -78,12 +78,12 @@ jobs:
 
       - name: 💾 Commit formatting
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
+          git add -- ':!./.github/**'
           if ! git diff --cached --quiet; then
             git commit -m "style: auto-format code with Prettier"
-            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.head_ref }}
+            git push origin HEAD:${{ github.head_ref }}
           else
             echo "No formatting changes."
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
