@@ -1,5 +1,5 @@
 import { screens } from "../screens";
-import { logger, timeout } from "../utils";
+import { _, logger, timeout } from "../utils";
 
 export class MainScreen {
   addTaskBtn = "~New Task";
@@ -13,7 +13,8 @@ export class MainScreen {
   openDrawerBtn = "~Open Drawer";
   pushTaskAdded = '//android.widget.TextView[@text="Task added"]';
   pushTaskMarkedComplete = '//android.widget.TextView[@text="Task marked complete"]';
-  pushtaskSaved = '//android.widget.TextView[@text="Task saved"]';
+  pushTaskSaved = '//android.widget.TextView[@text="Task saved"]';
+  pushTaskDeleted = '//android.widget.TextView[@text="Task was deleted"]';
   taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
   taskTextInput = '//android.widget.TextView[@text="Enter your task here."]';
   taskTitleInput = '//android.widget.TextView[@text="Title"]';
@@ -23,18 +24,26 @@ export class MainScreen {
     return `//android.widget.TextView[@text="${title}"]`;
   }
 
-  async addTask(title: string, task: string) {
+  async addTask(title?: string, task?: string) {
     try {
+      if (!title || !task) {
+        const randomData = _.getRandomText();
+        title = title ?? randomData.title;
+        task = task ?? randomData.text;
+      }
+
       const addBtn = await driver.$(this.addTaskBtn);
       await addBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await addBtn.click();
 
       await screens.addEdit.fillTask(title, task);
+      await driver.$(screens.main.pushTaskAdded).waitForDisplayed({ timeout: timeout.elementAppear });
       await driver.$(this.todoTitle).waitForDisplayed({ timeout: timeout.elementAppear });
       await driver.$(this.allTaskTitle).waitForDisplayed({ timeout: timeout.elementAppear });
       const taskTitleSelector = this.getTaskByTitle(title);
       await driver.$(taskTitleSelector).waitForDisplayed({ timeout: timeout.elementAppear });
       logger.info(`[addTask] Task "${title}" added successfully.`);
+      return taskTitleSelector;
     } catch (error) {
       throw new Error(
         `[addTask]: Error in addTask: ${(error as Error).message}`,
