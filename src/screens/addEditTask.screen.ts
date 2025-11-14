@@ -1,4 +1,5 @@
 import { screens } from "../screens";
+import { logger } from "../utils";
 
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
@@ -11,11 +12,16 @@ export class AddEditTaskScreen {
   backBtn = "~Back";
 
   async fillTask(title: string, text: string) {
-    await (await driver.$(this.taskTitleInput)).setValue(title);
-    await (await driver.$(this.taskTextInput)).setValue(text);
-    await (await driver.$(this.saveTaskBtn)).click();
-    await driver
-      .$(screens.main.pushTaskAdded)
-      .waitForDisplayed({ timeout: 5000 });
+    try {
+      await (await driver.$(this.taskTitleInput)).setValue(title);
+      await (await driver.$(this.taskTextInput)).setValue(text);
+      await (await driver.$(this.saveTaskBtn)).click();
+      await driver
+        .$(screens.main.pushTaskAdded)
+        .waitForDisplayed({ timeout: 5000 });
+      logger.info(`Task "${title}" added successfully.`);
+    } catch (error) {
+      throw new Error(`Error in fillTask: ${(error as Error).message}`);
+    }
   }
 }
