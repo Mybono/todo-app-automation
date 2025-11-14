@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Mobile automation for Todo app using TypeScript + Appium + Cucumber",
   "scripts": {
-    "test": "cucumber-js --require-module ts-node/register --require step-definitions/**/*.ts features/**/*.feature",
+    "test": "cucumber-js --require-module ts-node/register --require step-definitions/**/*.ts features/**/*.feature --format json:reports/cucumber.json",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write ."
@@ -23,5 +23,6 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.0",
     "prettier": "^3.0.0"
-  }
+  },
+  "type": "module"
 }

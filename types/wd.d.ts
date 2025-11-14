@@ -1,11 +1,10 @@
 declare module "wd" {
-  import { EventEmitter } from "events";
-
-  export interface Browser extends EventEmitter {
+  interface Browser {
     init(caps: any): Promise<void>;
-    quit(): Promise<void>;
-    elementById(id: string): Promise<any>;
-    elementsByClassName(cls: string): Promise<any[]>;
+    elementByAccessibilityId(selector: string): Promise<any>;
+    elementByXPath(selector: string): Promise<any>;
+    elementsById(selector: string): Promise<any[]>;
+    elementById(selector: string): Promise<any>;
   }
 
   const wd: {

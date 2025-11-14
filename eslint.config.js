@@ -10,21 +10,21 @@ export default [
       parserOptions: {
         ecmaVersion: 2020,
         sourceType: "module",
-        project: "./tsconfig.json"
-      }
+        project: "./tsconfig.json",
+      },
     },
     plugins: {
-      "@typescript-eslint": tsPlugin
+      "@typescript-eslint": tsPlugin,
     },
     rules: {
       "no-console": "warn",
       "no-debugger": "error",
       "prefer-const": "error",
-      "eqeqeq": ["error", "always"],
+      eqeqeq: ["error", "always"],
       "@typescript-eslint/no-unused-vars": [
         "error",
-        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }
-      ]
-    }
-  }
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+    },
+  },
 ];

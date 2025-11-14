@@ -1,20 +1,20 @@
 import { Given, When, Then } from "@cucumber/cucumber";
 import wd, { Browser } from "wd";
 import { expect } from "chai";
-import { MainScreen } from "../pages";
+import { MainScreen } from "../pages/MainScreen";
 
 let driver: Browser;
 let mainScreen: MainScreen;
 
 const caps = {
   platformName: "Android",
-  deviceName: "Pixel_7_API_34",   
-  app: "./app/apk/app-debug.apk", 
-  automationName: "UiAutomator2"
+  deviceName: "Samsung Galaxy S21",
+  app: "./app/apk/app-debug.apk",
+  automationName: "UiAutomator2",
 };
 
 Given("I am on the main screen", async () => {
-  driver = wd.promiseChainRemote("localhost", 4723); // Appium сервер по умолчанию
+  driver = wd.promiseChainRemote("localhost", 4723);
   await driver.init(caps);
   mainScreen = new MainScreen(driver);
 });
@@ -25,6 +25,10 @@ When("I add a new task {string}", async (taskName: string) => {
 
 Then("I should see the task {string} in the list", async (taskName: string) => {
   const tasks = await mainScreen.getTasks();
-  const texts = await Promise.all(tasks.map(t => t.text()));
+  const texts = await Promise.all(tasks.map((t) => t.text()));
   expect(texts).to.include(taskName);
+});
+
+When("I mark task {string} as completed", async (taskName: string) => {
+  await mainScreen.markTaskCompleted(taskName);
 });
