@@ -24,14 +24,18 @@ export class MainScreen {
   }
 
   async addTask(title: string, task: string) {
-    const addBtn = await driver.$(this.addTaskBtn);
-    await addBtn.waitForDisplayed({ timeout: 5000 });
-    await addBtn.click();
+    try {
+      const addBtn = await driver.$(this.addTaskBtn);
+      await addBtn.waitForDisplayed({ timeout: 5000 });
+      await addBtn.click();
 
-    await screens.addEdit.fillTask(title, task);
-    await driver.$(this.todoTitle).waitForDisplayed({ timeout: 5000 });
-    await driver.$(this.allTaskTitle).waitForDisplayed({ timeout: 5000 });
-    const taskTitleSelector = this.getTaskByTitle(title);
-    await driver.$(taskTitleSelector).waitForDisplayed({ timeout: 5000 });
+      await screens.addEdit.fillTask(title, task);
+      await driver.$(this.todoTitle).waitForDisplayed({ timeout: 5000 });
+      await driver.$(this.allTaskTitle).waitForDisplayed({ timeout: 5000 });
+      const taskTitleSelector = this.getTaskByTitle(title);
+      await driver.$(taskTitleSelector).waitForDisplayed({ timeout: 5000 });
+    } catch (error) {
+      throw new Error(`[addTask]: Error in addTask: ${(error as Error).message}`);
+    }
   }
 }
