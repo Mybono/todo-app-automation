@@ -9,7 +9,14 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "webdriverio", "@wdio/globals/types", "mocha"]
+    "types": [
+      "node",
+      "webdriverio",
+      "@wdio/globals/types",
+      "mocha"
+    ]
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+  ]
 }
