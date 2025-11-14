@@ -12,11 +12,16 @@ export class MainScreen {
   taskList = "id:task_list";
 
   async addTask(name: string) {
-    await this.driver.elementById(this.addTaskButton).click();
-    await this.driver.elementById(this.taskNameField).type(name);
+    const addBtn = await this.driver.elementById(this.addTaskButton);
+    await addBtn.click();
+
+    const input = await this.driver.elementById(this.taskNameField);
+    await input.type(name);
   }
 
   async getTasks() {
-    return this.driver.elementsById(this.taskList);
+    // @ts-ignore
+    const tasks = await this.driver.elementsById(this.taskList);
+    return tasks;
   }
 }
