@@ -1,5 +1,6 @@
+import { logger, timeout } from "../utils";
 import { screens } from "../screens";
-import { logger } from "../utils";
+
 
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
@@ -18,7 +19,7 @@ export class AddEditTaskScreen {
       await (await driver.$(this.saveTaskBtn)).click();
       await driver
         .$(screens.main.pushTaskAdded)
-        .waitForDisplayed({ timeout: 5000 });
+        .waitForDisplayed({ timeout: timeout.elementAppear });
       logger.info(`Task "${title}" added successfully.`);
     } catch (error) {
       throw new Error(
