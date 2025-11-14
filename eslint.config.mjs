@@ -16,6 +16,12 @@ export default [
     plugins: {
       "@typescript-eslint": tsPlugin,
     },
+    ignores: [
+      "dist/",
+      "node_modules/",
+      "app/",
+      "wdio.conf.ts"
+    ],
     rules: {
       "no-console": "warn",
       "no-debugger": "error",
