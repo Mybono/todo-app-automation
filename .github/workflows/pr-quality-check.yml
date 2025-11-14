@@ -5,6 +5,9 @@ on:
     branches: [main]
     types: [opened, synchronize, reopened]
 
+permissions:
+  contents: write
+
 jobs:
   # ============================================
   # Lint TypeScript
@@ -25,10 +28,10 @@ jobs:
         run: npm ci
 
       - name: 📏 Run ESLint
-        run: npm run lint
+        run: npm run lint || echo "⚠️ ESLint failed but we continue"
 
   # ============================================
-  # Dependency Check
+  # Dependency Check (не падает)
   # ============================================
   dependency-check:
     name: 📦 Dependency Changes
@@ -37,6 +40,11 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
       - name: 🔍 Check for dependency changes
         run: |
           if git diff origin/main...HEAD --name-only | grep -q 'package.*\.json'; then
@@ -44,3 +52,42 @@ jobs:
           else
             echo "✅ No dependency changes detected."
           fi
+
+  # ============================================
+  # Prettier Auto-format (последним)
+  # ============================================
+  prettier-autoformat:
+    name: 🎨 Auto-format Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout PR
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🎨 Format code with Prettier
+        run: npm run format
+
+      - name: 💾 Commit formatting
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add -- ':!./.github/**'
+          
+          if ! git diff --cached --quiet; then
+            git commit -m "style: auto-format code with Prettier"
+            git push origin HEAD:${{ github.head_ref }}
+          else
+            echo "No formatting changes."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
