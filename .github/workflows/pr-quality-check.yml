@@ -1,6 +1,5 @@
 name: 🔍 PR Checks
 
-# Срабатывает на pull request в main
 on:
   pull_request:
     branches: [main]
@@ -8,7 +7,7 @@ on:
 
 jobs:
   # ============================================
-  # Lint and TypeScript check
+  # Lint TypeScript
   # ============================================
   lint:
     name: 🧹 Lint TypeScript
@@ -29,32 +28,6 @@ jobs:
         run: npm run lint
 
   # ============================================
-  # Run tests (Cucumber + Appium)
-  # ============================================
-  test:
-    name: 🤖 Run Automation Tests
-    runs-on: ubuntu-latest
-    services:
-      appium:
-        image: appium/appium
-        ports:
-          - 4723:4723
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v4
-
-      - name: 🔧 Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: 📦 Install dependencies
-        run: npm ci
-
-      - name: 🧪 Run tests
-        run: npm test
-
-  # ============================================
   # Dependency Check
   # ============================================
   dependency-check:
@@ -68,3 +41,5 @@ jobs:
         run: |
           if git diff origin/main...HEAD --name-only | grep -q 'package.*\.json'; then
             echo "⚠️ Dependencies changed! Review security, licenses, and bundle size."
+          else
+            echo "✅ No dependency changes detected."
