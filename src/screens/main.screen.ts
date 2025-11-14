@@ -35,7 +35,9 @@ export class MainScreen {
       const taskTitleSelector = this.getTaskByTitle(title);
       await driver.$(taskTitleSelector).waitForDisplayed({ timeout: 5000 });
     } catch (error) {
-      throw new Error(`[addTask]: Error in addTask: ${(error as Error).message}`);
+      throw new Error(
+        `[addTask]: Error in addTask: ${(error as Error).message}`,
+      );
     }
   }
 }

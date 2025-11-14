@@ -5,12 +5,7 @@ export default [
   {
     files: ["src/**/*.ts"],
 
-    ignores: [
-      "node_modules/",
-      "dist/",
-      "app/",
-      "wdio.conf.ts",
-    ],
+    ignores: ["node_modules/", "dist/", "app/", "wdio.conf.ts"],
 
     languageOptions: {
       parser: tsParser,

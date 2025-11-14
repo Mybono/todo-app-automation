@@ -21,7 +21,9 @@ export class AddEditTaskScreen {
         .waitForDisplayed({ timeout: 5000 });
       logger.info(`Task "${title}" added successfully.`);
     } catch (error) {
-      throw new Error(`[fillTask]: Error in fillTask: ${(error as Error).message}`);
+      throw new Error(
+        `[fillTask]: Error in fillTask: ${(error as Error).message}`,
+      );
     }
   }
 }
