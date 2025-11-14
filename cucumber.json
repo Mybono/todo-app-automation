@@ -1,33 +1,47 @@
-import { join } from 'path';
-import type { Options } from '@wdio/types';
-
-const config: Options.Testrunner = {
-    runner: 'local',
-    specs: ['./features/**/*.feature'],
-    maxInstances: 1,
-    capabilities: [{
-        platformName: 'Android',
-        'appium:deviceName': 'Android Emulator',
-        'appium:platformVersion': '13.0',
-        'appium:app': join(process.cwd(), 'app/TodoApp.apk'),
-        'appium:automationName': 'UiAutomator2'
-    }],
-    logLevel: 'info',
-    framework: 'cucumber',
-    reporters: ['spec'],
-    cucumberOpts: {
-        require: ['./step-definitions/**/*.ts'],
-        backtrace: false,
-        requireModule: ['ts-node/register'],
-        strict: true,
-        tagExpression: '',
-        timeout: 60000
-    },
-    services: ['appium'],
-    autoCompileOpts: {
-        tsNodeOpts: { transpileOnly: true },
-        autoCompile: true
-    }
-};
-
-export default config;
+[
+  {
+    "uri": "features/add_task.feature",
+    "id": "add-a-new-task",
+    "keyword": "Feature",
+    "name": "Add a new task",
+    "description": "",
+    "line": 1,
+    "elements": [
+      {
+        "id": "add-a-new-task;add-task-to-main-list",
+        "keyword": "Scenario",
+        "name": "Add task to main list",
+        "line": 3,
+        "steps": [
+          {
+            "keyword": "Given ",
+            "name": "I am on the main screen",
+            "line": 4,
+            "result": {
+              "status": "passed",
+              "duration": 123456789
+            }
+          },
+          {
+            "keyword": "When ",
+            "name": "I add a new task \"Buy milk\"",
+            "line": 5,
+            "result": {
+              "status": "passed",
+              "duration": 234567890
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "I should see the task \"Buy milk\" in the list",
+            "line": 6,
+            "result": {
+              "status": "passed",
+              "duration": 345678901
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
