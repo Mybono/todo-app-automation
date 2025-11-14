@@ -12,7 +12,8 @@ export class MainScreen {
   moreOptionsMenu = "~More";
   openDrawerBtn = "~Open Drawer";
   pushTaskAdded = '//android.widget.TextView[@text="Task added"]';
-  pushTaskMarkedComplete = '//android.widget.TextView[@text="Task marked complete"]';
+  pushTaskMarkedComplete =
+    '//android.widget.TextView[@text="Task marked complete"]';
   pushTaskSaved = '//android.widget.TextView[@text="Task saved"]';
   pushTaskDeleted = '//android.widget.TextView[@text="Task was deleted"]';
   taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
@@ -37,11 +38,19 @@ export class MainScreen {
       await addBtn.click();
 
       await screens.addEdit.fillTask(title, task);
-      await driver.$(screens.main.pushTaskAdded).waitForDisplayed({ timeout: timeout.elementAppear });
-      await driver.$(this.todoTitle).waitForDisplayed({ timeout: timeout.elementAppear });
-      await driver.$(this.allTaskTitle).waitForDisplayed({ timeout: timeout.elementAppear });
+      await driver
+        .$(screens.main.pushTaskAdded)
+        .waitForDisplayed({ timeout: timeout.elementAppear });
+      await driver
+        .$(this.todoTitle)
+        .waitForDisplayed({ timeout: timeout.elementAppear });
+      await driver
+        .$(this.allTaskTitle)
+        .waitForDisplayed({ timeout: timeout.elementAppear });
       const taskTitleSelector = this.getTaskByTitle(title);
-      await driver.$(taskTitleSelector).waitForDisplayed({ timeout: timeout.elementAppear });
+      await driver
+        .$(taskTitleSelector)
+        .waitForDisplayed({ timeout: timeout.elementAppear });
       logger.info(`[addTask] Task "${title}" added successfully.`);
       return taskTitleSelector;
     } catch (error) {

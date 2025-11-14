@@ -30,14 +30,20 @@ class TestDataGenerator {
   public getRandomText(): { title: string; text: string } {
     const titleLength = getRandomInt(4, 10);
     const textLength = getRandomInt(8, 20);
-    
+
     // Title: letters + numbers + emojis
     const titleChars = LETTERS + LETTERS.toUpperCase() + NUMBERS + EMOJIS;
     let title = this.generateRandomString(titleLength, titleChars);
     title = title.charAt(0).toUpperCase() + title.slice(1);
 
     // Text: letters + numbers + emojis + spaces + special chars
-    const textChars = LETTERS + LETTERS.toUpperCase() + NUMBERS + EMOJIS + SPECIAL_CHARS + SPACES;
+    const textChars =
+      LETTERS +
+      LETTERS.toUpperCase() +
+      NUMBERS +
+      EMOJIS +
+      SPECIAL_CHARS +
+      SPACES;
     const text = this.generateRandomString(textLength, textChars);
 
     return { title, text };

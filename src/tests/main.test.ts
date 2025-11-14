@@ -11,7 +11,10 @@ describe("Todo App", () => {
   });
 
   it("should add a task", async () => {
-    await screens.main.addTask("Buy milk", "Remember to buy milk from the store");
+    await screens.main.addTask(
+      "Buy milk",
+      "Remember to buy milk from the store",
+    );
   });
   it("should edit a task", async () => {
     const titleSelector = await screens.main.addTask();
