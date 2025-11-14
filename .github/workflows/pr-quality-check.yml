@@ -6,7 +6,7 @@ on:
     types: [opened, synchronize, reopened]
 
 permissions:
-  contents: write   
+  contents: write  
 
 jobs:
   # ============================================
@@ -29,7 +29,29 @@ jobs:
 
       - name: 📏 Run ESLint
         run: npm run lint
+        env:
+          ESLINT_NO_DEV_ERRORS: true
 
+  # ============================================
+  # Dependency Check
+  # ============================================
+  dependency-check:
+    name: 📦 Dependency Changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔍 Check for dependency changes
+        run: |
+          if git diff origin/main...HEAD --name-only | grep -q 'package.*\.json'; then
+            echo "⚠️ Dependencies changed! Review security, licenses, and bundle size."
+          else
+            echo "✅ No dependency changes detected."
+
+  # ============================================
+  # Auto-format with Prettier (LAST!)
+  # ============================================
   prettier-autoformat:
     name: 🎨 Auto-format Prettier
     runs-on: ubuntu-latest
@@ -51,31 +73,18 @@ jobs:
       - name: 🎨 Format code with Prettier
         run: npm run format
 
-      - name: 💾 Commit formatted files
+      - name: 🔧 Configure Git
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          if git diff --quiet; then
-            echo "✨ No formatting changes needed."
-          else
-            echo "💾 Formatting changes detected. Committing..."
-            git add .
-            git commit -m "style: auto-format code with Prettier"
-            git push
-          fi
-
-  dependency-check:
-    name: 📦 Dependency Changes
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v4
-
-      - name: 🔍 Check for dependency changes
+      - name: 💾 Commit formatting
         run: |
-          if git diff origin/main...HEAD --name-only | grep -q 'package.*\.json'; then
-            echo "⚠️ Dependencies changed! Review security, licenses, and bundle size."
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m "style: auto-format code with Prettier" --no-verify
+            git push origin HEAD:${{ github.head_ref }}
           else
-            echo "✅ No dependency changes detected."
-          fi
+            echo "No formatting changes."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

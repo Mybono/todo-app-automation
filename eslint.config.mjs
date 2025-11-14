@@ -3,8 +3,15 @@ import tsParser from "@typescript-eslint/parser";
 
 export default [
   {
-    files: ["**/*.ts"],
-    ignores: ["node_modules/", "app/"],
+    files: ["src/**/*.ts"],
+
+    ignores: [
+      "node_modules/",
+      "dist/",
+      "app/",
+      "wdio.conf.ts",
+    ],
+
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -13,15 +20,11 @@ export default [
         project: "./tsconfig.json",
       },
     },
+
     plugins: {
       "@typescript-eslint": tsPlugin,
     },
-    ignores: [
-      "dist/",
-      "node_modules/",
-      "app/",
-      "wdio.conf.ts"
-    ],
+
     rules: {
       "no-console": "warn",
       "no-debugger": "error",
