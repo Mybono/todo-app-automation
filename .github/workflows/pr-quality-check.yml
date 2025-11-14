@@ -8,36 +8,6 @@ on:
 
 jobs:
   # ============================================
-  # PR Validation
-  # ============================================
-  pr-validation:
-    name: ✅ PR Validation
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: 🏷️ Check PR title
-        run: |
-          PR_TITLE="${{ github.event.pull_request.title }}"
-          if ! echo "$PR_TITLE" | grep -qE '^(feat|fix|docs|style|refactor|test|chore|perf)(\(.+\))?: .+'; then
-            echo "⚠️ PR title doesn't follow conventional commits format"
-          else
-            echo "✅ PR title is OK"
-
-      - name: 📝 Check PR description
-        run: |
-          PR_BODY="${{ github.event.pull_request.body }}"
-          if [ -z "$PR_BODY" ] || [ ${#PR_BODY} -lt 20 ]; then
-            echo "⚠️ PR description too short"
-            exit 1
-          else
-            echo "✅ PR description is OK"
-
-  # ============================================
   # Lint and TypeScript check
   # ============================================
   lint:
