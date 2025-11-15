@@ -2,7 +2,6 @@ import { timeout } from "../utils";
 import { screens } from "../screens";
 
 describe("Todo App", () => {
-
   it("should add a task", async () => {
     await screens.main.addTask(
       "Buy milk",
