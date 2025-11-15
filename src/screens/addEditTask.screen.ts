@@ -12,7 +12,13 @@ export class AddEditTaskScreen {
   editBtn = "~Edit";
   backBtn = "~Back";
 
-  async fillTask(text: string, title: string) {
+  async fillTask({
+    title: title,
+    text: text,
+  }: {
+    title: string;
+    text: string;
+  }) {
     try {
       await this.fillOutTitle(title);
       await this.fillOutText(text);

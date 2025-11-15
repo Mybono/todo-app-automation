@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "build": "tsc",
     "test": "npm run build && wdio run wdio.conf.ts",
-    "test:watch": "tsc --watch",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/chai": "^4.3.5",

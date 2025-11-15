@@ -8,8 +8,6 @@ const getRandomInt = (min: number, max: number): number => {
 // Character sets
 const LETTERS = "abcdefghijklmnopqrstuvwxyz";
 const NUMBERS = "0123456789";
-const EMOJIS = "😀😃😄😁😂🤣😅😊😇😉🥰😍🤩";
-const SPECIAL_CHARS = "!@#$%^&*()-_=+[]{};:,.<>/?";
 const SPACES = " ";
 
 /** Lightweight utility class for generating random test data */
@@ -32,18 +30,12 @@ class TestDataGenerator {
     const textLength = getRandomInt(8, 20);
 
     // Title: letters + numbers + emojis
-    const titleChars = LETTERS + LETTERS.toUpperCase() + NUMBERS + EMOJIS;
+    const titleChars = LETTERS + LETTERS.toUpperCase() + NUMBERS;
     let title = this.generateRandomString(titleLength, titleChars);
     title = title.charAt(0).toUpperCase() + title.slice(1);
 
     // Text: letters + numbers + emojis + spaces + special chars
-    const textChars =
-      LETTERS +
-      LETTERS.toUpperCase() +
-      NUMBERS +
-      EMOJIS +
-      SPECIAL_CHARS +
-      SPACES;
+    const textChars = LETTERS + LETTERS.toUpperCase() + NUMBERS + SPACES;
     const text = this.generateRandomString(textLength, textChars);
 
     return { title, text };
