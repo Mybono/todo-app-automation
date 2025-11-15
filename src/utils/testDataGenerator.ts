@@ -35,11 +35,7 @@ class TestDataGenerator {
     title = title.charAt(0).toUpperCase() + title.slice(1);
 
     // Text: letters + numbers + emojis + spaces + special chars
-    const textChars =
-      LETTERS +
-      LETTERS.toUpperCase() +
-      NUMBERS +
-      SPACES;
+    const textChars = LETTERS + LETTERS.toUpperCase() + NUMBERS + SPACES;
     const text = this.generateRandomString(textLength, textChars);
 
     return { title, text };

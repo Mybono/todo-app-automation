@@ -37,7 +37,7 @@ export class MainScreen {
       await addBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await addBtn.click();
 
-      await screens.addEdit.fillTask({title, text});
+      await screens.addEdit.fillTask({ title, text });
       await driver
         .$(screens.main.pushTaskAdded)
         .waitForDisplayed({ timeout: timeout.elementAppear });
