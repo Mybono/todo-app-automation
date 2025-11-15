@@ -1,32 +1,60 @@
-import type { Options } from "@wdio/types";
+import { capabilities } from "./src/config";
+import { logger } from "./src/utils/logger";
+import { execSync } from "child_process";
 
 export const config = {
   runner: "local",
   path: "/",
   port: 4723,
 
-  specs: ["./src/tests/**/*.ts"],
+  specs: ["./dist/tests/**/*.js"],
   maxInstances: 1,
+
+  capabilities: capabilities as any,
+
   framework: "mocha",
   reporters: ["spec"],
+
   mochaOpts: {
+    ui: "bdd",
     timeout: 60000,
   },
 
-  capabilities: [
-    {
-      platformName: "Android",
-      "appium:deviceName": "Samsung Galaxy S21",
-      "appium:app": "./app/apk/app-debug.apk",
-      "appium:automationName": "UiAutomator2",
-    },
+  services: [
+    [
+      "appium",
+      {
+        command: "appium",
+        args: {
+          relaxedSecurity: true,
+        },
+      },
+    ],
   ],
 
-  autoCompileOpts: {
-    autoCompile: true,
-    tsNodeOpts: {
-      transpileOnly: true,
-      project: "./tsconfig.json",
-    },
+  onPrepare: function () {
+    try {
+      logger.log("💥 Cleaning Appium packages...");
+
+      const packages = [
+        "io.appium.uiautomator2.server",
+        "io.appium.uiautomator2.server.test",
+        "io.appium.settings",
+      ];
+
+      for (const pkg of packages) {
+        logger.log(`🧹 Clearing package: ${pkg}`);
+        try {
+          execSync(`adb -s emulator-5554 shell pm clear ${pkg}`);
+        } catch {}
+        try {
+          execSync(`adb -s emulator-5554 uninstall ${pkg}`);
+        } catch {}
+      }
+
+      logger.log("✅ Appium packages cleaned successfully!");
+    } catch (e) {
+      logger.warn(`⚠️ Cleanup failed, continuing anyway: ${e}`);
+    }
   },
-} as Options.Testrunner;
+};

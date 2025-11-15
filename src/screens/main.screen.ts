@@ -1,8 +1,8 @@
-import { screens } from "../screens";
 import { _, logger, timeout } from "../utils";
+import { screens } from "../screens";
 
 export class MainScreen {
-  addTaskBtn = "~New Task";
+  addTaskBtn = '//android.view.View[@content-desc="New Task"]/..';
   allTaskTitle = '//android.widget.TextView[@text="All Tasks"]';
   checkBoxUnchecked = "//android.widget.CheckBox";
   filterActive = "~Active";
