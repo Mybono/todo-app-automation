@@ -1,4 +1,3 @@
-import { logger } from "../utils";
 /**
  * Timeout constants for various operations in milliseconds.
  */
@@ -10,14 +9,3 @@ export const timeout = {
   /** Timeout for page navigation or screen transitions (10000 ms) */
   navigation: 10000,
 };
-
-export function getTextSelector(title: string) {
-  return `android=new UiSelector().className("android.widget.TextView").textContains("${title}")`;
-}
-
-export async function fetchSource() {
-  const source = await driver.getPageSource();
-  logger.warn("\n========== LIST WITH TASK ==========");
-  logger.log(source);
-  logger.warn("====================================\n");
-}

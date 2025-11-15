@@ -1,4 +1,4 @@
-import { _, logger, timeout, getTextSelector } from "../utils";
+import { _, logger, timeout, getTextSelector, push } from "../utils";
 import { screens } from "../screens";
 
 export class MainScreen {
@@ -11,11 +11,6 @@ export class MainScreen {
   filterCompleted = "~Completed";
   moreOptionsMenu = "~More";
   openDrawerBtn = "~Open Drawer";
-  pushTaskAdded = '//android.widget.TextView[@text="Task added"]';
-  pushTaskMarkedComplete =
-    '//android.widget.TextView[@text="Task marked complete"]';
-  pushTaskSaved = '//android.widget.TextView[@text="Task saved"]';
-  pushTaskDeleted = '//android.widget.TextView[@text="Task was deleted"]';
   taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
   taskTextInput = '//android.widget.TextView[@text="Enter your task here."]';
   taskTitleInput = '//android.widget.TextView[@text="Title"]';
@@ -37,7 +32,7 @@ export class MainScreen {
 
       await screens.addEdit.fillTask({ title, text });
       await driver
-        .$(screens.main.pushTaskAdded)
+        .$(push.taskAdded)
         .waitForDisplayed({ timeout: timeout.elementAppear });
       await driver
         .$(this.todoTitle)

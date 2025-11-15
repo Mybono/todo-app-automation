@@ -1,4 +1,4 @@
-import { _, logger, timeout } from "../utils";
+import { _, logger, getTextSelector, timeout } from "../utils";
 
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
@@ -56,6 +56,8 @@ export class AddEditTaskScreen {
       const saveTaskBtn = await driver.$(this.saveTaskBtn);
       await saveTaskBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await saveTaskBtn.click();
+      titleSelector = getTextSelector(title);
+      return titleSelector;
     } catch (error) {
       throw new Error(`[editTask]: ${(error as Error).message}`);
     }
