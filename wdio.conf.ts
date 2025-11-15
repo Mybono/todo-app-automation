@@ -8,15 +8,19 @@ export const config: Options.Testrunner = {
     path: "/",
     port: 4723,
 
-    specs: ["./src/tests/**/*.ts"],
+    // ✅ Исправлено: указываем скомпилированные JS файлы
+    specs: ["./dist/tests/**/*.js"],
     maxInstances: 1,
+    
+    // ✅ Добавлено: capabilities обязательны
+    capabilities: capabilities,
+    
     framework: "mocha",
     reporters: ["spec"],
 
     mochaOpts: {
         ui: "bdd",
         timeout: 60000,
-        require: ["ts-node/register"] // подключаем ts-node
     },
 
     services: [
@@ -29,10 +33,6 @@ export const config: Options.Testrunner = {
         }]
     ],
 
-    /**
-     * Hook before starting the session: clean only Appium packages
-     * without killing the emulator.
-     */
     onPrepare: function () {
         try {
             logger.log("💥 Cleaning Appium packages...");

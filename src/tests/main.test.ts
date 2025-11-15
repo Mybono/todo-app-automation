@@ -1,14 +1,7 @@
-import { createDriver, driver, timeout } from "../utils";
+import { timeout } from "../utils";
 import { screens } from "../screens";
 
 describe("Todo App", () => {
-  before(async () => {
-    await createDriver();
-  });
-
-  after(async () => {
-    await driver?.deleteSession();
-  });
 
   it("should add a task", async () => {
     await screens.main.addTask(
@@ -26,7 +19,7 @@ describe("Todo App", () => {
   it("should delete a task", async () => {
     const titleSelector = await screens.main.addTask();
     await screens.addEdit.deleteTask(titleSelector);
-    const push = await driver!.$(screens.main.pushTaskSaved);
+    const push = await driver!.$(screens.main.pushTaskDeleted);
     await push.waitForDisplayed({ timeout: timeout.elementAppear });
     expect(await push.isDisplayed()).toBe(true);
   });
