@@ -1,5 +1,5 @@
 import { remote, RemoteOptions } from "webdriverio";
-
+import { capabilities } from "../config/capabilities";
 let driver: WebdriverIO.Browser | undefined;
 
 export async function createDriver(): Promise<WebdriverIO.Browser> {
@@ -8,15 +8,17 @@ export async function createDriver(): Promise<WebdriverIO.Browser> {
     hostname: "127.0.0.1",
     port: 4723,
     path: "/",
-    capabilities: {
-      platformName: "Android",
-      "appium:deviceName": "Samsung Galaxy S21",
-      "appium:app": "./app/apk/app-debug.apk",
-      "appium:automationName": "UiAutomator2",
-    },
+    capabilities: capabilities[0],
   };
 
   driver = await remote(options);
+  return driver;
+}
+
+export async function getDriver(): Promise<WebdriverIO.Browser> {
+  if (!driver) {
+    driver = await createDriver();
+  }
   return driver;
 }
 
