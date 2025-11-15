@@ -3,9 +3,11 @@ import { _, timeout } from "../utils";
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
   taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
-  taskTitleInput = '//android.widget.TextView[@text="Title"]';
-  taskTextInput = '//android.widget.TextView[@text="Enter your task here."]';
-  saveTaskBtn = "~Save task";
+  taskTitleInput =
+    '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]';
+  taskTextInput =
+    '//android.widget.EditText[.//android.widget.TextView[@text="Enter your task here."]]';
+  saveTaskBtn = '//android.view.View[@content-desc="Save task"]/..';
   deleteBtn = "~Delete task";
   editBtn = "~Edit";
   backBtn = "~Back";

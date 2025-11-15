@@ -6,7 +6,6 @@ adb logcat -d | grep -iE "uiautomator|appium|instrument|fatal|exception"
 npm install -g appium-doctor
 appium-doctor --android
 
-
 adb shell am force-stop io.appium.uiautomator2.server
 adb shell am force-stop io.appium.uiautomator2.server.test
 adb uninstall io.appium.uiautomator2.server
