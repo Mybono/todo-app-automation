@@ -1,15 +1,13 @@
-import { _, timeout } from "../utils";
+import { _, getTextSelector, timeout } from "../utils";
 
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
   taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
-  taskTitleInput =
-    '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]';
-  taskTextInput =
-    '//android.widget.EditText[.//android.widget.TextView[@text="Enter your task here."]]';
-  saveTaskBtn = '//android.view.View[@content-desc="Save task"]/..';
+  taskTitleInput = '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]';
+  taskTextInput = '//android.widget.EditText[.//android.widget.TextView[@text="Enter your task here."]]';
+  saveTaskBtn = "~Save task";
   deleteBtn = "~Delete task";
-  editBtn = "~Edit";
+  editBtn = "~Edit Task";
   backBtn = "~Back";
 
   async fillTask({
@@ -47,12 +45,13 @@ export class AddEditTaskScreen {
       }
 
       await this.selectTask(titleSelector);
+
       const editBtn = await driver.$(this.editBtn);
       await editBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await editBtn.click();
 
-      await this.fillOutTitle(title);
-      await this.fillOutText(text);
+      await this.editTitle(title);
+      await this.editText(text);
 
       const saveTaskBtn = await driver.$(this.editBtn);
       await saveTaskBtn.waitForDisplayed({ timeout: timeout.elementAppear });
@@ -95,6 +94,29 @@ export class AddEditTaskScreen {
       await titleInput.setValue(title);
     } catch (error) {
       throw new Error(`[fillOutTitle]: ${(error as Error).message}`);
+    }
+  }
+
+  async editText(text: string) {
+    try {
+      const textSelector = getTextSelector(text);
+      const textInput = await driver.$(textSelector);
+      await textInput.waitForDisplayed({ timeout: timeout.elementAppear });
+      await textInput.setValue(text);
+    } catch (error) {
+      throw new Error(`[editText]: ${(error as Error).message}`,
+      );
+    }
+  }
+
+  async editTitle(title: string) {
+    try {
+      const titleSelector = getTextSelector(title);
+      const titleInput = await driver.$(titleSelector);
+      await titleInput.waitForDisplayed({ timeout: timeout.elementAppear });
+      await titleInput.setValue(title);
+    } catch (error) {
+      throw new Error(`[editTitle]: ${(error as Error).message}`);
     }
   }
 

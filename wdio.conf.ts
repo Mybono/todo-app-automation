@@ -21,15 +21,15 @@ export const config = {
   },
 
   services: [
-    [
-      "appium",
-      {
-        command: "appium",
-        args: {
-          relaxedSecurity: true,
-        },
-      },
-    ],
+    // [
+    //   "appium",
+    //   {
+    //     command: "appium",
+    //     args: {
+    //       relaxedSecurity: true,
+    //     },
+    //   },
+    // ],
   ],
 
   onPrepare: function () {

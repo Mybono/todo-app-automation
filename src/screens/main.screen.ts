@@ -1,4 +1,4 @@
-import { _, logger, timeout } from "../utils";
+import { _, logger, timeout, getTextSelector } from "../utils";
 import { screens } from "../screens";
 
 export class MainScreen {
@@ -21,9 +21,7 @@ export class MainScreen {
   taskTitleInput = '//android.widget.TextView[@text="Title"]';
   todoTitle = '//android.widget.TextView[@text="Todo"]';
 
-  getTitleSelector(title: string) {
-    return `android=new UiSelector().className("android.widget.TextView").textContains("${title}")`;
-  }
+
 
   async addTask(title?: string, text?: string) {
     try {
@@ -48,12 +46,7 @@ export class MainScreen {
         .$(this.allTaskTitle)
         .waitForDisplayed({ timeout: timeout.elementAppear });
 
-      const source = await driver.getPageSource();
-      console.log("\n========== LIST WITH TASK ==========");
-      console.log(source);
-      console.log("====================================\n");
-
-      const taskTitleSelector = this.getTitleSelector(title);
+      const taskTitleSelector = getTextSelector(title);
       await driver
         .$(taskTitleSelector)
         .waitForDisplayed({ timeout: timeout.elementAppear });
