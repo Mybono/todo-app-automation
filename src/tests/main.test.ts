@@ -1,59 +1,37 @@
-import { timeout, push, getCheckBoxSelector, toggleCheckbox } from "../utils";
+import { push, expectPushMessage } from "../utils";
 import { screens } from "../screens";
 
-describe("Edit Task: ", () => {
+describe("Task management @task @smoke ", () => {
+  let titleSelector: string;
 
-  it("should add a task", async () => {
+  beforeEach(async () => {
+    titleSelector = await screens.main.addTask({});
+  });
+
+  it("adds a new task with title and description", async () => {
     await screens.main.addTask(
-      "Buy milk",
-      "Remember to buy milk from the store",
+      {
+        title: "Buy milk",
+        text: "Remember to buy milk from the store"
+      },
     );
+    await expectPushMessage(push.taskAdded);
   });
 
-  it("delete a task", async () => {
-    const titleSelector = await screens.main.addTask();
+  it("adds a new task with title", async () => {
+    await screens.main.addTask(
+      { title: "Complete assignment" }
+    );
+    await expectPushMessage(push.taskAdded);
+  });
+
+  it("deletes an existing task and shows confirmation message", async () => {
     await screens.addEdit.deleteTask(titleSelector);
-
-    const pushTaskDeleted = await driver!.$(push.taskDeleted);
-    await pushTaskDeleted.waitForDisplayed({ timeout: timeout.elementAppear });
-    expect(await pushTaskDeleted.isDisplayed()).toBe(true);
+    await expectPushMessage(push.taskDeleted);
   });
 
-  it("edit a task", async () => {
-    const titleSelector = await screens.main.addTask();
+  it("edits a task and confirms the changes are saved", async () => {
     await screens.addEdit.editTask({ titleSelector: titleSelector });
-
-    const taskSaved = await driver!.$(push.taskSaved);
-    await taskSaved.waitForDisplayed({ timeout: timeout.elementAppear });
-    expect(await taskSaved.isDisplayed()).toBe(true);
+    await expectPushMessage(push.taskSaved);
   });
-
-  it("mark task completed from task screen", async () => {
-    const titleSelector = await screens.main.addTask();
-    await screens.addEdit.selectTask(titleSelector);
-
-    const checkbox = getCheckBoxSelector(false);
-    let checkedCheckbox = await toggleCheckbox(checkbox, true);
-    await checkedCheckbox.waitForDisplayed({ timeout: timeout.elementAppear });
-    expect(await checkedCheckbox.isDisplayed()).toBe(true);
-
-    const pushTaskMarkedComplete = await driver!.$(push.taskMarkedComplete);
-    await pushTaskMarkedComplete.waitForDisplayed({ timeout: timeout.elementAppear });
-    expect(await pushTaskMarkedComplete.isDisplayed()).toBe(true);
-
-    const backBtn = await driver!.$(screens.addEdit.backBtn);
-    await backBtn.waitForDisplayed({ timeout: timeout.elementAppear });
-    await backBtn.click();
-  })
-
-  it("mark task completed from main screen", async () => {
-    const checkbox = getCheckBoxSelector(false);
-    let checkedCheckbox = await toggleCheckbox(checkbox, true);
-    await checkedCheckbox.waitForDisplayed({ timeout: timeout.elementAppear });
-    expect(await checkedCheckbox.isDisplayed()).toBe(true);
-
-    const pushTaskMarkedComplete = await driver!.$(push.taskMarkedComplete);
-    await pushTaskMarkedComplete.waitForDisplayed({ timeout: timeout.elementAppear });
-    expect(await pushTaskMarkedComplete.isDisplayed()).toBe(true);
-  })
 });

@@ -1,4 +1,5 @@
-import { _, logger, getTextSelector, timeout } from "../utils";
+import { _, logger, getTextSelector, getCheckBoxSelector, toggleCheckbox, timeout } from "../utils";
+import { Task, taskStatuses } from "../interfaces";
 
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
@@ -10,19 +11,20 @@ export class AddEditTaskScreen {
   editBtn = "~Edit Task";
   backBtn = "~Back";
 
-  async fillTask({
-    title: title,
-    text: text,
-  }: {
-    title: string;
-    text: string;
-  }) {
+  async fillTask(task: Task) {
+    let title = task.title;
+    let text = task.text;
     try {
       await this.fillOutTitle(title);
       await this.fillOutText(text);
       const saveTaskBtn = await driver.$(this.saveTaskBtn);
       await saveTaskBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await saveTaskBtn.click();
+      if (task.status === taskStatuses.completed) {
+        const checkbox = getCheckBoxSelector(false);
+        let checkedCheckbox = await toggleCheckbox(checkbox, true);
+        await checkedCheckbox.waitForDisplayed({ timeout: timeout.elementAppear });
+      }
     } catch (error) {
       throw new Error(`[fillTask]: ${(error as Error).message}`);
     }

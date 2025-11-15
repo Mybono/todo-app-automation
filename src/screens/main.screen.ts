@@ -1,5 +1,6 @@
-import { _, logger, timeout, getTextSelector, push } from "../utils";
+import { _, logger, timeout, getTextSelector, push, getCheckBoxSelector, toggleCheckbox } from "../utils";
 import { screens } from "../screens";
+import { Task, taskStatuses } from "../interfaces";
 
 export class MainScreen {
   addTaskBtn = '//android.view.View[@content-desc="New Task"]/..';
@@ -16,24 +17,28 @@ export class MainScreen {
   taskTitleInput = '//android.widget.TextView[@text="Title"]';
   todoTitle = '//android.widget.TextView[@text="Todo"]';
 
-
-
-  async addTask(title?: string, text?: string) {
+  async addTask(task: Task) {
+    let title = task.title;
+    let text = task.text;
+    let taskStaus = task.status;
     try {
-      if (!title || !text) {
+      if (!task.title || !task.text) {
         const randomData = _.getRandomText();
-        title = title ?? randomData.title;
-        text = text ?? randomData.text;
+        title = task.title ?? randomData.title;
+        text = task.text ?? randomData.text;
       }
 
       const addBtn = await driver.$(this.addTaskBtn);
       await addBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await addBtn.click();
 
-      await screens.addEdit.fillTask({ title, text });
-      await driver
-        .$(push.taskAdded)
-        .waitForDisplayed({ timeout: timeout.elementAppear });
+      await screens.addEdit.fillTask({ title: title, text: text, status: taskStaus });
+
+      if (taskStaus === taskStatuses.active) {
+        await driver
+          .$(push.taskAdded)
+          .waitForDisplayed({ timeout: timeout.elementAppear });
+      }
       await driver
         .$(this.todoTitle)
         .waitForDisplayed({ timeout: timeout.elementAppear });
