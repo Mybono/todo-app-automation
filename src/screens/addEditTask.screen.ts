@@ -1,4 +1,4 @@
-import { _, getTextSelector, timeout } from "../utils";
+import { _, logger, timeout } from "../utils";
 
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
@@ -53,9 +53,9 @@ export class AddEditTaskScreen {
       await this.editTitle(title);
       await this.editText(text);
 
-      const saveTaskBtn = await driver.$(this.editBtn);
+      const saveTaskBtn = await driver.$(this.saveTaskBtn);
       await saveTaskBtn.waitForDisplayed({ timeout: timeout.elementAppear });
-      await editBtn.click();
+      await saveTaskBtn.click();
     } catch (error) {
       throw new Error(`[editTask]: ${(error as Error).message}`);
     }
@@ -99,10 +99,10 @@ export class AddEditTaskScreen {
 
   async editText(text: string) {
     try {
-      const textSelector = getTextSelector(text);
-      const textInput = await driver.$(textSelector);
-      await textInput.waitForDisplayed({ timeout: timeout.elementAppear });
-      await textInput.setValue(text);
+      const titleInput = await $$('android.widget.EditText');
+      await titleInput[1].waitForDisplayed({ timeout: timeout.elementAppear });
+      await titleInput[1].setValue(text);
+      logger.info(`[editText] Text edited to "${text}" successfully.`);
     } catch (error) {
       throw new Error(`[editText]: ${(error as Error).message}`,
       );
@@ -111,10 +111,10 @@ export class AddEditTaskScreen {
 
   async editTitle(title: string) {
     try {
-      const titleSelector = getTextSelector(title);
-      const titleInput = await driver.$(titleSelector);
-      await titleInput.waitForDisplayed({ timeout: timeout.elementAppear });
-      await titleInput.setValue(title);
+      const titleInput = await $$('android.widget.EditText');
+      await titleInput[0].waitForDisplayed({ timeout: timeout.elementAppear });
+      await titleInput[0].setValue(title);
+      logger.info(`[editTitle] Title edited to "${title}" successfully.`);
     } catch (error) {
       throw new Error(`[editTitle]: ${(error as Error).message}`);
     }
@@ -128,6 +128,7 @@ export class AddEditTaskScreen {
       await driver
         .$(this.taskDetailsHeader)
         .waitForDisplayed({ timeout: timeout.elementAppear });
+        logger.info(`[selectTask] Task selected successfully. ${titleSelector}`);
     } catch (error) {
       throw new Error(`[selectTask]: ${(error as Error).message}`);
     }
