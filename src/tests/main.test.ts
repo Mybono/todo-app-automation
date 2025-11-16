@@ -1,23 +1,17 @@
 import { push, expectPushMessage } from "../utils";
 import { screens } from "../screens";
 
-
 describe("Task management @task @smoke ", () => {
-
   it("[UITM001]: Adds a new task with title and description", async () => {
-    await screens.main.addTask(
-      {
-        title: "Buy milk",
-        text: "Remember to buy milk from the store"
-      },
-    );
+    await screens.main.addTask({
+      title: "Buy milk",
+      text: "Remember to buy milk from the store",
+    });
     await expectPushMessage(push.taskAdded);
   });
 
   it("[UITM002]: Adds a new task with title", async () => {
-    await screens.main.addTask(
-      { title: "Complete assignment" }
-    );
+    await screens.main.addTask({ title: "Complete assignment" });
     await expectPushMessage(push.taskAdded);
   });
 

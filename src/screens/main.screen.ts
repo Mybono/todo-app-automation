@@ -1,6 +1,6 @@
-import { _, logger, timeout, getTextSelector, push, getCheckBoxSelector, toggleCheckbox } from "../utils";
-import { screens } from "../screens";
+import { _, logger, timeout, getTextSelector, push } from "../utils";
 import { Task, taskStatuses } from "../interfaces";
+import { screens } from "../screens";
 
 export class MainScreen {
   addTaskBtn = '//android.view.View[@content-desc="New Task"]/..';
@@ -32,7 +32,11 @@ export class MainScreen {
       await addBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await addBtn.click();
 
-      await screens.addEdit.fillTask({ title: title, text: text, status: taskStaus });
+      await screens.addEdit.fillTask({
+        title: title,
+        text: text,
+        status: taskStaus,
+      });
 
       if (taskStaus === taskStatuses.active) {
         await driver

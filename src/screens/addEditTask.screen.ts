@@ -1,11 +1,20 @@
-import { _, logger, getTextSelector, getCheckBoxSelector, toggleCheckbox, timeout } from "../utils";
+import {
+  _,
+  logger,
+  getTextSelector,
+  getCheckBoxSelector,
+  toggleCheckbox,
+  timeout,
+} from "../utils";
 import { Task, taskStatuses } from "../interfaces";
 
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
   taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
-  taskTitleInput = '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]';
-  taskTextInput = '//android.widget.EditText[.//android.widget.TextView[@text="Enter your task here."]]';
+  taskTitleInput =
+    '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]';
+  taskTextInput =
+    '//android.widget.EditText[.//android.widget.TextView[@text="Enter your task here."]]';
   saveTaskBtn = "~Save task";
   deleteBtn = "~Delete task";
   editBtn = "~Edit Task";
@@ -23,7 +32,9 @@ export class AddEditTaskScreen {
       if (task.status === taskStatuses.completed) {
         const checkbox = getCheckBoxSelector(false);
         let checkedCheckbox = await toggleCheckbox(checkbox, true);
-        await checkedCheckbox.waitForDisplayed({ timeout: timeout.elementAppear });
+        await checkedCheckbox.waitForDisplayed({
+          timeout: timeout.elementAppear,
+        });
       }
     } catch (error) {
       throw new Error(`[fillTask]: ${(error as Error).message}`);
@@ -103,19 +114,18 @@ export class AddEditTaskScreen {
 
   async editText(text: string) {
     try {
-      const titleInput = await $$('android.widget.EditText');
+      const titleInput = await $$("android.widget.EditText");
       await titleInput[1].waitForDisplayed({ timeout: timeout.elementAppear });
       await titleInput[1].setValue(text);
       logger.info(`[editText] Text edited to "${text}" successfully.`);
     } catch (error) {
-      throw new Error(`[editText]: ${(error as Error).message}`,
-      );
+      throw new Error(`[editText]: ${(error as Error).message}`);
     }
   }
 
   async editTitle(title: string) {
     try {
-      const titleInput = await $$('android.widget.EditText');
+      const titleInput = await $$("android.widget.EditText");
       await titleInput[0].waitForDisplayed({ timeout: timeout.elementAppear });
       await titleInput[0].setValue(title);
       logger.info(`[editTitle] Title edited to "${title}" successfully.`);
@@ -132,7 +142,7 @@ export class AddEditTaskScreen {
       await driver
         .$(this.taskDetailsHeader)
         .waitForDisplayed({ timeout: timeout.elementAppear });
-        logger.info(`[selectTask] Task selected successfully. ${titleSelector}`);
+      logger.info(`[selectTask] Task selected successfully. ${titleSelector}`);
     } catch (error) {
       throw new Error(`[selectTask]: ${(error as Error).message}`);
     }
