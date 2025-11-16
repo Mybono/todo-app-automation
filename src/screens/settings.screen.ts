@@ -3,9 +3,9 @@ import {
     clickElement,
     expectElement,
 } from "../utils";
-import { screens } from "../screens";
+import { screens } from ".";
 
-export class NavigateScreen {
+export class SettingsScreen {
     burgerMenuBtn = "~Open Drawer";
     statisticsBtn = '//android.widget.TextView[@text="Statistics"]';
     taskListBtn = '//android.widget.TextView[@text="Task List"]';
