@@ -1,4 +1,12 @@
-import { _, timeout } from "../utils";
+import {
+  _,
+  logger,
+  getTextSelector,
+  getCheckBoxSelector,
+  toggleCheckbox,
+  timeout,
+} from "../utils";
+import { Task, taskStatuses } from "../interfaces";
 
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
@@ -7,24 +15,27 @@ export class AddEditTaskScreen {
     '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]';
   taskTextInput =
     '//android.widget.EditText[.//android.widget.TextView[@text="Enter your task here."]]';
-  saveTaskBtn = '//android.view.View[@content-desc="Save task"]/..';
+  saveTaskBtn = "~Save task";
   deleteBtn = "~Delete task";
-  editBtn = "~Edit";
+  editBtn = "~Edit Task";
   backBtn = "~Back";
 
-  async fillTask({
-    title: title,
-    text: text,
-  }: {
-    title: string;
-    text: string;
-  }) {
+  async fillTask(task: Task) {
+    let title = task.title;
+    let text = task.text;
     try {
       await this.fillOutTitle(title);
       await this.fillOutText(text);
       const saveTaskBtn = await driver.$(this.saveTaskBtn);
       await saveTaskBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await saveTaskBtn.click();
+      if (task.status === taskStatuses.completed) {
+        const checkbox = getCheckBoxSelector(false);
+        let checkedCheckbox = await toggleCheckbox(checkbox, true);
+        await checkedCheckbox.waitForDisplayed({
+          timeout: timeout.elementAppear,
+        });
+      }
     } catch (error) {
       throw new Error(`[fillTask]: ${(error as Error).message}`);
     }
@@ -42,21 +53,24 @@ export class AddEditTaskScreen {
     try {
       if (!title || !text) {
         const randomData = _.getRandomText();
-        title = title ?? randomData.title;
-        text = text ?? randomData.text;
+        title = randomData.title;
+        text = randomData.text;
       }
 
       await this.selectTask(titleSelector);
+
       const editBtn = await driver.$(this.editBtn);
       await editBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await editBtn.click();
 
-      await this.fillOutTitle(title);
-      await this.fillOutText(text);
+      await this.editTitle(title);
+      await this.editText(text);
 
-      const saveTaskBtn = await driver.$(this.editBtn);
+      const saveTaskBtn = await driver.$(this.saveTaskBtn);
       await saveTaskBtn.waitForDisplayed({ timeout: timeout.elementAppear });
-      await editBtn.click();
+      await saveTaskBtn.click();
+      titleSelector = getTextSelector(title);
+      return titleSelector;
     } catch (error) {
       throw new Error(`[editTask]: ${(error as Error).message}`);
     }
@@ -98,6 +112,28 @@ export class AddEditTaskScreen {
     }
   }
 
+  async editText(text: string) {
+    try {
+      const titleInput = await $$("android.widget.EditText");
+      await titleInput[1].waitForDisplayed({ timeout: timeout.elementAppear });
+      await titleInput[1].setValue(text);
+      logger.info(`[editText] Text edited to "${text}" successfully.`);
+    } catch (error) {
+      throw new Error(`[editText]: ${(error as Error).message}`);
+    }
+  }
+
+  async editTitle(title: string) {
+    try {
+      const titleInput = await $$("android.widget.EditText");
+      await titleInput[0].waitForDisplayed({ timeout: timeout.elementAppear });
+      await titleInput[0].setValue(title);
+      logger.info(`[editTitle] Title edited to "${title}" successfully.`);
+    } catch (error) {
+      throw new Error(`[editTitle]: ${(error as Error).message}`);
+    }
+  }
+
   async selectTask(titleSelector: string) {
     try {
       const task = await driver!.$(titleSelector);
@@ -106,8 +142,20 @@ export class AddEditTaskScreen {
       await driver
         .$(this.taskDetailsHeader)
         .waitForDisplayed({ timeout: timeout.elementAppear });
+      logger.info(`[selectTask] Task selected successfully. ${titleSelector}`);
     } catch (error) {
       throw new Error(`[selectTask]: ${(error as Error).message}`);
+    }
+  }
+
+  async backToMain() {
+    try {
+      const backBtn = await driver!.$(this.backBtn);
+      await backBtn.waitForDisplayed({ timeout: timeout.elementAppear });
+      await backBtn.click();
+      logger.info(`[backToMain] Navigated to main screen successfully.`);
+    } catch (error) {
+      throw new Error(`[backToMain]: ${(error as Error).message}`);
     }
   }
 }

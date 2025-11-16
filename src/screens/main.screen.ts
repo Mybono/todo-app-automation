@@ -1,4 +1,5 @@
-import { _, logger, timeout } from "../utils";
+import { _, logger, timeout, getTextSelector, push } from "../utils";
+import { Task, taskStatuses } from "../interfaces";
 import { screens } from "../screens";
 
 export class MainScreen {
@@ -11,36 +12,37 @@ export class MainScreen {
   filterCompleted = "~Completed";
   moreOptionsMenu = "~More";
   openDrawerBtn = "~Open Drawer";
-  pushTaskAdded = '//android.widget.TextView[@text="Task added"]';
-  pushTaskMarkedComplete =
-    '//android.widget.TextView[@text="Task marked complete"]';
-  pushTaskSaved = '//android.widget.TextView[@text="Task saved"]';
-  pushTaskDeleted = '//android.widget.TextView[@text="Task was deleted"]';
   taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
   taskTextInput = '//android.widget.TextView[@text="Enter your task here."]';
   taskTitleInput = '//android.widget.TextView[@text="Title"]';
   todoTitle = '//android.widget.TextView[@text="Todo"]';
 
-  getTitleSelector(title: string) {
-    return `android=new UiSelector().className("android.widget.TextView").textContains("${title}")`;
-  }
-
-  async addTask(title?: string, text?: string) {
+  async addTask(task: Task) {
+    let title = task.title;
+    let text = task.text;
+    let taskStaus = task.status;
     try {
-      if (!title || !text) {
+      if (!task.title || !task.text) {
         const randomData = _.getRandomText();
-        title = title ?? randomData.title;
-        text = text ?? randomData.text;
+        title = randomData.title;
+        text = randomData.text;
       }
 
       const addBtn = await driver.$(this.addTaskBtn);
       await addBtn.waitForDisplayed({ timeout: timeout.elementAppear });
       await addBtn.click();
 
-      await screens.addEdit.fillTask({ title, text });
-      await driver
-        .$(screens.main.pushTaskAdded)
-        .waitForDisplayed({ timeout: timeout.elementAppear });
+      await screens.addEdit.fillTask({
+        title: title,
+        text: text,
+        status: taskStaus,
+      });
+
+      if (taskStaus === taskStatuses.active) {
+        await driver
+          .$(push.taskAdded)
+          .waitForDisplayed({ timeout: timeout.elementAppear });
+      }
       await driver
         .$(this.todoTitle)
         .waitForDisplayed({ timeout: timeout.elementAppear });
@@ -48,12 +50,7 @@ export class MainScreen {
         .$(this.allTaskTitle)
         .waitForDisplayed({ timeout: timeout.elementAppear });
 
-      const source = await driver.getPageSource();
-      console.log("\n========== LIST WITH TASK ==========");
-      console.log(source);
-      console.log("====================================\n");
-
-      const taskTitleSelector = this.getTitleSelector(title);
+      const taskTitleSelector = getTextSelector(title);
       await driver
         .$(taskTitleSelector)
         .waitForDisplayed({ timeout: timeout.elementAppear });
