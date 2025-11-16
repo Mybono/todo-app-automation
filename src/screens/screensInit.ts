@@ -1,4 +1,9 @@
-import { AddEditTaskScreen, MainScreen, SettingsScreen, StatisticsScreen } from "../screens";
+import {
+  AddEditTaskScreen,
+  MainScreen,
+  SettingsScreen,
+  StatisticsScreen,
+} from "../screens";
 
 class ScreenFactory {
   private static _addEditScreen: AddEditTaskScreen;
@@ -22,7 +27,8 @@ class ScreenFactory {
   }
 
   static get statistics() {
-    if (!this._statisticsScreen) this._statisticsScreen = new StatisticsScreen();
+    if (!this._statisticsScreen)
+      this._statisticsScreen = new StatisticsScreen();
     return this._statisticsScreen;
   }
 }
