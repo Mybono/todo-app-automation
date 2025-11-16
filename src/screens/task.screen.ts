@@ -34,17 +34,17 @@ export class task {
    * @throws {Error} Throws error if form elements are not found or filling fails
    * @returns {Promise<void>}
    * @example
-   * await addEdit.fillTask({ 
-   *   title: "Buy milk", 
-   *   text: "From store", 
-   *   status: taskStatuses.completed 
+   * await addEdit.fillTask({
+   *   title: "Buy milk",
+   *   text: "From store",
+   *   status: taskStatuses.completed
    * });
    */
   async fillTask(task: Task): Promise<void> {
     let title = task.title;
     let text = task.text;
     try {
-      await this.fillField({  title: title, text: text });
+      await this.fillField({ title: title, text: text });
       await clickElement(this.saveTaskBtn);
       if (task.status === taskStatuses.completed) {
         const checkbox = getCheckBoxSelector(false);
@@ -73,7 +73,7 @@ export class task {
       await this.selectTask(selector);
       await clickElement(this.editBtn);
 
-      await this.fillField({ title: title, text: text});
+      await this.fillField({ title: title, text: text });
 
       await clickElement(this.saveTaskBtn);
       selector = getTextSelector(title);
@@ -110,13 +110,17 @@ export class task {
       if (fields.title !== undefined) {
         await inputs[0].waitForDisplayed({ timeout: timeout.elementAppear });
         await inputs[0].setValue(fields.title);
-        logger.info(`[fillField] Title edited to "${fields.title}" successfully.`);
+        logger.info(
+          `[fillField] Title edited to "${fields.title}" successfully.`,
+        );
       }
 
       if (fields.text !== undefined) {
         await inputs[1].waitForDisplayed({ timeout: timeout.elementAppear });
         await inputs[1].setValue(fields.text);
-        logger.info(`[fillField] Text edited to "${fields.text}" successfully.`);
+        logger.info(
+          `[fillField] Text edited to "${fields.text}" successfully.`,
+        );
       }
     } catch (error) {
       throw new Error(`[fillField]: ${(error as Error).message}`);

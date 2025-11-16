@@ -33,4 +33,4 @@ export function getCheckBoxSelector(isChecked: boolean) {
   return `android=new UiSelector().className("android.widget.CheckBox").checked(${isChecked})`;
 }
 
-export const editTextWidget = "android.widget.EditText"
+export const editTextWidget = "android.widget.EditText";
