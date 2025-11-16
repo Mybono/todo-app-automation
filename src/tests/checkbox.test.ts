@@ -4,7 +4,7 @@ import { screens } from "../screens";
 
 describe("Task Checkbox Actions @checkbox @smoke", () => {
 
-    it("marks a task as completed from the task details screen", async () => {
+    it("[UITM005]: Marks a task as completed from the task details screen", async () => {
         const titleSelector = await screens.main.addTask({status: taskStatuses.active});
         await screens.addEdit.selectTask(titleSelector);
 
@@ -20,7 +20,7 @@ describe("Task Checkbox Actions @checkbox @smoke", () => {
         await backBtn.click();
     })
 
-    it("marks a task as completed directly from the main task list", async () => {
+    it("[UITM006]: Marks a task as completed directly from the main task list", async () => {
         await screens.main.addTask({status: taskStatuses.active});
         const checkbox = getCheckBoxSelector(false);
         let checkedCheckbox = await toggleCheckbox(checkbox, true);
@@ -30,7 +30,7 @@ describe("Task Checkbox Actions @checkbox @smoke", () => {
         await expectPushMessage(push.taskMarkedComplete);
     })
 
-    it("marks a task as active directly from the main task list", async () => {
+    it("[UITM007]: Marks a task as active directly from the main task list", async () => {
         await screens.main.addTask({status: taskStatuses.completed});
         const checkbox = getCheckBoxSelector(true);
         let checkedCheckbox = await toggleCheckbox(checkbox, false);
@@ -40,7 +40,7 @@ describe("Task Checkbox Actions @checkbox @smoke", () => {
         await expectPushMessage(push.taskMarkedActive);
     })
 
-    it("marks a task as active from the task details screen", async () => {
+    it("[UITM008]: Marks a task as active from the task details screen", async () => {
         const titleSelector = await screens.main.addTask({status: taskStatuses.completed});
         await screens.addEdit.selectTask(titleSelector);
 

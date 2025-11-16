@@ -8,7 +8,7 @@ describe("Task management @task @smoke ", () => {
     titleSelector = await screens.main.addTask({});
   });
 
-  it("adds a new task with title and description", async () => {
+  it("[UITM001]: Adds a new task with title and description", async () => {
     await screens.main.addTask(
       {
         title: "Buy milk",
@@ -18,19 +18,19 @@ describe("Task management @task @smoke ", () => {
     await expectPushMessage(push.taskAdded);
   });
 
-  it("adds a new task with title", async () => {
+  it("[UITM002]: Adds a new task with title", async () => {
     await screens.main.addTask(
       { title: "Complete assignment" }
     );
     await expectPushMessage(push.taskAdded);
   });
 
-  it("deletes an existing task and shows confirmation message", async () => {
+  it("[UITM003]: Deletes an existing task and shows confirmation message", async () => {
     await screens.addEdit.deleteTask(titleSelector);
     await expectPushMessage(push.taskDeleted);
   });
 
-  it("edits a task and confirms the changes are saved", async () => {
+  it("[UITM004]: Edits a task and confirms the changes are saved", async () => {
     await screens.addEdit.editTask({ titleSelector: titleSelector });
     await expectPushMessage(push.taskSaved);
   });
