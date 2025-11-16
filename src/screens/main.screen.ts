@@ -1,4 +1,11 @@
-import { _, clickElement, logger, timeout, getTextSelector, push } from "../utils";
+import {
+  _,
+  clickElement,
+  logger,
+  timeout,
+  getTextSelector,
+  push,
+} from "../utils";
 import { Task, taskStatuses } from "../interfaces";
 import { screens } from "../screens";
 
@@ -16,7 +23,6 @@ export class MainScreen {
   filterActive = '//android.widget.TextView[@text="Active"]';
   filterAll = '//android.widget.TextView[@text="All"]';
   filterBtn = "~Filter";
-
 
   async addTask(task: Task) {
     let title = task.title;

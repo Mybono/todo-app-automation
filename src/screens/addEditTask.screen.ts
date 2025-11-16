@@ -78,7 +78,7 @@ export class AddEditTaskScreen {
       await driver
         .$(this.taskDetailsHeader)
         .waitForDisplayed({ timeout: timeout.elementAppear });
-      
+
       await clickElement(this.deleteBtn);
     } catch (error) {
       throw new Error(`[deleteTask]: ${(error as Error).message}`);
@@ -131,7 +131,6 @@ export class AddEditTaskScreen {
 
   async selectTask(titleSelector: string) {
     try {
-
       await clickElement(titleSelector);
       await driver
         .$(this.taskDetailsHeader)

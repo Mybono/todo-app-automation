@@ -1,4 +1,4 @@
-import { clickElement, headers, push, expectElement,  } from "../utils";
+import { clickElement, headers, push, expectElement } from "../utils";
 import { screens } from "../screens";
 
 describe("Task management @task @smoke ", () => {
