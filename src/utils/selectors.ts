@@ -40,3 +40,13 @@ export const push = {
   taskMarkedComplete: '//android.widget.TextView[@text="Task marked complete"]',
   taskDeleted: '//android.widget.TextView[@text="Task was deleted"]',
 };
+
+export const headers = {
+  activeTasks: '//android.widget.TextView[@text="Active Tasks"]',
+  completedTasks: '//android.widget.TextView[@text="Completed Tasks"]',
+  allTasks: '//android.widget.TextView[@text="All Tasks"]',
+  noActiveTasks: '//android.widget.TextView[@text="You have no active tasks!"]',
+  noCompletedTasks:
+    '//android.widget.TextView[@text="You have no completed tasks!"]',
+  noAllTasks: '//android.widget.TextView[@text="You have no tasks!"]',
+};
