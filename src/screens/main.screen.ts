@@ -10,7 +10,6 @@ import { Task, taskStatuses } from "../interfaces";
 import { screens } from "../screens";
 
 export class MainScreen {
-  burgerMenuBtn = "~Open Drawer";
   addTaskBtn = '//android.view.View[@content-desc="New Task"]/..';
   allTaskTitle = '//android.widget.TextView[@text="All Tasks"]';
   checkBoxUnchecked = "//android.widget.CheckBox";
