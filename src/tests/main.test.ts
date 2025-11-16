@@ -17,13 +17,13 @@ describe("Task management @task @regression ", () => {
 
   it("[UITM-TA003]: Deletes an existing task and shows confirmation message", async () => {
     const titleSelector = await screens.main.addTask({});
-    await screens.addEdit.deleteTask(titleSelector);
+    await screens.task.deleteTask(titleSelector);
     await expectElement(push.taskDeleted);
   });
 
   it("[UITM-TA004]: Edits a task and confirms the changes are saved", async () => {
     const titleSelector = await screens.main.addTask({});
-    await screens.addEdit.editTask({ titleSelector: titleSelector });
+    await screens.task.editTask({ selector: titleSelector });
     await expectElement(push.taskSaved);
   });
 });

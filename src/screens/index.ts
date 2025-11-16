@@ -1,4 +1,4 @@
-export * from "./addEditTask.screen";
+export * from "./task.screen";
 export * from "./main.screen";
 export * from "./settings.screen";
 export * from "./screensInit";

@@ -13,24 +13,24 @@ export const config = {
   capabilities: capabilities as any,
 
   framework: "mocha",
-  reporters: ["spec"],
+  reporters: [
+    "spec",
+    [
+      "allure",
+      {
+        outputDir: "reports/allure-results",
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+      },
+    ],
+  ],
 
   mochaOpts: {
     ui: "bdd",
     timeout: 60000,
   },
 
-  services: [
-    // [
-    //   "appium",
-    //   {
-    //     command: "appium",
-    //     args: {
-    //       relaxedSecurity: true,
-    //     },
-    //   },
-    // ],
-  ],
+  services: [],
 
   onPrepare: function () {
     try {

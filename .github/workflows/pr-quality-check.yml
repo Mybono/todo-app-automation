@@ -96,7 +96,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # ============================================
-  # Spellcheck (Orfography) 
+  # Spellcheck (Orfography)
   # ============================================
   spellcheck:
     name: 🔤 Spellcheck

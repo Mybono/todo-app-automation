@@ -29,6 +29,10 @@ export default [
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
+      "@typescript-eslint/explicit-function-return-type": ["warn"],
+      "@typescript-eslint/no-explicit-any": ["warn"],
+      "@typescript-eslint/no-floating-promises": ["error"],
+      "max-len": ["warn", { code: 100 }],
     },
   },
 ];

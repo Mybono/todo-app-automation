@@ -8,6 +8,7 @@ export async function expectElement(selector: string) {
     const element = await driver!.$(selector);
     await element.waitForDisplayed({ timeout: timeout.elementAppear });
     expect(await element.isDisplayed()).toBe(true);
+    return element;
   } catch (error) {
     throw new Error(
       `[expectElement]: Element is not visible: ${selector}\n${(error as Error).message}`,
