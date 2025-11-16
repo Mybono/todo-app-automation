@@ -2,7 +2,7 @@ import {
   timeout,
   push,
   getCheckBoxSelector,
-  expectPushMessage,
+  expectElement,
   toggleCheckbox,
 } from "../utils";
 import { taskStatuses } from "../interfaces";
@@ -20,7 +20,7 @@ describe("Task Checkbox Actions @checkbox @smoke", () => {
     await checkedCheckbox.waitForDisplayed({ timeout: timeout.elementAppear });
     expect(await checkedCheckbox.isDisplayed()).toBe(true);
 
-    await expectPushMessage(push.taskMarkedComplete);
+    await expectElement(push.taskMarkedComplete);
     await screens.addEdit.backToMain();
   });
 
@@ -35,7 +35,7 @@ describe("Task Checkbox Actions @checkbox @smoke", () => {
     await checkedCheckbox.waitForDisplayed({ timeout: timeout.elementAppear });
     expect(await checkedCheckbox.isDisplayed()).toBe(true);
 
-    await expectPushMessage(push.taskMarkedActive);
+    await expectElement(push.taskMarkedActive);
     await screens.addEdit.backToMain();
   });
 
@@ -46,7 +46,7 @@ describe("Task Checkbox Actions @checkbox @smoke", () => {
     await checkedCheckbox.waitForDisplayed({ timeout: timeout.elementAppear });
 
     expect(await checkedCheckbox.isDisplayed()).toBe(true);
-    await expectPushMessage(push.taskMarkedComplete);
+    await expectElement(push.taskMarkedComplete);
   });
 
   it("[UITM008]: Marks a task as active directly from the main task list", async () => {
@@ -56,6 +56,6 @@ describe("Task Checkbox Actions @checkbox @smoke", () => {
     await checkedCheckbox.waitForDisplayed({ timeout: timeout.elementAppear });
 
     expect(await checkedCheckbox.isDisplayed()).toBe(true);
-    await expectPushMessage(push.taskMarkedActive);
+    await expectElement(push.taskMarkedActive);
   });
 });

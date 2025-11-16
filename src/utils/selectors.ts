@@ -40,3 +40,10 @@ export const push = {
   taskMarkedComplete: '//android.widget.TextView[@text="Task marked complete"]',
   taskDeleted: '//android.widget.TextView[@text="Task was deleted"]',
 };
+
+export const headers = {
+  activeTsks: 'new UiSelector().text("Active Tasks")',
+  completedTsks: 'new UiSelector().text("Completed Tasks")',
+  allTasks: 'new UiSelector().text("All Tasks")',
+  noCompletedTasks: 'new UiSelector().text("You have no completed tasks!")',
+}

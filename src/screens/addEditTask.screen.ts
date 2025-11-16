@@ -1,5 +1,6 @@
 import {
   _,
+  clickElement,
   logger,
   getTextSelector,
   getCheckBoxSelector,
@@ -26,9 +27,7 @@ export class AddEditTaskScreen {
     try {
       await this.fillOutTitle(title);
       await this.fillOutText(text);
-      const saveTaskBtn = await driver.$(this.saveTaskBtn);
-      await saveTaskBtn.waitForDisplayed({ timeout: timeout.elementAppear });
-      await saveTaskBtn.click();
+      await clickElement(this.saveTaskBtn);
       if (task.status === taskStatuses.completed) {
         const checkbox = getCheckBoxSelector(false);
         let checkedCheckbox = await toggleCheckbox(checkbox, true);
@@ -58,10 +57,7 @@ export class AddEditTaskScreen {
       }
 
       await this.selectTask(titleSelector);
-
-      const editBtn = await driver.$(this.editBtn);
-      await editBtn.waitForDisplayed({ timeout: timeout.elementAppear });
-      await editBtn.click();
+      await clickElement(this.editBtn);
 
       await this.editTitle(title);
       await this.editText(text);
@@ -82,9 +78,8 @@ export class AddEditTaskScreen {
       await driver
         .$(this.taskDetailsHeader)
         .waitForDisplayed({ timeout: timeout.elementAppear });
-      const deleteBtn = await driver.$(this.deleteBtn);
-      await deleteBtn.waitForDisplayed({ timeout: timeout.elementAppear });
-      await deleteBtn.click();
+      
+      await clickElement(this.deleteBtn);
     } catch (error) {
       throw new Error(`[deleteTask]: ${(error as Error).message}`);
     }
@@ -136,9 +131,8 @@ export class AddEditTaskScreen {
 
   async selectTask(titleSelector: string) {
     try {
-      const task = await driver!.$(titleSelector);
-      await task.waitForDisplayed({ timeout: timeout.elementAppear });
-      await task.click();
+
+      await clickElement(titleSelector);
       await driver
         .$(this.taskDetailsHeader)
         .waitForDisplayed({ timeout: timeout.elementAppear });
@@ -150,9 +144,7 @@ export class AddEditTaskScreen {
 
   async backToMain() {
     try {
-      const backBtn = await driver!.$(this.backBtn);
-      await backBtn.waitForDisplayed({ timeout: timeout.elementAppear });
-      await backBtn.click();
+      await clickElement(this.backBtn);
       logger.info(`[backToMain] Navigated to main screen successfully.`);
     } catch (error) {
       throw new Error(`[backToMain]: ${(error as Error).message}`);
