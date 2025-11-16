@@ -3,19 +3,18 @@ import { Task, taskStatuses } from "../interfaces";
 import { screens } from "../screens";
 
 export class MainScreen {
-  burgerMenu = "~Open Drawer";
+  burgerMenuBtn = "~Open Drawer";
   addTaskBtn = '//android.view.View[@content-desc="New Task"]/..';
   allTaskTitle = '//android.widget.TextView[@text="All Tasks"]';
   checkBoxUnchecked = "//android.widget.CheckBox";
   moreOptionsMenu = "~More";
-  openDrawerBtn = "~Open Drawer";
   taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
   taskTextInput = '//android.widget.TextView[@text="Enter your task here."]';
   taskTitleInput = '//android.widget.TextView[@text="Title"]';
   todoTitle = '//android.widget.TextView[@text="Todo"]';
-  filterCompleted = "~Completed";
-  filterActive = "~Active";
-  filterAll = "~All";
+  filterCompleted = '//android.widget.TextView[@text="Completed"]';
+  filterActive = '//android.widget.TextView[@text="Active"]';
+  filterAll = '//android.widget.TextView[@text="All"]';
   filterBtn = "~Filter";
 
 

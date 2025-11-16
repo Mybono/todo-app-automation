@@ -42,8 +42,10 @@ export const push = {
 };
 
 export const headers = {
-  activeTsks: 'new UiSelector().text("Active Tasks")',
-  completedTsks: 'new UiSelector().text("Completed Tasks")',
-  allTasks: 'new UiSelector().text("All Tasks")',
-  noCompletedTasks: 'new UiSelector().text("You have no completed tasks!")',
+  activeTasks: '//android.widget.TextView[@text="Active Tasks"]',
+  completedTasks: '//android.widget.TextView[@text="Completed Tasks"]',
+  allTasks: '//android.widget.TextView[@text="All Tasks"]',
+  noActiveTasks: '//android.widget.TextView[@text="You have no active tasks!"]',
+  noCompletedTasks: '//android.widget.TextView[@text="You have no completed tasks!"]',
+  noAllTasks: '//android.widget.TextView[@text="You have no tasks!"]'
 }
