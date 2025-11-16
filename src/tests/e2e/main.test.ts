@@ -1,5 +1,5 @@
-import { push, expectElement } from "../utils";
-import { screens } from "../screens";
+import { push, expectElement } from "../../utils";
+import { screens } from "../../screens";
 
 describe("Task management @task @regression ", () => {
   it("[UITM-TA001]: Adds a new task with title and description", async () => {

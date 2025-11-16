@@ -1,5 +1,5 @@
-import { expectElement } from "../utils";
-import { screens } from "../screens";
+import { expectElement } from "../../utils";
+import { screens } from "../../screens";
 
 describe("Screens navigation @navigate @regression", () => {
   it("[UITM-NA001]: Navigates from Tasks screen to Settings screen", async () => {

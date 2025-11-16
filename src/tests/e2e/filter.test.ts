@@ -1,6 +1,6 @@
-import { headers, expectElement } from "../utils";
-import { filter } from "../types";
-import { screens } from "../screens";
+import { headers, expectElement } from "../../utils";
+import { filter } from "../../types";
+import { screens } from "../../screens";
 
 describe("Filter empty tasks @filter @regression", () => {
   it("[UITM-FE001]: Filter tasks between Active", async () => {
