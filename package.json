@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "test:report": "npm run build && wdio run wdio.conf.ts && allure generate reports/allure-results --clean && allure open",
     "test": "npm run build && wdio run wdio.conf.ts",
     "report": "allure generate reports/allure-results --clean && allure open",
     "lint": "eslint . --ext .ts",
@@ -28,6 +27,7 @@
     "appium": "^3.1.1",
     "appium-uiautomator2-driver": "^6.1.1",
     "chai": "^4.3.8",
+    "dotenv": "^17.2.3",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.0",

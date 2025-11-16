@@ -13,13 +13,16 @@ export const config = {
   capabilities: capabilities as any,
 
   framework: "mocha",
-    reporters: [
-    'spec',
-    ['allure', {
-      outputDir: 'reports/allure-results',
-      disableWebdriverStepsReporting: true,
-      disableWebdriverScreenshotsReporting: false,
-    }]
+  reporters: [
+    "spec",
+    [
+      "allure",
+      {
+        outputDir: "reports/allure-results",
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+      },
+    ],
   ],
 
   mochaOpts: {
