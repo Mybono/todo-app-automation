@@ -7,7 +7,7 @@ import {
   expectElement,
   toggleCheckbox,
 } from "../utils";
-import { taskStatuses } from "../interfaces";
+import { taskStatuses } from "../types";
 import { screens } from "../screens";
 
 describe("Task Checkbox Actions @checkbox @regression", () => {

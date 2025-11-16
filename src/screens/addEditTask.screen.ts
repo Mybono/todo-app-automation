@@ -1,13 +1,15 @@
 import {
   _,
   clickElement,
-  logger,
-  getTextSelector,
+  ElementNotFoundError,
   getCheckBoxSelector,
-  toggleCheckbox,
+  getTextSelector,
+  InvalidInputError,
+  logger,
   timeout,
+  toggleCheckbox,
 } from "../utils";
-import { Task, taskStatuses } from "../interfaces";
+import { Task, taskStatuses } from "../types";
 
 export class AddEditTaskScreen {
   newTaskHeader = '//android.widget.TextView[@text="New Task"]';
@@ -98,11 +100,21 @@ export class AddEditTaskScreen {
   }
 
   async fillOutTitle(title: string) {
+    if (!title || title.trim() === '') {
+      throw new InvalidInputError('title', title);
+    }
     try {
       const titleInput = await driver.$(this.taskTitleInput);
-      await titleInput.waitForDisplayed({ timeout: timeout.elementAppear });
+      const displayed = await titleInput.waitForDisplayed({ timeout: timeout.elementAppear });
+      if (!displayed) {
+        throw new ElementNotFoundError(this.taskTitleInput);
+      }
+
       await titleInput.setValue(title);
     } catch (error) {
+      if (error instanceof ElementNotFoundError || error instanceof InvalidInputError) {
+        throw error;
+      }
       throw new Error(`[fillOutTitle]: ${(error as Error).message}`);
     }
   }

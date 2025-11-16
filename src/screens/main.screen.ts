@@ -6,7 +6,7 @@ import {
   getTextSelector,
   push,
 } from "../utils";
-import { Task, taskStatuses } from "../interfaces";
+import { Task, taskStatuses } from "../types";
 import { screens } from "../screens";
 
 export class MainScreen {

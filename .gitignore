@@ -24,3 +24,5 @@ node_modules
 /reports
 appium_device.log\
 /dist
+/allure-results
+/allure-report  
