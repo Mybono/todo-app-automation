@@ -24,8 +24,8 @@ export class MainScreen {
     try {
       if (!task.title || !task.text) {
         const randomData = _.getRandomText();
-        title = task.title ?? randomData.title;
-        text = task.text ?? randomData.text;
+        title = randomData.title;
+        text = randomData.text;
       }
 
       const addBtn = await driver.$(this.addTaskBtn);

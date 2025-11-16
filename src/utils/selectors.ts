@@ -9,6 +9,7 @@ export function getCheckBoxSelector(isChecked: boolean) {
 }
 
 export async function toggleCheckbox(selector: string, desiredState: boolean) {
+    try {
     const checkbox = await $(selector);
     const currentState = (await checkbox.getAttribute('checked')) === 'true';
 
@@ -19,6 +20,9 @@ export async function toggleCheckbox(selector: string, desiredState: boolean) {
     } else {
         logger.log('Checkbox already in desired state');
         return checkbox; 
+    }
+    } catch (error) {
+        throw new Error(`[toggleCheckbox]: ${(error as Error).message}`);
     }
 }
 

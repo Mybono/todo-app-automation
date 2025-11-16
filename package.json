@@ -6,7 +6,7 @@
     "test": "npm run build && wdio run wdio.conf.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "format": "prettier --write .",
+    "format ": "prettier --write .",
     "clean": "rm -rf dist",
     "build": "tsc",
     "wdio": "wdio run ./wdio.conf.ts"

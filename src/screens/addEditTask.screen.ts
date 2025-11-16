@@ -42,8 +42,8 @@ export class AddEditTaskScreen {
     try {
       if (!title || !text) {
         const randomData = _.getRandomText();
-        title = title ?? randomData.title;
-        text = text ?? randomData.text;
+        title = randomData.title;
+        text = randomData.text;
       }
 
       await this.selectTask(titleSelector);
@@ -135,6 +135,17 @@ export class AddEditTaskScreen {
         logger.info(`[selectTask] Task selected successfully. ${titleSelector}`);
     } catch (error) {
       throw new Error(`[selectTask]: ${(error as Error).message}`);
+    }
+  }
+
+  async backToMain() {
+    try {
+      const backBtn = await driver!.$(this.backBtn);
+      await backBtn.waitForDisplayed({ timeout: timeout.elementAppear });
+      await backBtn.click();
+      logger.info(`[backToMain] Navigated to main screen successfully.`);
+    } catch (error) {
+      throw new Error(`[backToMain]: ${(error as Error).message}`);
     }
   }
 }

@@ -1,12 +1,8 @@
 import { push, expectPushMessage } from "../utils";
 import { screens } from "../screens";
 
-describe("Task management @task @smoke ", () => {
-  let titleSelector: string;
 
-  beforeEach(async () => {
-    titleSelector = await screens.main.addTask({});
-  });
+describe("Task management @task @smoke ", () => {
 
   it("[UITM001]: Adds a new task with title and description", async () => {
     await screens.main.addTask(
@@ -26,11 +22,13 @@ describe("Task management @task @smoke ", () => {
   });
 
   it("[UITM003]: Deletes an existing task and shows confirmation message", async () => {
+    const titleSelector = await screens.main.addTask({});
     await screens.addEdit.deleteTask(titleSelector);
     await expectPushMessage(push.taskDeleted);
   });
 
   it("[UITM004]: Edits a task and confirms the changes are saved", async () => {
+    const titleSelector = await screens.main.addTask({});
     await screens.addEdit.editTask({ titleSelector: titleSelector });
     await expectPushMessage(push.taskSaved);
   });
