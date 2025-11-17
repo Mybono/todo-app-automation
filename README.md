@@ -8,6 +8,7 @@
 [![Mocha](https://img.shields.io/badge/Testing-Mocha-red)](https://mochajs.org/)
 [![Chai](https://img.shields.io/badge/Assertion-Chai-yellow)](https://www.chaijs.com/)
 [![WebDriverIO](https://img.shields.io/badge/E2E-WebDriverIO-blueviolet)](https://webdriver.io/)
+[![Docker Image](https://img.shields.io/badge/Docker-Latest%20Image-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/mybono/todo-app-automation)
 
 Automated testing framework for Todo mobile application using Appium and WebDriverIO with TypeScript.
 
@@ -16,90 +17,33 @@ Automated testing framework for Todo mobile application using Appium and WebDriv
 - [Overview](#overview)
 - [Technology Stack](./docs/stack.md)
 - [Project Structure](./docs/structure.md)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Running Tests](#-running-tests)
-- [CI/CD Pipeline](#-cicd-pipeline)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Running Tests](#running-tests)
+- [CI/CD Pipeline](#cicd-pipeline)
 - [Test Documentation](./docs/TestPlan.md)
-- [Test Reports](#-test-reports)
+- [Test Reports](#test-reports)
 - [Troubleshooting](./docs/troubleshooting.md)
 - [TODO](#todo)
 - [Notes](#notes)
-
-<br>
-<br>
 
 ## Overview
 
 This project implements automated tests for a Todo mobile application covering:
 
 - ✅ Task creation and management (add, edit, delete)
-- ✏️ Task editing with validation
-- 🗑️ Task deletion with confirmation
-- ☑️ Task completion/activation (checkbox functionality)
-- 🔍 Task filtering (All, Active, Completed)
-- 🧭 Navigation between screens (Tasks, Settings, Statistics)
-- 📊 UI validation and push notifications
+- ✅ Task editing with validation
+- ✅ Task deletion with confirmation
+- ✅ Task completion/activation (checkbox functionality)
+- ✅ Task filtering (All, Active, Completed)
+- ✅ Navigation between screens (Tasks, Settings, Statistics)
+- ✅ UI validation and push notifications
 
 ## [Technology Stack](./docs/stack.md)
 
 ## [Project Structure](./docs/structure.md)
 
-## Prerequisites
-
-### Required Software
-
-1. **Java Development Kit (JDK)**
-   - Version: 11 or higher
-   - Required for Android SDK
-
-   ```bash
-   java -version
-   ```
-
-2. **Android SDK & Platform Tools**
-   - Android SDK Platform 34 (Android 14)
-   - Android SDK Build-Tools
-   - Android Emulator
-
-   Set environment variables:
-
-   ```bash
-   export ANDROID_HOME=/path/to/android-sdk
-   export PATH=$PATH:$ANDROID_HOME/platform-tools
-   export PATH=$PATH:$ANDROID_HOME/tools
-   ```
-
-3. **Node.js & npm**
-   - Version: 20.x or higher
-
-   ```bash
-   node -v
-   npm -v
-   ```
-
-4. **Android Emulator**
-   - Device: Any Android device/emulator
-   - Platform: Android 16 (API 34) or higher
-   - Resolution: 1080x2400 recommended
-
-### Environment Setup
-
-1. **Verify Android Debug Bridge (ADB)**
-
-   ```bash
-   adb version
-   adb devices
-   ```
-
-2. **Check Appium Installation**
-
-   ```bash
-   npm install -g appium-doctor
-   appium-doctor --android
-   ```
-
-   Ensure all checks pass ✅
+## [Prerequisites](./docs/prerequisites.md)
 
 ## Installation
 
@@ -158,6 +102,51 @@ Or start via Android Studio AVD Manager.
 adb devices
 # Output should show: emulator-5554    device
 ```
+
+## Alternative Installation via Docker
+
+You can run all tests and the Appium server without installing Node.js, Appium, or Android SDK locally by using our prebuilt Docker image.
+
+### Pull and Run the Docker Image
+
+```bash
+# Pull the image from Docker Hub
+docker pull mybono/todo-app-automation:latest
+```
+
+### Run tests inside the container
+
+```bash
+docker run --rm -it \
+  -v $(pwd)/reports:/usr/src/app/reports \
+  -p 4723:4723 \
+  mybono/todo-app-automation:latest
+```
+
+## 📘 Explanation of Flags
+
+| Flag                                     | Description                                                               |
+| ---------------------------------------- | ------------------------------------------------------------------------- |
+| `-v $(pwd)/reports:/usr/src/app/reports` | Mounts local reports folder so test reports persist outside the container |
+| `-p 4723:4723`                           | Exposes Appium default port                                               |
+| `--rm`                                   | Removes container after execution                                         |
+| `-it`                                    | Interactive mode (shows logs in real time)                                |
+
+---
+
+🔍 Note about `--rm`
+
+- `--rm` deletes the container after tests finish, but the Docker image remains on your machine.
+  You will NOT need to download it again unless you manually delete the image.
+
+## 📦 [Docker Hub Image](https://hub.docker.com/r/mybono/todo-app-automation)
+
+## ✅ Benefits
+
+- No need to install **Node.js**, **Appium**, **Android SDK**
+- Fully isolated test environment
+- Consistent behavior across all machines
+- Ready-to-run **CI/CD friendly** setup
 
 ## Running Tests
 
