@@ -1,15 +1,35 @@
-import "./setup"; // Import shared mocks
-import {
+import "./setup";
+import { MainScreen } from "../../screens/main.screen";
+import { taskStatuses } from "../../types";
+import * as utils from "../../utils";
+import { createMockElement, mockFillTask, mockSelectTask } from "./setup";
+
+// Import mocked constants
+const {
   mainScreenLocators,
   getTextSelector,
   getCheckBoxSelector,
   push,
-} from "../../constants";
-import { MainScreen } from "../../screens/main.screen";
-import { taskStatuses } from "../../types";
-import * as utils from "../../utils";
-import { screens } from "../../screens/screensInit";
-import { createMockElement } from "./setup";
+} = require("../../constants");
+
+// Mock the actual screens module to use our mocks
+jest.mock("../../screens/screensInit", () => {
+  const { mockFillTask, mockSelectTask } = require("./setup");
+
+  return {
+    screens: {
+      task: {
+        fillTask: mockFillTask,
+        selectTask: mockSelectTask,
+      },
+      main: {
+        toggleCheckbox: jest.fn().mockResolvedValue({
+          waitForDisplayed: jest.fn().mockResolvedValue(undefined),
+        }),
+      },
+    },
+  };
+});
 
 describe("MainScreen Unit Tests", () => {
   let mainScreen: MainScreen;
@@ -24,8 +44,10 @@ describe("MainScreen Unit Tests", () => {
     (global.$ as jest.Mock).mockReturnValue(mockElement);
     (utils.clickElement as jest.Mock).mockResolvedValue(undefined);
     (utils.expectElement as jest.Mock).mockResolvedValue(undefined);
-    (screens.task.fillTask as jest.Mock).mockResolvedValue(undefined);
-    (screens.task.selectTask as jest.Mock).mockResolvedValue(undefined);
+
+    // Reset our custom mocks
+    mockFillTask.mockClear().mockResolvedValue(undefined);
+    mockSelectTask.mockClear().mockResolvedValue(undefined);
 
     jest.clearAllMocks();
   });
@@ -42,7 +64,7 @@ describe("MainScreen Unit Tests", () => {
       expect(utils.clickElement).toHaveBeenCalledWith(
         mainScreenLocators.addTaskBtn,
       );
-      expect(screens.task.fillTask).toHaveBeenCalledWith({
+      expect(mockFillTask).toHaveBeenCalledWith({
         title: "Test Task",
         text: "Test Description",
         status: undefined,
@@ -66,7 +88,7 @@ describe("MainScreen Unit Tests", () => {
       const result = await mainScreen.addTask(task);
 
       expect(utils._.getRandomText).toHaveBeenCalled();
-      expect(screens.task.fillTask).toHaveBeenCalledWith({
+      expect(mockFillTask).toHaveBeenCalledWith({
         title: "Random Title",
         text: "Random Description",
         status: undefined,
@@ -83,7 +105,7 @@ describe("MainScreen Unit Tests", () => {
 
       await mainScreen.addTask(task);
 
-      expect(screens.task.fillTask).toHaveBeenCalledWith({
+      expect(mockFillTask).toHaveBeenCalledWith({
         title: "Active Task",
         text: "Description",
         status: taskStatuses.active,
@@ -100,7 +122,7 @@ describe("MainScreen Unit Tests", () => {
 
       await mainScreen.addTask(task);
 
-      expect(screens.task.fillTask).toHaveBeenCalledWith({
+      expect(mockFillTask).toHaveBeenCalledWith({
         title: "Completed Task",
         text: "Description",
         status: taskStatuses.completed,
@@ -157,7 +179,7 @@ describe("MainScreen Unit Tests", () => {
     it("should mark task complete without titleSelector", async () => {
       await mainScreen.markTaskComplete(true);
 
-      expect(screens.task.selectTask).not.toHaveBeenCalled();
+      expect(mockSelectTask).not.toHaveBeenCalled();
       expect(getCheckBoxSelector).toHaveBeenCalledWith(false);
       expect(utils.clickElement).toHaveBeenCalledWith("mock-checkbox-false");
       expect(getCheckBoxSelector).toHaveBeenCalledWith(true);
@@ -184,7 +206,7 @@ describe("MainScreen Unit Tests", () => {
 
       await mainScreen.markTaskComplete(true, titleSelector);
 
-      expect(screens.task.selectTask).toHaveBeenCalledWith(titleSelector);
+      expect(mockSelectTask).toHaveBeenCalledWith(titleSelector);
       expect(utils.clickElement).toHaveBeenCalled();
       expect(utils.expectElement).toHaveBeenCalled();
     });

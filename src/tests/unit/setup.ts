@@ -1,18 +1,51 @@
-// src/tests/unit/setup.ts
-// Shared mocks configuration for all unit tests
+import {
+  mainScreenLocators,
+  settingsScreenLocators,
+  taskScreenLocators,
+  push,
+  headers,
+  timeout,
+} from "../../constants";
 
 // Mock WebDriverIO driver globally
 global.driver = {
   $: jest.fn(),
   $$: jest.fn(),
   pause: jest.fn(),
+  waitUntil: jest.fn().mockResolvedValue(true),
+  getPageSource: jest.fn().mockResolvedValue("<mock>Page Source</mock>"),
+} as any;
+
+// Mock browser object
+global.browser = {
+  $: jest.fn(),
+  $$: jest.fn(),
+  waitUntil: jest.fn().mockResolvedValue(true),
 } as any;
 
 // Mock global $ and $$ functions
 global.$ = jest.fn() as any;
 global.$$ = jest.fn() as any;
 
-// Mock all utils
+// Create mock functions that we'll export
+export const mockFillTask = jest.fn().mockResolvedValue(undefined);
+export const mockSelectTask = jest.fn().mockResolvedValue(undefined);
+
+// Mock constants module
+jest.mock("../../constants", () => {
+  const actualConstants = jest.requireActual("../../constants");
+
+  return {
+    ...actualConstants,
+    getTextSelector: jest.fn((text: string) => `mock-text-selector-${text}`),
+    getCheckBoxSelector: jest.fn((isCompleted: boolean) =>
+      isCompleted ? "mock-checkbox-true" : "mock-checkbox-false",
+    ),
+    fetchSource: jest.fn(),
+  };
+});
+
+// Mock utils module
 jest.mock("../../utils", () => ({
   _: {
     getRandomText: jest.fn(() => ({
@@ -21,12 +54,7 @@ jest.mock("../../utils", () => ({
     })),
   },
   clickElement: jest.fn().mockResolvedValue(undefined),
-  editTextWidget: "//android.widget.EditText",
   expectElement: jest.fn().mockResolvedValue(undefined),
-  getCheckBoxSelector: jest.fn((isCompleted: boolean) =>
-    isCompleted ? "mock-checkbox-true" : "mock-checkbox-false",
-  ),
-  getTextSelector: jest.fn((text: string) => `mock-text-selector-${text}`),
   logger: {
     info: jest.fn(),
     log: jest.fn(),
@@ -34,52 +62,35 @@ jest.mock("../../utils", () => ({
     error: jest.fn(),
     debug: jest.fn(),
   },
-  timeout: {
-    elementAppear: 5000,
-    elementClick: 3000,
-    navigation: 10000,
-  },
-  push: {
-    taskAdded: '//android.widget.TextView[@text="Task added"]',
-    taskSaved: '//android.widget.TextView[@text="Task saved"]',
-    taskDeleted: '//android.widget.TextView[@text="Task was deleted"]',
-    taskMarkedComplete:
-      '//android.widget.TextView[@text="Task marked complete"]',
-    taskMarkedActive: '//android.widget.TextView[@text="Task marked active"]',
-  },
 }));
 
-// Mock screens module - use static values instead of references
-jest.mock("../../screens", () => ({
-  screens: {
-    main: {
-      todoTitle: '//android.widget.TextView[@text="Todo"]',
-      allTaskTitle: '//android.widget.TextView[@text="All Tasks"]',
-      toggleCheckbox: jest.fn().mockResolvedValue({
-        waitForDisplayed: jest.fn().mockResolvedValue(undefined),
-      }),
-    },
-    task: {
-      fillTask: jest.fn(),
-      selectTask: jest.fn(),
-      // fillTask: jest.fn().mockResolvedValue(undefined),
-      // selectTask: jest.fn().mockResolvedValue(undefined),
-    },
-    statistics: {
-      statisticHeader: '//android.widget.TextView[@text="Statistics"]',
-    },
-  },
-}));
+// Mock screensInit module
+jest.mock("../../screens/screensInit", () => {
+  const { mockFillTask, mockSelectTask } = require("./setup");
 
-// Mock screensInit separately for MainScreen tests
-jest.mock("../../screens/screensInit", () => ({
-  screens: {
-    task: {
-      fillTask: jest.fn().mockResolvedValue(undefined),
-      selectTask: jest.fn().mockResolvedValue(undefined),
+  return {
+    screens: {
+      task: {
+        fillTask: mockFillTask,
+        selectTask: mockSelectTask,
+      },
+      main: {
+        toggleCheckbox: jest.fn().mockResolvedValue({
+          waitForDisplayed: jest.fn().mockResolvedValue(undefined),
+        }),
+      },
     },
-  },
-}));
+  };
+});
+
+export {
+  mainScreenLocators,
+  settingsScreenLocators,
+  taskScreenLocators,
+  push,
+  headers,
+  timeout,
+};
 
 /**
  * Creates a mock element with common WebDriverIO methods
@@ -128,4 +139,23 @@ export function resetAllMocks() {
 
   const mockElements = createMockElements();
   (global.$$ as jest.Mock).mockResolvedValue(mockElements);
+  (global.browser.waitUntil as jest.Mock).mockResolvedValue(true);
+
+  // Reset our custom mocks
+  mockFillTask.mockClear().mockResolvedValue(undefined);
+  mockSelectTask.mockClear().mockResolvedValue(undefined);
+
+  // Reset mocked functions from constants
+  const constants = require("../../constants");
+  constants.getTextSelector.mockClear();
+  constants.getCheckBoxSelector.mockClear();
+  constants.fetchSource.mockClear();
 }
+
+// Initialize with default mocks
+const mockElement = createMockElement();
+(global.driver.$ as jest.Mock).mockReturnValue(mockElement);
+(global.$ as jest.Mock).mockReturnValue(mockElement);
+
+const mockElements = createMockElements();
+(global.$$ as jest.Mock).mockResolvedValue(mockElements);

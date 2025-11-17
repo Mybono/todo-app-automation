@@ -1,9 +1,14 @@
 import "./setup";
-import { settingsScreenLocators, mainScreenLocators } from "../../constants";
 import { SettingsScreen } from "../../screens/settings.screen";
 import * as utils from "../../utils";
 import { screens } from "../../screens";
 import { createMockElement, resetAllMocks } from "./setup";
+
+// Import mocked constants
+const {
+  settingsScreenLocators,
+  mainScreenLocators,
+} = require("../../constants");
 
 describe("SettingsScreen Unit Tests", () => {
   let settingsScreen: SettingsScreen;

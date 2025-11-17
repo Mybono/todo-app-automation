@@ -1,16 +1,18 @@
 import "./setup"; // Import shared mocks
-import {
-  taskScreenLocators,
-  getCheckBoxSelector,
-  getTextSelector,
-  editTextWidget,
-  timeout,
-} from "../../constants";
 import { TaskScreen } from "../../screens/task.screen";
 import { taskStatuses } from "../../types";
 import * as utils from "../../utils";
 import { screens } from "../../screens";
 import { createMockElement, createMockElements } from "./setup";
+
+// Import mocked constants
+const {
+  taskScreenLocators,
+  getCheckBoxSelector,
+  getTextSelector,
+  editTextWidget,
+  timeout,
+} = require("../../constants");
 
 describe("TaskScreen Unit Tests", () => {
   let taskScreen: TaskScreen;
@@ -26,6 +28,7 @@ describe("TaskScreen Unit Tests", () => {
     (global.driver.$ as jest.Mock).mockReturnValue(mockElement);
     (global.$ as jest.Mock).mockReturnValue(mockElement);
     (global.$$ as jest.Mock).mockResolvedValue(mockElements);
+    (global.browser.waitUntil as jest.Mock).mockResolvedValue(true);
     (utils.clickElement as jest.Mock).mockResolvedValue(undefined);
     (utils.expectElement as jest.Mock).mockResolvedValue(undefined);
 
@@ -122,9 +125,7 @@ describe("TaskScreen Unit Tests", () => {
       expect(mockElements[1].setValue).toHaveBeenCalledWith(
         "Random Description",
       );
-      expect(result).toBe(
-        'android=new UiSelector().className("android.widget.TextView").textContains("Random Title")',
-      );
+      expect(result).toBe("mock-text-selector-Random Title");
     });
 
     it("should throw error when selectTask fails", async () => {

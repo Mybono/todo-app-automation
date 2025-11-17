@@ -4,23 +4,32 @@
 [![Test Framework](https://img.shields.io/badge/Framework-WebDriverIO-orange)](https://webdriver.io/)
 [![Appium](https://img.shields.io/badge/Appium-v3.1.1-purple)](https://appium.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org/)
+[![Jest](https://img.shields.io/badge/Testing-Jest-brightgreen)](https://jestjs.io/)
+[![Mocha](https://img.shields.io/badge/Testing-Mocha-red)](https://mochajs.org/)
+[![Chai](https://img.shields.io/badge/Assertion-Chai-yellow)](https://www.chaijs.com/)
+[![WebDriverIO](https://img.shields.io/badge/E2E-WebDriverIO-blueviolet)](https://webdriver.io/)
 
 Automated testing framework for Todo mobile application using Appium and WebDriverIO with TypeScript.
 
 ## 📋 Table of Contents
 
-- [Overview](#-overview)
-- [Technology Stack](#-technology-stack)
-- [Project Structure](#-project-structure)
+- [Overview](#overview)
+- [Technology Stack](./docs/stack.md)
+- [Project Structure](./docs/structure.md)
 - [Prerequisites](#-prerequisites)
 - [Installation](#-installation)
 - [Running Tests](#-running-tests)
 - [CI/CD Pipeline](#-cicd-pipeline)
-- [Test Documentation](#-test-documentation)
+- [Test Documentation](./docs/TestPlan.md)
 - [Test Reports](#-test-reports)
-- [Troubleshooting](#-troubleshooting)
+- [Troubleshooting](./docs/troubleshooting.md)
+- [TODO](#todo)
+- [Notes](#notes)
 
-## 🎯 Overview
+<br>
+<br>
+
+## Overview
 
 This project implements automated tests for a Todo mobile application covering:
 
@@ -32,74 +41,11 @@ This project implements automated tests for a Todo mobile application covering:
 - 🧭 Navigation between screens (Tasks, Settings, Statistics)
 - 📊 UI validation and push notifications
 
-## 🛠 Technology Stack
+## [Technology Stack](./docs/stack.md)
 
-| Technology       | Version | Purpose                        |
-| ---------------- | ------- | ------------------------------ |
-| **Node.js**      | 20.x    | Runtime environment            |
-| **TypeScript**   | 5.9.3   | Type-safe programming language |
-| **WebDriverIO**  | 8.40.0  | Test automation framework      |
-| **Appium**       | 3.1.1   | Mobile automation server       |
-| **UiAutomator2** | 6.1.1   | Android automation driver      |
-| **Mocha**        | -       | Test framework                 |
-| **Chai**         | 4.3.8   | Assertion library              |
-| **ESLint**       | 9.39.1  | Code linting                   |
-| **Prettier**     | 3.0.0   | Code formatting                |
+## [Project Structure](./docs/structure.md)
 
-## 📁 Project Structure
-
-```
-todo-app-automation/
-├── .github/
-│   └── workflows/
-│       └── pr-quality-check.yml    # CI/CD pipeline configuration
-├── app/
-│   └── apk/
-│       └── app-debug.apk           # Android application (not in repo)
-├── docs/
-│   └── TestPlan.md                 # 📋 Complete test documentation
-├── src/
-│   ├── config/
-│   │   ├── capabilities.ts         # Appium capabilities configuration
-│   │   └── index.ts
-│   ├── screens/                    # Page Object Models
-│   │   ├── task.screen.ts          # Add/Edit task screen
-│   │   ├── main.screen.ts          # Main screen with task list
-│   │   ├── Settings.screen.ts      # Settings screen list
-│   │   ├── statistic.screen.ts     # Statistic screen list
-│   │   ├── screensInit.ts          # Screen factory pattern
-│   │   └── index.ts
-│   ├── tests/
-│   │   ├── e2e/                    # Test Suites (Appium/WDIO)
-│   │   │   ├── main.test.ts        # ✅ Task management (add, edit, delete)
-│   │   │   ├── checkbox.test.ts.   # ☑️ Task completion/activation
-│   │   │   ├── filter.test.ts      # 🔍 Task filtering
-│   │   │   └── navigate.test.ts.   # 🧭 Screen navigation
-│   │   └── unit/                   # unit tests Jest
-│   │       ├── main.test.ts
-│   │       ├── settings.test.ts
-│   │       └── task.test.ts
-│   │
-│   ├── constants/                             # Locators
-│   │   ├── mainScreen.locators.screen.ts      # Main Screen
-│   │   ├── settingsScreen.locators.screen.ts  # Settings Screen locators
-│   │   ├── taskScreen.locataros.test.ts       # TaskScreen locators
-│   │   ├── common.test.ts                     # generic locators
-│   │   └── index.ts
-│   └── utils/
-│       ├── logger.ts               # Custom logger with colors
-│       ├── services.ts             # Services
-│       ├── testDataGenerator.ts    # Random test data generation
-│       └── index.ts
-├── dist/                           # Compiled TypeScript output
-├── wdio.conf.ts                    # WebDriverIO configuration
-├── tsconfig.json                   # TypeScript configuration
-├── eslint.config.mjs               # ESLint configuration
-├── package.json                    # Project dependencies
-└── README.md                       # This file
-```
-
-## 📋 Prerequisites
+## Prerequisites
 
 ### Required Software
 
@@ -155,7 +101,7 @@ todo-app-automation/
 
    Ensure all checks pass ✅
 
-## 🚀 Installation
+## Installation
 
 ### 1. Clone Repository
 
@@ -213,7 +159,7 @@ adb devices
 # Output should show: emulator-5554    device
 ```
 
-## 🧪 Running Tests
+## Running Tests
 
 ### Build & Run All Tests
 
@@ -227,22 +173,10 @@ This command:
 2. Starts Appium server automatically
 3. Executes all tests in `src/tests/`
 
-### Run Specific Test Suite
+### 📸 Screenshots on Test Failure
 
-```bash
-# Task Management Tests
-npm run build
-npx wdio run wdio.conf.ts --spec ./dist/tests/main.test.js
-
-# Checkbox Functionality Tests
-npx wdio run wdio.conf.ts --spec ./dist/tests/checkbox.test.js
-
-# Filter Tests
-npx wdio run wdio.conf.ts --spec ./dist/tests/filter.test.js
-
-# Navigation Tests
-npx wdio run wdio.conf.ts --spec ./dist/tests/navigate.test.js
-```
+All failed E2E tests automatically capture screenshots for easier debugging.  
+Screenshots are saved to: reports/screenshots
 
 ### Generate Report
 
@@ -281,7 +215,7 @@ appium --log-level debug:debug --relaxed-security
 npx wdio run wdio.conf.ts
 ```
 
-## 🔄 CI/CD Pipeline
+## CI/CD Pipeline
 
 ### GitHub Actions Workflow
 
@@ -298,7 +232,19 @@ on:
 
 ### Pipeline Stages
 
-#### 1. **Lint TypeScript** 🧹
+![Pipeline Example](./assets/pipelineExample.png)
+
+#### 1. **Unit Tests** 🧪
+
+- Runs unit tests using **Jest** with coverage.
+- Jest unit tests cover the **core logic** of the main application classes:
+  - **MainScreen** – task creation, selection, and completion logic.
+  - **SettingsScreen** – applying filters, navigating menus, opening statistics.
+  - **TaskScreen** – task editing, saving, and deletion workflows.
+
+![Unit Example](./assets/unitTestEx.png)
+
+#### 2. **Lint TypeScript** 🧹
 
 - Runs ESLint on all `.ts` files
 - Checks code quality and standards
@@ -308,7 +254,7 @@ on:
 npm run lint
 ```
 
-#### 2. **Dependency Check** 📦
+#### 3. **Dependency Check** 📦
 
 - Detects changes in `package.json` or `package-lock.json`
 - Alerts reviewers about:
@@ -316,7 +262,7 @@ npm run lint
   - License compliance
   - Bundle size impact
 
-#### 3. **Auto-format with Prettier** 🎨
+#### 4. **Auto-format with Prettier** 🎨
 
 - Automatically formats code
 - Commits changes back to PR
@@ -338,20 +284,7 @@ git push origin HEAD:<branch-name>
 4. **Prettier runs** → Automatically formats & commits
 5. **Tests run locally** → Manual verification before merge
 
-### Running Pipeline Checks Locally
-
-Before pushing:
-
-```bash
-# Run all checks
-npm run lint && npm run format
-
-# Verify build
-npm run build
-npm test
-```
-
-## 📊 Test Documentation
+## [Test Documentation](./docs/TestPlan.md)
 
 **📄 Complete test documentation is available at: [docs/TestPlan.md](./docs/TestPlan.md)**
 
@@ -367,219 +300,36 @@ The test plan includes:
 - **Priority & Severity Definitions** - P1-P4 and S1-S4 classifications
 - **Traceability Matrix** - Complete mapping from inputs to test cases
 
-### Test Coverage Overview
-
-| Test Suite           | Test Cases | Status             | Automation |
-| -------------------- | ---------- | ------------------ | ---------- |
-| **Task Management**  | 4          | ✅ All Implemented | 100%       |
-| **Checkbox Actions** | 4          | ✅ All Implemented | 100%       |
-| **Filters**          | 6          | ✅ All Implemented | 100%       |
-| **Navigation**       | 4          | ✅ All Implemented | 100%       |
-| **Total**            | **18**     | **18 Automated**   | **100%**   |
-
-### Test Case Summary by Priority
-
-| Priority          | Count | Automated | Description                                                    |
-| ----------------- | ----- | --------- | -------------------------------------------------------------- |
-| **Critical (P1)** | 2     | 2 ✅      | Core functionality: task creation, completion from main screen |
-| **High (P2)**     | 8     | 8 ✅      | Important features: edit, delete, checkbox actions             |
-| **Medium (P3)**   | 6     | 6 ✅      | Filtering, navigation with tasks                               |
-| **Low (P4)**      | 2     | 2 ✅      | Empty states, statistics navigation                            |
-
-## 📈 Test Reports
+## Test Reports
 
 ### Console Output
 
 Tests output to console with colored logs:
+[Full Console Logs](./docs/test-logs.md)
 
+### Allure Reports
+
+```bash
+npm run report
 ```
-Todo App - Task Management
-  ✅ should add a task (3.2s)
-  ✅ should edit a task (2.8s)
-  ✅ should delete a task (2.5s)
-
-Todo App - Checkbox Actions
-  ✅ should mark task complete from task details (2.9s)
-  ✅ should mark task active from task details (2.7s)
-  ✅ should mark task complete from main screen (2.4s)
-  ✅ should mark task active from main screen (2.6s)
-
-Todo App - Filters
-  ✅ should show empty state for active filter (2.1s)
-  ✅ should show empty state for completed filter (2.0s)
-  ✅ should show empty state for all filter (1.9s)
-  ✅ should filter active tasks correctly (3.1s)
-  ✅ should filter completed tasks correctly (3.0s)
-  ✅ should show all tasks in all filter (2.8s)
-
-Todo App - Navigation
-  ✅ should navigate from tasks to settings (1.8s)
-  ✅ should navigate from settings to statistics (1.7s)
-  ✅ should navigate from statistics to settings (1.6s)
-  ✅ should navigate from settings back to tasks (1.5s)
-
-18 passing (45.6s)
-```
-
-## 📈 Allure Reports
 
 ![Allure Report Example](./assets/allureReportExample1.png)
 ![Allure Report Example](./assets/allureReportExample2.png)
 
-## 🐛 Troubleshooting
+## [Troubleshooting](./docs/troubleshooting.md)
 
-### Common Issues
+## TODO
 
-#### 1. **Appium Server Won't Start**
+- Develop test scenarios and implement tests to verify the app's behavior under unexpected device events:
+  - Network loss (Wi-Fi / mobile data)
+  - Screen rotation (portrait ↔ landscape)
+  - Device lock and unlock
+  - Background app interruptions
+  - Sudden screen off
+  - Battery drain / low battery simulation
+- Develop & Implement Slack notification servise
 
-```bash
-# Kill existing Appium processes
-pkill -9 node
-
-# Clean Appium packages
-adb shell pm clear io.appium.uiautomator2.server
-adb uninstall io.appium.uiautomator2.server
-adb uninstall io.appium.uiautomator2.server.test
-adb uninstall io.appium.settings
-```
-
-#### 2. **Emulator Not Detected**
-
-```bash
-# Restart ADB
-adb kill-server
-adb start-server
-adb devices
-```
-
-#### 3. **Session Creation Failed**
-
-```bash
-# Clear logs and retry
-adb logcat -c
-
-# Increase timeouts in capabilities.ts:
-"appium:newCommandTimeout": 300
-"appium:uiautomator2ServerLaunchTimeout": 90000
-```
-
-#### 4. **Element Not Found**
-
-Enable debug mode to see page source:
-
-```typescript
-const source = await driver.getPageSource();
-console.log(source);
-```
-
-Or use the debug test file:
-
-```bash
-npm run build
-npx wdio run wdio.conf.ts --spec ./dist/tests/debug.test.js
-```
-
-#### 5. **TypeScript Compilation Errors**
-
-```bash
-npm run clean
-npm run build
-```
-
-### Debug Commands
-
-```bash
-# View Appium logs with verbosity
-appium --log-level debug:debug
-
-# View device logs filtered
-adb logcat | grep -iE "appium|uiautomator"
-
-# Clear device logs
-adb logcat -c
-
-# Take screenshot from device
-adb shell screencap /sdcard/screen.png
-adb pull /sdcard/screen.png
-
-# Check installed packages
-adb shell pm list packages | grep appium
-```
-
-### Appium Doctor
-
-Run diagnostics to verify setup:
-
-```bash
-appium-doctor --android
-```
-
-Ensure all required checks pass:
-
-- ✅ ANDROID_HOME is set
-- ✅ JAVA_HOME is set
-- ✅ adb exists
-- ✅ android exists
-- ✅ emulator exists
-
-## 🤝 Contributing
-
-1. Create feature branch: `git checkout -b feature/new-tests`
-2. Make changes and ensure tests pass: `npm test`
-3. Run linting: `npm run lint:fix`
-4. Format code: `npm run format`
-5. Commit: `git commit -m "feat: add new test cases"`
-6. Push: `git push origin feature/new-tests`
-7. Create Pull Request
-
-The CI pipeline will automatically:
-
-- Lint your code
-- Check dependencies
-- Auto-format with Prettier
-
-## 📝 Notes
-
-### Test Data Generation
-
-The framework generates random test data for flexible testing:
-
-```typescript
-import { _ } from "./utils";
-
-const { title, text } = _.getRandomText();
-// title: 4-10 alphanumeric characters
-// text: 8-20 characters with spaces
-```
-
-### Emulator Configuration
-
-Current configuration in `capabilities.ts`:
-
-- **Device**: emulator-5554
-- **Platform**: Android 16.0 (API 34)
-- **Automation**: UiAutomator2
-- **Auto-grant permissions**: Enabled
-- **Window animation**: Disabled (for faster test execution)
-- **Command timeout**: 300 seconds
-
-### Page Object Model Pattern
-
-All screen interactions are abstracted through Page Objects:
-
-```typescript
-// Using screen factory
-import { screens } from "./screens";
-
-// Add task
-const taskSelector = await screens.main.addTask("Title", "Description");
-
-// Edit task
-await screens.addEdit.editTask({ titleSelector, title: "New Title" });
-
-// Delete task
-await screens.addEdit.deleteTask(taskSelector);
-```
+## [NOTES](./docs/notes.md)
 
 ### Best Practices Implemented
 
@@ -593,7 +343,7 @@ await screens.addEdit.deleteTask(taskSelector);
 - ✅ ESLint for code quality
 - ✅ Prettier for consistent formatting
 
-## 📚 Resources
+## Resources
 
 - [WebDriverIO Documentation](https://webdriver.io/)
 - [Appium Documentation](https://appium.io/docs/en/latest/)
@@ -602,7 +352,17 @@ await screens.addEdit.deleteTask(taskSelector);
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Mocha Test Framework](https://mochajs.org/)
 
-## 📧 Support
+## Contributing
+
+1. Create feature branch: `git checkout -b feature/new-tests`
+2. Make changes and ensure tests pass: `npm test`
+3. Run linting: `npm run lint:fix`
+4. Format code: `npm run format`
+5. Commit: `git commit -m "feat: add new test cases"`
+6. Push: `git push origin feature/new-tests`
+7. Create Pull Request
+
+## Support
 
 For questions, issues, or contributions:
 
