@@ -438,6 +438,9 @@ Todo App - Navigation
 ```
 
 ## 📈 Allure Reports
+```bash
+npm run report
+```
 
 ![Allure Report Example](./assets/allureReportExample1.png)
 ![Allure Report Example](./assets/allureReportExample2.png)
