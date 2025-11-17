@@ -1,3 +1,13 @@
+
+import { 
+  mainScreenLocators, 
+  settingsScreenLocators, 
+  taskScreenLocators,
+  push,
+  headers,
+  timeout 
+} from '../../constants';
+
 // Mock WebDriverIO driver globally
 global.driver = {
   $: jest.fn(),
@@ -22,69 +32,19 @@ global.$$ = jest.fn() as any;
 export const mockFillTask = jest.fn().mockResolvedValue(undefined);
 export const mockSelectTask = jest.fn().mockResolvedValue(undefined);
 
-// Mock constants module
-jest.mock("../../constants", () => ({
-  mainScreenLocators: {
-    addTaskBtn: '//android.view.View[@content-desc="New Task"]/..',
-    allTaskTitle: '//android.widget.TextView[@text="All Tasks"]',
-    checkBoxUnchecked: "//android.widget.CheckBox",
-    filterActive: '//android.widget.TextView[@text="Active"]',
-    filterAll: '//android.widget.TextView[@text="All"]',
-    filterBtn: "~Filter",
-    filterCompleted: '//android.widget.TextView[@text="Completed"]',
-    moreOptionsMenu: "~More",
-    taskDetailsHeader: '//android.widget.TextView[@text="Task Details"]',
-    taskTextInput: '//android.widget.TextView[@text="Enter your task here."]',
-    taskTitleInput: '//android.widget.TextView[@text="Title"]',
-    todoTitle: '//android.widget.TextView[@text="Todo"]',
-  },
-  settingsScreenLocators: {
-    burgerMenuBtn: "~Open Drawer",
-    statisticsBtn: '//android.widget.TextView[@text="Statistics"]',
-    taskListBtn: '//android.widget.TextView[@text="Task List"]',
-    todoHeader: '//android.widget.TextView[@text="Todo"]',
-  },
-  taskScreenLocators: {
-    backBtn: "~Back",
-    deleteBtn: "~Delete task",
-    editBtn: "~Edit Task",
-    newTaskHeader: '//android.widget.TextView[@text="New Task"]',
-    saveTaskBtn: "~Save task",
-    taskDetailsHeader: '//android.widget.TextView[@text="Task Details"]',
-    taskTextInput:
-      '//android.widget.EditText[.//android.widget.TextView[@text="Enter your task here."]]',
-    taskTitleInput:
-      '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]',
-  },
-  getTextSelector: jest.fn((text: string) => `mock-text-selector-${text}`),
-  getCheckBoxSelector: jest.fn((isCompleted: boolean) =>
-    isCompleted ? "mock-checkbox-true" : "mock-checkbox-false"
-  ),
-  fetchSource: jest.fn(),
-  push: {
-    taskMarkedActive: '//android.widget.TextView[@text="Task marked active"]',
-    taskSaved: '//android.widget.TextView[@text="Task saved"]',
-    taskAdded: '//android.widget.TextView[@text="Task added"]',
-    taskMarkedComplete:
-      '//android.widget.TextView[@text="Task marked complete"]',
-    taskDeleted: '//android.widget.TextView[@text="Task was deleted"]',
-  },
-  headers: {
-    activeTasks: '//android.widget.TextView[@text="Active Tasks"]',
-    completedTasks: '//android.widget.TextView[@text="Completed Tasks"]',
-    allTasks: '//android.widget.TextView[@text="All Tasks"]',
-    noActiveTasks: '//android.widget.TextView[@text="You have no active tasks!"]',
-    noCompletedTasks:
-      '//android.widget.TextView[@text="You have no completed tasks!"]',
-    noAllTasks: '//android.widget.TextView[@text="You have no tasks!"]',
-  },
-  editTextWidget: "android.widget.EditText",
-  timeout: {
-    elementAppear: 5000,
-    elementClick: 3000,
-    navigation: 10000,
-  },
-}));
+// Mock constants module 
+jest.mock("../../constants", () => {
+  const actualConstants = jest.requireActual("../../constants");
+  
+  return {
+    ...actualConstants,
+    getTextSelector: jest.fn((text: string) => `mock-text-selector-${text}`),
+    getCheckBoxSelector: jest.fn((isCompleted: boolean) =>
+      isCompleted ? "mock-checkbox-true" : "mock-checkbox-false"
+    ),
+    fetchSource: jest.fn(),
+  };
+});
 
 // Mock utils module
 jest.mock("../../utils", () => ({
@@ -105,7 +65,7 @@ jest.mock("../../utils", () => ({
   },
 }));
 
-// Mock screensInit module - исправленная версия
+// Mock screensInit module
 jest.mock("../../screens/screensInit", () => {
   const { mockFillTask, mockSelectTask } = require("./setup");
   
@@ -123,6 +83,15 @@ jest.mock("../../screens/screensInit", () => {
     },
   };
 });
+
+export {
+  mainScreenLocators,
+  settingsScreenLocators, 
+  taskScreenLocators,
+  push,
+  headers,
+  timeout
+};
 
 /**
  * Creates a mock element with common WebDriverIO methods
@@ -176,6 +145,12 @@ export function resetAllMocks() {
   // Reset our custom mocks
   mockFillTask.mockClear().mockResolvedValue(undefined);
   mockSelectTask.mockClear().mockResolvedValue(undefined);
+
+  // Reset mocked functions from constants
+  const constants = require("../../constants");
+  constants.getTextSelector.mockClear();
+  constants.getCheckBoxSelector.mockClear();
+  constants.fetchSource.mockClear();
 }
 
 // Initialize with default mocks
