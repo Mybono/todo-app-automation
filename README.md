@@ -15,7 +15,7 @@ Automated testing framework for Todo mobile application using Appium and WebDriv
 ## 📋 Table of Contents
 - [Overview](#overview)
 - [Technology Stack](./docs/stack.md)
-- [Project Structure](./STRUCTURE.md)
+- [Project Structure](./docs/structure.md)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Running Tests](#running-tests)
