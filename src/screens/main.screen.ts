@@ -1,29 +1,14 @@
+import { _, clickElement, expectElement, logger } from "../utils";
 import {
-  _,
-  clickElement,
-  expectElement,
-  logger,
-  getCheckBoxSelector,
   getTextSelector,
+  getCheckBoxSelector,
+  mainScreenLocators,
   push,
-} from "../utils";
+} from "../constants";
 import { Task, taskStatuses, FilterType } from "../types";
 import { screens } from "../screens";
 
 export class MainScreen {
-  addTaskBtn = '//android.view.View[@content-desc="New Task"]/..';
-  allTaskTitle = '//android.widget.TextView[@text="All Tasks"]';
-  checkBoxUnchecked = "//android.widget.CheckBox";
-  moreOptionsMenu = "~More";
-  taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
-  taskTextInput = '//android.widget.TextView[@text="Enter your task here."]';
-  taskTitleInput = '//android.widget.TextView[@text="Title"]';
-  todoTitle = '//android.widget.TextView[@text="Todo"]';
-  filterCompleted = '//android.widget.TextView[@text="Completed"]';
-  filterActive = '//android.widget.TextView[@text="Active"]';
-  filterAll = '//android.widget.TextView[@text="All"]';
-  filterBtn = "~Filter";
-
   /**
    * Adds a new task to the app.
    * If title or text is not provided, generates random task data.
@@ -56,7 +41,7 @@ export class MainScreen {
         text = randomData.text;
       }
 
-      await clickElement(this.addTaskBtn);
+      await clickElement(mainScreenLocators.addTaskBtn);
       await screens.task.fillTask({
         title: title,
         text: text,
@@ -66,8 +51,8 @@ export class MainScreen {
       if (taskStaus === taskStatuses.active) {
         await expectElement(push.taskAdded);
       }
-      await expectElement(this.todoTitle);
-      await expectElement(this.allTaskTitle);
+      await expectElement(mainScreenLocators.todoTitle);
+      await expectElement(mainScreenLocators.allTaskTitle);
 
       const taskTitleSelector = getTextSelector(title);
       await expectElement(taskTitleSelector);
@@ -100,18 +85,18 @@ export class MainScreen {
    */
   async applyFilter(filterType: FilterType): Promise<void> {
     try {
-      await clickElement(this.filterBtn);
+      await clickElement(mainScreenLocators.filterBtn);
 
       let filterSelector: string;
       switch (filterType) {
         case "all":
-          filterSelector = this.filterAll;
+          filterSelector = mainScreenLocators.filterAll;
           break;
         case "active":
-          filterSelector = this.filterActive;
+          filterSelector = mainScreenLocators.filterActive;
           break;
         case "completed":
-          filterSelector = this.filterCompleted;
+          filterSelector = mainScreenLocators.filterCompleted;
           break;
       }
 

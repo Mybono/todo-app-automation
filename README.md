@@ -23,6 +23,7 @@ Automated testing framework for Todo mobile application using Appium and WebDriv
 ## 🎯 Overview
 
 This project implements automated tests for a Todo mobile application covering:
+
 - ✅ Task creation and management (add, edit, delete)
 - ✏️ Task editing with validation
 - 🗑️ Task deletion with confirmation
@@ -33,17 +34,17 @@ This project implements automated tests for a Todo mobile application covering:
 
 ## 🛠 Technology Stack
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Node.js** | 20.x | Runtime environment |
-| **TypeScript** | 5.9.3 | Type-safe programming language |
-| **WebDriverIO** | 8.40.0 | Test automation framework |
-| **Appium** | 3.1.1 | Mobile automation server |
-| **UiAutomator2** | 6.1.1 | Android automation driver |
-| **Mocha** | - | Test framework |
-| **Chai** | 4.3.8 | Assertion library |
-| **ESLint** | 9.39.1 | Code linting |
-| **Prettier** | 3.0.0 | Code formatting |
+| Technology       | Version | Purpose                        |
+| ---------------- | ------- | ------------------------------ |
+| **Node.js**      | 20.x    | Runtime environment            |
+| **TypeScript**   | 5.9.3   | Type-safe programming language |
+| **WebDriverIO**  | 8.40.0  | Test automation framework      |
+| **Appium**       | 3.1.1   | Mobile automation server       |
+| **UiAutomator2** | 6.1.1   | Android automation driver      |
+| **Mocha**        | -       | Test framework                 |
+| **Chai**         | 4.3.8   | Assertion library              |
+| **ESLint**       | 9.39.1  | Code linting                   |
+| **Prettier**     | 3.0.0   | Code formatting                |
 
 ## 📁 Project Structure
 
@@ -68,16 +69,25 @@ todo-app-automation/
 │   │   ├── statistic.screen.ts     # Statistic screen list
 │   │   ├── screensInit.ts          # Screen factory pattern
 │   │   └── index.ts
-│   ├── tests/                      # Test Suites
-│   │   ├── main.test.ts            # ✅ Task management (add, edit, delete)
-│   │   ├── checkbox.test.ts        # ☑️ Task completion/activation
-│   │   ├── filter.test.ts          # 🔍 Task filtering
-│   │   ├── navigate.test.ts        # 🧭 Screen navigation
-│   │   └── debug.test.ts           # 🐛 Debug utilities
+│   ├── tests/
+│   │   ├── e2e/                    # Test Suites (Appium/WDIO)
+│   │   │   ├── main.test.ts        # ✅ Task management (add, edit, delete)
+│   │   │   ├── checkbox.test.ts.   # ☑️ Task completion/activation
+│   │   │   ├── filter.test.ts      # 🔍 Task filtering
+│   │   │   └── navigate.test.ts.   # 🧭 Screen navigation
+│   │   └── unit/                   # unit tests Jest
+│   │       ├── main.test.ts
+│   │       ├── settings.test.ts
+│   │       └── task.test.ts
+│   │
+│   ├── constants/                             # Locators
+│   │   ├── mainScreen.locators.screen.ts      # Main Screen
+│   │   ├── settingsScreen.locators.screen.ts  # Settings Screen locators
+│   │   ├── taskScreen.locataros.test.ts       # TaskScreen locators
+│   │   ├── common.test.ts                     # generic locators
+│   │   └── index.ts
 │   └── utils/
-│       ├── constants.ts            # Timeout constants
 │       ├── logger.ts               # Custom logger with colors
-│       ├── selectors.ts            # Selectors
 │       ├── services.ts             # Services
 │       ├── testDataGenerator.ts    # Random test data generation
 │       └── index.ts
@@ -96,6 +106,7 @@ todo-app-automation/
 1. **Java Development Kit (JDK)**
    - Version: 11 or higher
    - Required for Android SDK
+
    ```bash
    java -version
    ```
@@ -104,8 +115,9 @@ todo-app-automation/
    - Android SDK Platform 34 (Android 14)
    - Android SDK Build-Tools
    - Android Emulator
-   
+
    Set environment variables:
+
    ```bash
    export ANDROID_HOME=/path/to/android-sdk
    export PATH=$PATH:$ANDROID_HOME/platform-tools
@@ -114,6 +126,7 @@ todo-app-automation/
 
 3. **Node.js & npm**
    - Version: 20.x or higher
+
    ```bash
    node -v
    npm -v
@@ -127,17 +140,19 @@ todo-app-automation/
 ### Environment Setup
 
 1. **Verify Android Debug Bridge (ADB)**
+
    ```bash
    adb version
    adb devices
    ```
 
 2. **Check Appium Installation**
+
    ```bash
    npm install -g appium-doctor
    appium-doctor --android
    ```
-   
+
    Ensure all checks pass ✅
 
 ## 🚀 Installation
@@ -156,6 +171,7 @@ npm install
 ```
 
 This installs:
+
 - WebDriverIO and Appium drivers
 - TypeScript compiler
 - Testing frameworks (Mocha, Chai)
@@ -171,6 +187,7 @@ appium driver install uiautomator2
 ### 4. Prepare APK
 
 Place your application APK in:
+
 ```
 app/apk/app-debug.apk
 ```
@@ -182,6 +199,8 @@ app/apk/app-debug.apk
 emulator -list-avds
 
 # Start emulator
+appium
+OR
 emulator -avd <emulator_name> -no-snapshot-load
 ```
 
@@ -203,6 +222,7 @@ npm test
 ```
 
 This command:
+
 1. Compiles TypeScript (`npm run build`)
 2. Starts Appium server automatically
 3. Executes all tests in `src/tests/`
@@ -223,7 +243,9 @@ npx wdio run wdio.conf.ts --spec ./dist/tests/filter.test.js
 # Navigation Tests
 npx wdio run wdio.conf.ts --spec ./dist/tests/navigate.test.js
 ```
+
 ### Generate Report
+
 ```bash
 npm report
 ```
@@ -277,6 +299,7 @@ on:
 ### Pipeline Stages
 
 #### 1. **Lint TypeScript** 🧹
+
 - Runs ESLint on all `.ts` files
 - Checks code quality and standards
 - Non-blocking (warnings only)
@@ -286,6 +309,7 @@ npm run lint
 ```
 
 #### 2. **Dependency Check** 📦
+
 - Detects changes in `package.json` or `package-lock.json`
 - Alerts reviewers about:
   - Security vulnerabilities
@@ -293,12 +317,14 @@ npm run lint
   - Bundle size impact
 
 #### 3. **Auto-format with Prettier** 🎨
+
 - Automatically formats code
 - Commits changes back to PR
 - Excludes `.github/` workflows
 - Only commits if changes detected
 
 **Auto-commit behavior:**
+
 ```bash
 git commit -m "style: auto-format code with Prettier"
 git push origin HEAD:<branch-name>
@@ -330,6 +356,7 @@ npm test
 **📄 Complete test documentation is available at: [docs/TestPlan.md](./docs/TestPlan.md)**
 
 The test plan includes:
+
 - **User Needs & Risk Analysis** - 7 user needs and 4 identified risks
 - **Requirements Mapping** - 10 functional requirements with priorities
 - **Detailed Test Cases** - 17 test cases across 4 test suites:
@@ -342,22 +369,22 @@ The test plan includes:
 
 ### Test Coverage Overview
 
-| Test Suite | Test Cases | Status | Automation |
-|------------|------------|--------|------------|
-| **Task Management** | 4 | ✅ All Implemented | 100% |
-| **Checkbox Actions** | 4 | ✅ All Implemented | 100% |
-| **Filters** | 6 | ✅ All Implemented | 100% |
-| **Navigation** | 4 | ✅ All Implemented | 100% |
-| **Total** | **18** | **18 Automated** | **100%** |
+| Test Suite           | Test Cases | Status             | Automation |
+| -------------------- | ---------- | ------------------ | ---------- |
+| **Task Management**  | 4          | ✅ All Implemented | 100%       |
+| **Checkbox Actions** | 4          | ✅ All Implemented | 100%       |
+| **Filters**          | 6          | ✅ All Implemented | 100%       |
+| **Navigation**       | 4          | ✅ All Implemented | 100%       |
+| **Total**            | **18**     | **18 Automated**   | **100%**   |
 
 ### Test Case Summary by Priority
 
-| Priority | Count | Automated | Description |
-|----------|-------|-----------|-------------|
-| **Critical (P1)** | 2 | 2 ✅ | Core functionality: task creation, completion from main screen |
-| **High (P2)** | 8 | 8 ✅ | Important features: edit, delete, checkbox actions |
-| **Medium (P3)** | 6 | 6 ✅ | Filtering, navigation with tasks |
-| **Low (P4)** | 2 | 2 ✅ | Empty states, statistics navigation |
+| Priority          | Count | Automated | Description                                                    |
+| ----------------- | ----- | --------- | -------------------------------------------------------------- |
+| **Critical (P1)** | 2     | 2 ✅      | Core functionality: task creation, completion from main screen |
+| **High (P2)**     | 8     | 8 ✅      | Important features: edit, delete, checkbox actions             |
+| **Medium (P3)**   | 6     | 6 ✅      | Filtering, navigation with tasks                               |
+| **Low (P4)**      | 2     | 2 ✅      | Empty states, statistics navigation                            |
 
 ## 📈 Test Reports
 
@@ -394,24 +421,10 @@ Todo App - Navigation
 18 passing (45.6s)
 ```
 
-### Custom Logger
+## 📈 Allure Reports
 
-The framework includes a custom logger with timestamps and color-coding:
-
-```typescript
-import { logger } from "./utils";
-
-logger.info("Task added successfully");
-logger.warn("Element took longer than expected");
-logger.error("Failed to find element", error);
-logger.debug("Page source captured for debugging");
-```
-
-### Log Levels
-- 🔴 **ERROR** - Critical failures
-- 🟡 **WARN** - Warnings and slower operations
-- 🟢 **INFO** - Successful operations
-- 🔵 **DEBUG** - Detailed debugging information
+![Allure Report Example](./assets/allureReportExample1.png)
+![Allure Report Example](./assets/allureReportExample2.png)
 
 ## 🐛 Troubleshooting
 
@@ -460,6 +473,7 @@ console.log(source);
 ```
 
 Or use the debug test file:
+
 ```bash
 npm run build
 npx wdio run wdio.conf.ts --spec ./dist/tests/debug.test.js
@@ -501,6 +515,7 @@ appium-doctor --android
 ```
 
 Ensure all required checks pass:
+
 - ✅ ANDROID_HOME is set
 - ✅ JAVA_HOME is set
 - ✅ adb exists
@@ -518,6 +533,7 @@ Ensure all required checks pass:
 7. Create Pull Request
 
 The CI pipeline will automatically:
+
 - Lint your code
 - Check dependencies
 - Auto-format with Prettier
@@ -539,6 +555,7 @@ const { title, text } = _.getRandomText();
 ### Emulator Configuration
 
 Current configuration in `capabilities.ts`:
+
 - **Device**: emulator-5554
 - **Platform**: Android 16.0 (API 34)
 - **Automation**: UiAutomator2
@@ -588,11 +605,11 @@ await screens.addEdit.deleteTask(taskSelector);
 ## 📧 Support
 
 For questions, issues, or contributions:
+
 - Open an issue on GitHub
 - Check the [Test Documentation](./docs/TestPlan.md)
 - Review the [Troubleshooting](#-troubleshooting) section
 
 ---
 
-
-*Last Updated: November 2025*
+_Last Updated: November 2025_

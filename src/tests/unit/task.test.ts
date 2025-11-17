@@ -1,0 +1,303 @@
+import "./setup"; // Import shared mocks
+import {
+  taskScreenLocators,
+  getCheckBoxSelector,
+  getTextSelector,
+  editTextWidget,
+  timeout,
+} from "../../constants";
+import { TaskScreen } from "../../screens/task.screen";
+import { taskStatuses } from "../../types";
+import * as utils from "../../utils";
+import { screens } from "../../screens";
+import { createMockElement, createMockElements } from "./setup";
+
+describe("TaskScreen Unit Tests", () => {
+  let taskScreen: TaskScreen;
+  let mockElement: any;
+  let mockElements: any[];
+
+  beforeEach(() => {
+    taskScreen = new TaskScreen();
+    mockElement = createMockElement();
+    mockElements = createMockElements();
+
+    // Setup mocks
+    (global.driver.$ as jest.Mock).mockReturnValue(mockElement);
+    (global.$ as jest.Mock).mockReturnValue(mockElement);
+    (global.$$ as jest.Mock).mockResolvedValue(mockElements);
+    (utils.clickElement as jest.Mock).mockResolvedValue(undefined);
+    (utils.expectElement as jest.Mock).mockResolvedValue(undefined);
+
+    jest.clearAllMocks();
+  });
+
+  describe("fillTask()", () => {
+    it("should fill task with title and text", async () => {
+      const task = {
+        title: "Test Task",
+        text: "Test Description",
+      };
+
+      await taskScreen.fillTask(task);
+
+      expect(global.$$).toHaveBeenCalledWith(editTextWidget);
+      expect(mockElements[0].setValue).toHaveBeenCalledWith("Test Task");
+      expect(mockElements[1].setValue).toHaveBeenCalledWith("Test Description");
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        taskScreenLocators.saveTaskBtn,
+      );
+      expect(screens.main.toggleCheckbox).not.toHaveBeenCalled();
+    });
+
+    it("should fill task and mark as completed if status is completed", async () => {
+      const task = {
+        title: "Completed Task",
+        text: "Description",
+        status: taskStatuses.completed,
+      };
+
+      const mockCheckedCheckbox = {
+        waitForDisplayed: jest.fn().mockResolvedValue(undefined),
+      };
+      (screens.main.toggleCheckbox as jest.Mock).mockResolvedValue(
+        mockCheckedCheckbox,
+      );
+
+      await taskScreen.fillTask(task);
+
+      expect(mockElements[0].setValue).toHaveBeenCalledWith("Completed Task");
+      expect(mockElements[1].setValue).toHaveBeenCalledWith("Description");
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        taskScreenLocators.saveTaskBtn,
+      );
+      expect(getCheckBoxSelector).toHaveBeenCalledWith(false);
+      expect(screens.main.toggleCheckbox).toHaveBeenCalledWith(
+        "mock-checkbox-false",
+        true,
+      );
+      expect(mockCheckedCheckbox.waitForDisplayed).toHaveBeenCalledWith({
+        timeout: timeout.elementAppear,
+      });
+    });
+  });
+
+  describe("editTask()", () => {
+    it("should edit task with new title and text", async () => {
+      const task = {
+        title: "Updated Title",
+        text: "Updated Description",
+        selector: "mock-selector",
+      };
+
+      const result = await taskScreen.editTask(task);
+
+      expect(utils.clickElement).toHaveBeenCalledWith("mock-selector");
+      expect(utils.expectElement).toHaveBeenCalledWith(
+        taskScreenLocators.taskDetailsHeader,
+      );
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        taskScreenLocators.editBtn,
+      );
+      expect(mockElements[0].setValue).toHaveBeenCalledWith("Updated Title");
+      expect(mockElements[1].setValue).toHaveBeenCalledWith(
+        "Updated Description",
+      );
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        taskScreenLocators.saveTaskBtn,
+      );
+      expect(getTextSelector).toHaveBeenCalledWith("Updated Title");
+      expect(result).toBe("mock-text-selector-Updated Title");
+    });
+
+    it("should generate random data when title and text not provided", async () => {
+      const task = {
+        selector: "mock-selector",
+      };
+
+      const result = await taskScreen.editTask(task);
+
+      expect(utils._.getRandomText).toHaveBeenCalled();
+      expect(mockElements[0].setValue).toHaveBeenCalledWith("Random Title");
+      expect(mockElements[1].setValue).toHaveBeenCalledWith(
+        "Random Description",
+      );
+      expect(result).toBe(
+        'android=new UiSelector().className("android.widget.TextView").textContains("Random Title")',
+      );
+    });
+
+    it("should throw error when selectTask fails", async () => {
+      (utils.clickElement as jest.Mock).mockRejectedValueOnce(
+        new Error("Task not found"),
+      );
+
+      const task = {
+        title: "Test Task",
+        text: "Test Description",
+        selector: "invalid-selector",
+      };
+
+      await expect(taskScreen.editTask(task)).rejects.toThrow(
+        "[editTask]: [selectTask]: Task not found",
+      );
+    });
+  });
+
+  describe("deleteTask()", () => {
+    it("should delete task by selector", async () => {
+      const titleSelector = "mock-task-selector";
+
+      await taskScreen.deleteTask(titleSelector);
+
+      expect(utils.clickElement).toHaveBeenCalledWith(titleSelector);
+      expect(utils.expectElement).toHaveBeenCalledWith(
+        taskScreenLocators.taskDetailsHeader,
+      );
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        taskScreenLocators.deleteBtn,
+      );
+    });
+
+    it("should throw error when task selection fails", async () => {
+      (utils.clickElement as jest.Mock).mockRejectedValueOnce(
+        new Error("Task not found"),
+      );
+
+      await expect(taskScreen.deleteTask("invalid-selector")).rejects.toThrow(
+        "[deleteTask]: [selectTask]: Task not found",
+      );
+    });
+
+    it("should throw error when expectElement fails", async () => {
+      (utils.expectElement as jest.Mock).mockRejectedValueOnce(
+        new Error("Task details not displayed"),
+      );
+
+      await expect(taskScreen.deleteTask("mock-selector")).rejects.toThrow(
+        "[deleteTask]: [selectTask]: Task details not displayed",
+      );
+    });
+  });
+
+  describe("fillField()", () => {
+    it("should fill only title field", async () => {
+      await taskScreen.fillField({ title: "New Title" });
+
+      expect(global.$$).toHaveBeenCalledWith(editTextWidget);
+      expect(mockElements[0].waitForDisplayed).toHaveBeenCalledWith({
+        timeout: timeout.elementAppear,
+      });
+      expect(mockElements[0].setValue).toHaveBeenCalledWith("New Title");
+      expect(mockElements[1].setValue).not.toHaveBeenCalled();
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        '[fillField] Title edited to "New Title" successfully.',
+      );
+    });
+
+    it("should fill only text field", async () => {
+      await taskScreen.fillField({ text: "New Description" });
+
+      expect(global.$$).toHaveBeenCalledWith(editTextWidget);
+      expect(mockElements[1].waitForDisplayed).toHaveBeenCalledWith({
+        timeout: timeout.elementAppear,
+      });
+      expect(mockElements[1].setValue).toHaveBeenCalledWith("New Description");
+      expect(mockElements[0].setValue).not.toHaveBeenCalled();
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        '[fillField] Text edited to "New Description" successfully.',
+      );
+    });
+
+    it("should fill both title and text fields", async () => {
+      await taskScreen.fillField({
+        title: "Updated Title",
+        text: "Updated Description",
+      });
+
+      expect(mockElements[0].setValue).toHaveBeenCalledWith("Updated Title");
+      expect(mockElements[1].setValue).toHaveBeenCalledWith(
+        "Updated Description",
+      );
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        '[fillField] Title edited to "Updated Title" successfully.',
+      );
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        '[fillField] Text edited to "Updated Description" successfully.',
+      );
+    });
+
+    it("should handle undefined title field", async () => {
+      await taskScreen.fillField({ text: "Only text" });
+
+      expect(mockElements[0].setValue).not.toHaveBeenCalled();
+      expect(mockElements[1].setValue).toHaveBeenCalledWith("Only text");
+    });
+
+    it("should handle undefined text field", async () => {
+      await taskScreen.fillField({ title: "Only title" });
+
+      expect(mockElements[0].setValue).toHaveBeenCalledWith("Only title");
+      expect(mockElements[1].setValue).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("selectTask()", () => {
+    it("should select task and wait for details header", async () => {
+      const selector = "mock-task-selector";
+
+      await taskScreen.selectTask(selector);
+
+      expect(utils.clickElement).toHaveBeenCalledWith(selector);
+      expect(utils.expectElement).toHaveBeenCalledWith(
+        taskScreenLocators.taskDetailsHeader,
+      );
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        "[selectTask] Task selected successfully. mock-task-selector",
+      );
+    });
+
+    it("should throw error when task click fails", async () => {
+      (utils.clickElement as jest.Mock).mockRejectedValueOnce(
+        new Error("Element not clickable"),
+      );
+
+      await expect(taskScreen.selectTask("invalid-selector")).rejects.toThrow(
+        "[selectTask]: Element not clickable",
+      );
+    });
+
+    it("should throw error when details header not displayed", async () => {
+      (utils.expectElement as jest.Mock).mockRejectedValueOnce(
+        new Error("Header not found"),
+      );
+
+      await expect(taskScreen.selectTask("mock-selector")).rejects.toThrow(
+        "[selectTask]: Header not found",
+      );
+    });
+  });
+
+  describe("backToMain()", () => {
+    it("should navigate back to main screen", async () => {
+      await taskScreen.backToMain();
+
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        taskScreenLocators.backBtn,
+      );
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        "[backToMain] Navigated to main screen successfully.",
+      );
+    });
+
+    it("should throw error when back button click fails", async () => {
+      (utils.clickElement as jest.Mock).mockRejectedValueOnce(
+        new Error("Back button not found"),
+      );
+
+      await expect(taskScreen.backToMain()).rejects.toThrow(
+        "[backToMain]: Back button not found",
+      );
+    });
+  });
+});

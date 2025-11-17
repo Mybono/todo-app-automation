@@ -1,16 +1,11 @@
+import { mainScreenLocators, settingsScreenLocators } from "../constants";
 import { _, clickElement, expectElement } from "../utils";
-import { screens } from ".";
 
 export class SettingsScreen {
-  burgerMenuBtn = "~Open Drawer";
-  statisticsBtn = '//android.widget.TextView[@text="Statistics"]';
-  taskListBtn = '//android.widget.TextView[@text="Task List"]';
-  todoHeader = '//android.widget.TextView[@text="Todo"]';
-
   async goToNavigateScreen() {
     try {
-      await clickElement(this.burgerMenuBtn);
-      await expectElement(this.todoHeader);
+      await clickElement(settingsScreenLocators.burgerMenuBtn);
+      await expectElement(settingsScreenLocators.todoHeader);
     } catch (error) {
       throw new Error(`[goToNavigateScreen]: ${(error as Error).message}`);
     }
@@ -18,8 +13,8 @@ export class SettingsScreen {
 
   async goToStatisticsScreen() {
     try {
-      await clickElement(this.statisticsBtn);
-      await expectElement(screens.statistics.statisticHeader);
+      await clickElement(settingsScreenLocators.statisticsBtn);
+      await expectElement(settingsScreenLocators.statisticsBtn);
     } catch (error) {
       throw new Error(`[goToStatisticsScreen]: ${(error as Error).message}`);
     }
@@ -27,8 +22,8 @@ export class SettingsScreen {
 
   async goToTasksScreen() {
     try {
-      await clickElement(this.taskListBtn);
-      await expectElement(screens.main.todoTitle);
+      await clickElement(settingsScreenLocators.taskListBtn);
+      await expectElement(mainScreenLocators.todoTitle);
     } catch (error) {
       throw new Error(`[goToStatisticsScreen]: ${(error as Error).message}`);
     }

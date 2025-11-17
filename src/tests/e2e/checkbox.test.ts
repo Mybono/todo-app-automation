@@ -1,6 +1,7 @@
-import { expectElement, headers, push } from "../utils";
-import { taskStatuses, filter } from "../types";
-import { screens } from "../screens";
+import { taskStatuses, filter } from "../../types";
+import { headers, push } from "../../constants";
+import { expectElement } from "../../utils";
+import { screens } from "../../screens";
 
 describe("Task Checkbox Actions @checkbox @regression", () => {
   it("[UITM-CA001]: Marks a task as completed from the task details screen", async () => {
