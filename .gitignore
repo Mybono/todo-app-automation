@@ -25,4 +25,5 @@ node_modules
 appium_device.log\
 /dist
 /allure-results
-/allure-report  
+/allure-report
+/coverage
