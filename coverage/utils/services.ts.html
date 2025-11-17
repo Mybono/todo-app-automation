@@ -23,9 +23,9 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">21.42% </span>
+            <span class="strong">57.14% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">3/14</span>
+            <span class="fraction">8/14</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -35,15 +35,15 @@
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">0% </span>
+            <span class="strong">50% </span>
             <span class="quiet">Functions</span>
-            <span class="fraction">0/2</span>
+            <span class="fraction">1/2</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">21.42% </span>
+            <span class="strong">57.14% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">3/14</span>
+            <span class="fraction">8/14</span>
           </div>
         </div>
         <p class="quiet">
@@ -57,7 +57,7 @@
           </div>
         </template>
       </div>
-      <div class="status-line low"></div>
+      <div class="status-line medium"></div>
       <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -97,11 +97,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -128,12 +128,12 @@
 /**
  * Waits for an element to be visible and asserts that it is displayed.
  */
-export async function <span class="fstat-no" title="function not covered" >expectElement(</span>selector: string) {
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const element = <span class="cstat-no" title="statement not covered" >await driver!.$(selector);</span>
-<span class="cstat-no" title="statement not covered" >    await element.waitForDisplayed({ timeout: timeout.elementAppear });</span>
-<span class="cstat-no" title="statement not covered" >    expect(await element.isDisplayed()).toBe(true);</span>
-<span class="cstat-no" title="statement not covered" >    return element;</span>
+export async function expectElement(selector: string) {
+  try {
+    const element = await driver!.$(selector);
+    await element.waitForDisplayed({ timeout: timeout.elementAppear });
+    expect(await element.isDisplayed()).toBe(true);
+    return element;
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    throw new Error(</span>
       `[expectElement]: Element is not visible: ${selector}\n${(error as Error).message}`,
@@ -169,7 +169,7 @@ export async function <span class="fstat-no" title="function not covered" >click
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-11-16T19:04:58.632Z
+      at 2025-11-16T22:00:13.278Z
     </div>
     <script src="../prettify.js"></script>
     <script>

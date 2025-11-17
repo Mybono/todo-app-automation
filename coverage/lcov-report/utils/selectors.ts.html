@@ -23,9 +23,9 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">53.84% </span>
+            <span class="strong">61.53% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">7/13</span>
+            <span class="fraction">8/13</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -35,15 +35,15 @@
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">0% </span>
+            <span class="strong">33.33% </span>
             <span class="quiet">Functions</span>
-            <span class="fraction">0/3</span>
+            <span class="fraction">1/3</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">53.84% </span>
+            <span class="strong">61.53% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">7/13</span>
+            <span class="fraction">8/13</span>
           </div>
         </div>
         <p class="quiet">
@@ -98,7 +98,7 @@
 <a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -133,8 +133,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { logger } from "../utils";
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >getTextSelector(</span>title: string) {
-<span class="cstat-no" title="statement not covered" >  return `android=new UiSelector().className("android.widget.TextView").textContains("${title}")`;</span>
+export function getTextSelector(title: string) {
+  return `android=new UiSelector().className("android.widget.TextView").textContains("${title}")`;
 }
 &nbsp;
 export async function <span class="fstat-no" title="function not covered" >fetchSource(</span>) {
@@ -181,7 +181,7 @@ export const editTextWidget = "android.widget.EditText";
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-11-16T19:04:58.616Z
+      at 2025-11-16T22:00:13.266Z
     </div>
     <script src="../prettify.js"></script>
     <script>

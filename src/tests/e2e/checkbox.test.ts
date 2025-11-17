@@ -1,5 +1,6 @@
-import { expectElement, headers, push } from "../../utils";
 import { taskStatuses, filter } from "../../types";
+import { headers, push } from "../../constants";
+import { expectElement } from "../../utils";
 import { screens } from "../../screens";
 
 describe("Task Checkbox Actions @checkbox @regression", () => {

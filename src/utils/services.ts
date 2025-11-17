@@ -1,4 +1,4 @@
-import { timeout } from "../utils";
+import { timeout } from "../constants";
 
 /**
  * Waits for an element to be visible and asserts that it is displayed.

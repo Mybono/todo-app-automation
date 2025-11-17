@@ -1,92 +1,227 @@
-import { MainScreen, screens } from "../../screens";
-import { Task, taskStatuses } from "../../types";
-import { _ } from "../../utils";
+import "./setup"; // Import shared mocks
+import {
+  mainScreenLocators,
+  getTextSelector,
+  getCheckBoxSelector,
+  push,
+} from "../../constants";
+import { MainScreen } from "../../screens/main.screen";
+import { taskStatuses } from "../../types";
+import * as utils from "../../utils";
+import { screens } from "../../screens/screensInit";
+import { createMockElement } from "./setup";
 
-describe("MainScreen", () => {
+describe("MainScreen Unit Tests", () => {
   let mainScreen: MainScreen;
   let mockElement: any;
 
   beforeEach(() => {
-    Object.defineProperty(global, "localStorage", {
-      value: {
-        getItem: jest.fn(),
-        setItem: jest.fn(),
-        removeItem: jest.fn(),
-        clear: jest.fn(),
-      },
-      writable: true,
+    mainScreen = new MainScreen();
+    mockElement = createMockElement();
+
+    // Setup mocks
+    (global.driver.$ as jest.Mock).mockReturnValue(mockElement);
+    (global.$ as jest.Mock).mockReturnValue(mockElement);
+    (utils.clickElement as jest.Mock).mockResolvedValue(undefined);
+    (utils.expectElement as jest.Mock).mockResolvedValue(undefined);
+    (screens.task.fillTask as jest.Mock).mockResolvedValue(undefined);
+    (screens.task.selectTask as jest.Mock).mockResolvedValue(undefined);
+
+    jest.clearAllMocks();
+  });
+
+  describe("addTask()", () => {
+    it("should add a task with title and text", async () => {
+      const task = {
+        title: "Test Task",
+        text: "Test Description",
+      };
+
+      const result = await mainScreen.addTask(task);
+
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        mainScreenLocators.addTaskBtn,
+      );
+      expect(screens.task.fillTask).toHaveBeenCalledWith({
+        title: "Test Task",
+        text: "Test Description",
+        status: undefined,
+      });
+      expect(utils.expectElement).toHaveBeenCalledWith(
+        mainScreenLocators.todoTitle,
+      );
+      expect(utils.expectElement).toHaveBeenCalledWith(
+        mainScreenLocators.allTaskTitle,
+      );
+      expect(getTextSelector).toHaveBeenCalledWith("Test Task");
+      expect(result).toBe("mock-text-selector-Test Task");
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        '[addTask] Task "Test Task" added successfully.',
+      );
+    });
+
+    it("should generate random title/text if not provided", async () => {
+      const task = {};
+
+      const result = await mainScreen.addTask(task);
+
+      expect(utils._.getRandomText).toHaveBeenCalled();
+      expect(screens.task.fillTask).toHaveBeenCalledWith({
+        title: "Random Title",
+        text: "Random Description",
+        status: undefined,
+      });
+      expect(result).toBe("mock-text-selector-Random Title");
+    });
+
+    it("should add task with active status and wait for push notification", async () => {
+      const task = {
+        title: "Active Task",
+        text: "Description",
+        status: taskStatuses.active,
+      };
+
+      await mainScreen.addTask(task);
+
+      expect(screens.task.fillTask).toHaveBeenCalledWith({
+        title: "Active Task",
+        text: "Description",
+        status: taskStatuses.active,
+      });
+      expect(utils.expectElement).toHaveBeenCalledWith(push.taskAdded);
+    });
+
+    it("should add task with completed status without waiting for push", async () => {
+      const task = {
+        title: "Completed Task",
+        text: "Description",
+        status: taskStatuses.completed,
+      };
+
+      await mainScreen.addTask(task);
+
+      expect(screens.task.fillTask).toHaveBeenCalledWith({
+        title: "Completed Task",
+        text: "Description",
+        status: taskStatuses.completed,
+      });
+      expect(utils.expectElement).not.toHaveBeenCalledWith(push.taskAdded);
     });
   });
 
-  it("should add a task", async () => {
-    const task: Task = {
-      title: "Test",
-      text: "Desc",
-      status: taskStatuses.active,
-    };
-    const result = await mainScreen.addTask(task);
-    expect(result).toContain("Test");
-    expect(mockElement.click).toHaveBeenCalled();
-  });
+  describe("applyFilter()", () => {
+    it('should apply "all" filter', async () => {
+      await mainScreen.applyFilter("all");
 
-  it("should toggle checkbox", async () => {
-    const res = await mainScreen.toggleCheckbox("selector", true);
-    expect(mockElement.click).toHaveBeenCalled();
-    expect(res).toBe(mockElement);
-  });
-
-  it("should generate random data if title/text not provided", async () => {
-    jest
-      .spyOn(_, "getRandomText")
-      .mockReturnValue({ title: "Random", text: "RandomDesc" });
-    const task: Task = { status: taskStatuses.active };
-    const result = await mainScreen.addTask(task);
-    expect(result).toContain("Random");
-  });
-
-  it("should handle error in addTask", async () => {
-    global.$ = jest.fn().mockImplementation(() => {
-      throw new Error("Click failed");
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        mainScreenLocators.filterBtn,
+      );
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        mainScreenLocators.filterAll,
+      );
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        "[applyFilter] Applied filter: all",
+      );
     });
-    const task: Task = { title: "T", text: "D", status: taskStatuses.active };
-    await expect(mainScreen.addTask(task)).rejects.toThrow("Click failed");
+
+    it('should apply "active" filter', async () => {
+      await mainScreen.applyFilter("active");
+
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        mainScreenLocators.filterBtn,
+      );
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        mainScreenLocators.filterActive,
+      );
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        "[applyFilter] Applied filter: active",
+      );
+    });
+
+    it('should apply "completed" filter', async () => {
+      await mainScreen.applyFilter("completed");
+
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        mainScreenLocators.filterBtn,
+      );
+      expect(utils.clickElement).toHaveBeenCalledWith(
+        mainScreenLocators.filterCompleted,
+      );
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        "[applyFilter] Applied filter: completed",
+      );
+    });
   });
 
-  it('should apply "all" filter', async () => {
-    const spyClick = jest
-      .spyOn(global, "clickElement" as any)
-      .mockResolvedValue(undefined);
-    await mainScreen.applyFilter("all");
-    expect(spyClick).toHaveBeenCalledWith(mainScreen.filterAll);
+  describe("markTaskComplete()", () => {
+    it("should mark task complete without titleSelector", async () => {
+      await mainScreen.markTaskComplete(true);
+
+      expect(screens.task.selectTask).not.toHaveBeenCalled();
+      expect(getCheckBoxSelector).toHaveBeenCalledWith(false);
+      expect(utils.clickElement).toHaveBeenCalledWith("mock-checkbox-false");
+      expect(getCheckBoxSelector).toHaveBeenCalledWith(true);
+      expect(utils.expectElement).toHaveBeenCalledWith("mock-checkbox-true");
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        "[markTaskComplete] Task marked as completed",
+      );
+    });
+
+    it("should mark task as active without titleSelector", async () => {
+      await mainScreen.markTaskComplete(false);
+
+      expect(getCheckBoxSelector).toHaveBeenCalledWith(true);
+      expect(utils.clickElement).toHaveBeenCalledWith("mock-checkbox-true");
+      expect(getCheckBoxSelector).toHaveBeenCalledWith(false);
+      expect(utils.expectElement).toHaveBeenCalledWith("mock-checkbox-false");
+      expect(utils.logger.info).toHaveBeenCalledWith(
+        "[markTaskComplete] Task marked as active",
+      );
+    });
+
+    it("should select task first when titleSelector is provided", async () => {
+      const titleSelector = "mock-selector";
+
+      await mainScreen.markTaskComplete(true, titleSelector);
+
+      expect(screens.task.selectTask).toHaveBeenCalledWith(titleSelector);
+      expect(utils.clickElement).toHaveBeenCalled();
+      expect(utils.expectElement).toHaveBeenCalled();
+    });
   });
 
-  it("should throw error if filter fails", async () => {
-    const spyClick = jest
-      .spyOn(global, "clickElement" as any)
-      .mockRejectedValue(new Error("Fail"));
-    await expect(mainScreen.applyFilter("active")).rejects.toThrow("Fail");
-  });
+  describe("toggleCheckbox()", () => {
+    it("should click checkbox when state differs", async () => {
+      mockElement.getAttribute.mockResolvedValue("false");
 
-  it("should mark task complete with titleSelector", async () => {
-    screens.task.selectTask = jest.fn().mockResolvedValue(undefined);
-    const spyClick = jest
-      .spyOn(global, "clickElement" as any)
-      .mockResolvedValue(undefined);
-    await mainScreen.markTaskComplete(true, "selector");
-    expect(screens.task.selectTask).toHaveBeenCalledWith("selector");
-    expect(spyClick).toHaveBeenCalled();
-  });
+      const result = await mainScreen.toggleCheckbox("mocked-selector", true);
 
-  it("should not click if checkbox already in desired state", async () => {
-    (mockElement.getAttribute as jest.Mock).mockResolvedValue("true");
-    const res = await mainScreen.toggleCheckbox("selector", true);
-    expect(mockElement.click).not.toHaveBeenCalled();
-    expect(res).toBe(mockElement);
-  });
+      expect(global.$).toHaveBeenCalledWith("mocked-selector");
+      expect(mockElement.getAttribute).toHaveBeenCalledWith("checked");
+      expect(mockElement.click).toHaveBeenCalled();
+      expect(getCheckBoxSelector).toHaveBeenCalledWith(true);
+    });
 
-  it("should click if checkbox state differs", async () => {
-    (mockElement.getAttribute as jest.Mock).mockResolvedValue("false");
-    const res = await mainScreen.toggleCheckbox("selector", true);
-    expect(mockElement.click).toHaveBeenCalled();
+    it("should not click if checkbox already in desired state", async () => {
+      mockElement.getAttribute.mockResolvedValue("true");
+
+      const result = await mainScreen.toggleCheckbox("mocked-selector", true);
+
+      expect(mockElement.getAttribute).toHaveBeenCalledWith("checked");
+      expect(mockElement.click).not.toHaveBeenCalled();
+      expect(utils.logger.log).toHaveBeenCalledWith(
+        "Checkbox already in desired state",
+      );
+      expect(result).toBe(mockElement);
+    });
+
+    it("should toggle from checked to unchecked", async () => {
+      mockElement.getAttribute.mockResolvedValue("true");
+
+      await mainScreen.toggleCheckbox("selector", false);
+
+      expect(mockElement.click).toHaveBeenCalled();
+      expect(getCheckBoxSelector).toHaveBeenCalledWith(false);
+    });
   });
 });

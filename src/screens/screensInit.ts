@@ -1,13 +1,16 @@
-import { task, MainScreen, SettingsScreen, StatisticsScreen } from "../screens";
+import {
+  TaskScreen,
+  MainScreen,
+  SettingsScreen,
+} from "../screens";
 
 class ScreenFactory {
-  private static _task: task;
+  private static _task: TaskScreen;
   private static _mainScreen: MainScreen;
   private static _settings: SettingsScreen;
-  private static _statisticsScreen: StatisticsScreen;
 
   static get task() {
-    if (!this._task) this._task = new task();
+    if (!this._task) this._task = new TaskScreen();
     return this._task;
   }
 
@@ -19,12 +22,6 @@ class ScreenFactory {
   static get settings() {
     if (!this._settings) this._settings = new SettingsScreen();
     return this._settings;
-  }
-
-  static get statistics() {
-    if (!this._statisticsScreen)
-      this._statisticsScreen = new StatisticsScreen();
-    return this._statisticsScreen;
   }
 }
 

@@ -1,28 +1,15 @@
+import { _, clickElement, expectElement, logger } from "../utils";
 import {
-  _,
-  clickElement,
-  editTextWidget,
-  expectElement,
-  getCheckBoxSelector,
   getTextSelector,
-  logger,
+  getCheckBoxSelector,
   timeout,
-} from "../utils";
+  editTextWidget,
+  taskScreenLocators,
+} from "../constants";
 import { Task, EditTaskFields, taskStatuses } from "../types";
-import { screens } from ".";
+import { screens } from "../screens";
 
-export class task {
-  newTaskHeader = '//android.widget.TextView[@text="New Task"]';
-  taskDetailsHeader = '//android.widget.TextView[@text="Task Details"]';
-  taskTitleInput =
-    '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]';
-  taskTextInput =
-    '//android.widget.EditText[.//android.widget.TextView[@text="Enter your task here."]]';
-  saveTaskBtn = "~Save task";
-  deleteBtn = "~Delete task";
-  editBtn = "~Edit Task";
-  backBtn = "~Back";
-
+export class TaskScreen {
   /**
    * Fills out a task form with title and description, then saves it.
    * Optionally marks the task as completed if task.status === taskStatuses.completed.
@@ -45,7 +32,7 @@ export class task {
     let text = task.text;
     try {
       await this.fillField({ title: title, text: text });
-      await clickElement(this.saveTaskBtn);
+      await clickElement(taskScreenLocators.saveTaskBtn);
       if (task.status === taskStatuses.completed) {
         const checkbox = getCheckBoxSelector(false);
         let checkedCheckbox = await screens.main.toggleCheckbox(checkbox, true);
@@ -71,11 +58,11 @@ export class task {
       }
 
       await this.selectTask(selector);
-      await clickElement(this.editBtn);
+      await clickElement(taskScreenLocators.editBtn);
 
       await this.fillField({ title: title, text: text });
 
-      await clickElement(this.saveTaskBtn);
+      await clickElement(taskScreenLocators.saveTaskBtn);
       selector = getTextSelector(title);
       return selector;
     } catch (error) {
@@ -86,8 +73,8 @@ export class task {
   async deleteTask(titleSelector: string) {
     try {
       await this.selectTask(titleSelector);
-      await expectElement(this.taskDetailsHeader);
-      await clickElement(this.deleteBtn);
+      await expectElement(taskScreenLocators.taskDetailsHeader);
+      await clickElement(taskScreenLocators.deleteBtn);
     } catch (error) {
       throw new Error(`[deleteTask]: ${(error as Error).message}`);
     }
@@ -130,7 +117,7 @@ export class task {
   async selectTask(selector: string) {
     try {
       await clickElement(selector);
-      await expectElement(this.taskDetailsHeader);
+      await expectElement(taskScreenLocators.taskDetailsHeader);
       logger.info(`[selectTask] Task selected successfully. ${selector}`);
     } catch (error) {
       throw new Error(`[selectTask]: ${(error as Error).message}`);
@@ -139,7 +126,7 @@ export class task {
 
   async backToMain() {
     try {
-      await clickElement(this.backBtn);
+      await clickElement(taskScreenLocators.backBtn);
       logger.info(`[backToMain] Navigated to main screen successfully.`);
     } catch (error) {
       throw new Error(`[backToMain]: ${(error as Error).message}`);
