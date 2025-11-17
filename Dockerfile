@@ -1,42 +1,42 @@
-# Use Node.js 20 as base image
-FROM node:20-bullseye
+FROM node:20-bullseye AS builder
 
-# Install required tools for Android
-RUN apt-get update && apt-get install -y \
-    openjdk-11-jdk \
-    wget \
-    unzip \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Set working directory
+WORKDIR /usr/src/app
 
-# Install Appium and Allure globally
-RUN npm install -g appium appium-uiautomator2-driver allure-commandline
-
-# Set working directory inside container to match project root
-WORKDIR /usr/src/todo-app-automation
-
-# Copy only package files first for dependency caching
+# Copy package files and install all dependencies for building
 COPY package*.json ./
-
-# Install project dependencies
 RUN npm install
 
-# Copy TypeScript config separately for incremental build
+# Copy TypeScript config and source files
 COPY tsconfig.json ./
-
-# Copy the rest of the source code
 COPY src ./src
 COPY wdio.conf.ts ./
 
 # Build TypeScript
 RUN npm run build
 
-# Copy remaining files (docs, README, etc.)
-COPY . .
+# ===== Stage 2: Runtime (Ultra-light) =====
+FROM node:20-bullseye-slim
 
-# Expose Appium default port
+WORKDIR /usr/src/app
+
+# Copy only prod dependencies
+COPY package*.json ./
+RUN npm install --omit=dev
+
+# Copy compiled output and minimal runtime files
+COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/wdio.conf.ts ./
+COPY --from=builder /usr/src/app/src/config ./src/config
+COPY --from=builder /usr/src/app/src/screens ./src/screens
+
+# Expose Appium port
 EXPOSE 4723
 
-# Default command: start Appium server and run tests
-CMD ["sh", "-c", "appium & npm test"]
+# Entry point: install Appium dynamically, then run tests
+# This keeps the image size small until runtime
+CMD ["sh", "-c", "\
+  npm install -g appium appium-uiautomator2-driver allure-commandline && \
+  appium & \
+  npm test \
+"]
