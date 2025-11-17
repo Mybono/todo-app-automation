@@ -4,6 +4,10 @@
 [![Test Framework](https://img.shields.io/badge/Framework-WebDriverIO-orange)](https://webdriver.io/)
 [![Appium](https://img.shields.io/badge/Appium-v3.1.1-purple)](https://appium.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org/)
+[![Jest](https://img.shields.io/badge/Testing-Jest-brightgreen)](https://jestjs.io/)
+[![Mocha](https://img.shields.io/badge/Testing-Mocha-red)](https://mochajs.org/)
+[![Chai](https://img.shields.io/badge/Assertion-Chai-yellow)](https://www.chaijs.com/)
+[![WebDriverIO](https://img.shields.io/badge/E2E-WebDriverIO-blueviolet)](https://webdriver.io/)
 
 Automated testing framework for Todo mobile application using Appium and WebDriverIO with TypeScript.
 
@@ -71,11 +75,11 @@ todo-app-automation/
 │   │   └── index.ts
 │   ├── tests/
 │   │   ├── e2e/                    # Test Suites (Appium/WDIO)
-│   │   │   ├── main.test.ts        # ✅ Task management (add, edit, delete)
-│   │   │   ├── checkbox.test.ts.   # ☑️ Task completion/activation
-│   │   │   ├── filter.test.ts      # 🔍 Task filtering
-│   │   │   └── navigate.test.ts.   # 🧭 Screen navigation
-│   │   └── unit/                   # unit tests Jest
+│   │   │   ├── main.test.ts        # Task management
+│   │   │   ├── checkbox.test.ts.   # Task completion/activation
+│   │   │   ├── filter.test.ts      # Task filtering
+│   │   │   └── navigate.test.ts.   # Screen navigation
+│   │   └── unit/                   # unit tests (Jest)
 │   │       ├── main.test.ts
 │   │       ├── settings.test.ts
 │   │       └── task.test.ts
@@ -298,7 +302,19 @@ on:
 
 ### Pipeline Stages
 
-#### 1. **Lint TypeScript** 🧹
+![Allure Report Example](./assets/pipelineExample.png)
+
+#### 1. **Unit Tests** 🧪
+
+- Runs unit tests using **Jest** with coverage.
+- Jest unit tests cover the **core logic** of the main application classes:
+  - **MainScreen** – task creation, selection, and completion logic.
+  - **SettingsScreen** – applying filters, navigating menus, opening statistics.
+  - **TaskScreen** – task editing, saving, and deletion workflows.
+
+![Allure Report Example](./assets/unitTestEx.png)
+
+#### 2. **Lint TypeScript** 🧹
 
 - Runs ESLint on all `.ts` files
 - Checks code quality and standards
@@ -308,7 +324,7 @@ on:
 npm run lint
 ```
 
-#### 2. **Dependency Check** 📦
+#### 3. **Dependency Check** 📦
 
 - Detects changes in `package.json` or `package-lock.json`
 - Alerts reviewers about:
@@ -316,7 +332,7 @@ npm run lint
   - License compliance
   - Bundle size impact
 
-#### 3. **Auto-format with Prettier** 🎨
+#### 4. **Auto-format with Prettier** 🎨
 
 - Automatically formats code
 - Commits changes back to PR
@@ -522,21 +538,16 @@ Ensure all required checks pass:
 - ✅ android exists
 - ✅ emulator exists
 
-## 🤝 Contributing
+### 📝 TODO
 
-1. Create feature branch: `git checkout -b feature/new-tests`
-2. Make changes and ensure tests pass: `npm test`
-3. Run linting: `npm run lint:fix`
-4. Format code: `npm run format`
-5. Commit: `git commit -m "feat: add new test cases"`
-6. Push: `git push origin feature/new-tests`
-7. Create Pull Request
-
-The CI pipeline will automatically:
-
-- Lint your code
-- Check dependencies
-- Auto-format with Prettier
+- Develop test scenarios and implement tests to verify the app's behavior under unexpected device events:
+  - Network loss (Wi-Fi / mobile data)
+  - Screen rotation (portrait ↔ landscape)
+  - Device lock and unlock
+  - Background app interruptions
+  - Sudden screen off
+  - Battery drain / low battery simulation
+- Develop & Implement Slack notfication servise
 
 ## 📝 Notes
 
@@ -601,6 +612,16 @@ await screens.addEdit.deleteTask(taskSelector);
 - [Android Debug Bridge (ADB)](https://developer.android.com/tools/adb)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Mocha Test Framework](https://mochajs.org/)
+
+## 🤝 Contributing
+
+1. Create feature branch: `git checkout -b feature/new-tests`
+2. Make changes and ensure tests pass: `npm test`
+3. Run linting: `npm run lint:fix`
+4. Format code: `npm run format`
+5. Commit: `git commit -m "feat: add new test cases"`
+6. Push: `git push origin feature/new-tests`
+7. Create Pull Request
 
 ## 📧 Support
 

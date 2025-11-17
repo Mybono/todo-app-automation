@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-    # ============================================
+  # ============================================
   # Unit Tests
   # ============================================
   unit-tests:
@@ -36,7 +36,7 @@ jobs:
           file: ./coverage/lcov.info
           flags: unittests
           name: codecov-umbrella
-          
+
   # ============================================
   # Lint TypeScript
   # ============================================
