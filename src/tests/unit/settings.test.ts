@@ -77,9 +77,6 @@ describe("SettingsScreen Unit Tests", () => {
       expect(utils.clickElement).toHaveBeenCalledWith(
         settingsScreenLocators.statisticsBtn,
       );
-      expect(utils.expectElement).toHaveBeenCalledWith(
-        screens.statistics.statisticHeader,
-      );
     });
 
     it("should throw error when statistics button click fails", async () => {

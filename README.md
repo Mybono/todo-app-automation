@@ -69,16 +69,25 @@ todo-app-automation/
 │   │   ├── statistic.screen.ts     # Statistic screen list
 │   │   ├── screensInit.ts          # Screen factory pattern
 │   │   └── index.ts
-│   ├── tests/                      # Test Suites
-│   │   ├── main.test.ts            # ✅ Task management (add, edit, delete)
-│   │   ├── checkbox.test.ts        # ☑️ Task completion/activation
-│   │   ├── filter.test.ts          # 🔍 Task filtering
-│   │   ├── navigate.test.ts        # 🧭 Screen navigation
-│   │   └── debug.test.ts           # 🐛 Debug utilities
+│   ├── tests/
+│   │   ├── e2e/                    # Test Suites (Appium/WDIO)
+│   │   │   ├── main.test.ts        # ✅ Task management (add, edit, delete)
+│   │   │   ├── checkbox.test.ts.   # ☑️ Task completion/activation
+│   │   │   ├── filter.test.ts      # 🔍 Task filtering
+│   │   │   └── navigate.test.ts.   # 🧭 Screen navigation        
+│   │   └── unit/                   # unit tests Jest
+│   │       ├── main.test.ts
+│   │       ├── settings.test.ts
+│   │       └── task.test.ts
+│   │ 
+│   ├── constants/                             # Locators
+│   │   ├── mainScreen.locators.screen.ts      # Main Screen
+│   │   ├── settingsScreen.locators.screen.ts  # Settings Screen locators
+│   │   ├── taskScreen.locataros.test.ts       # TaskScreen locators
+│   │   ├── common.test.ts                     # generic locators
+│   │   └── index.ts
 │   └── utils/
-│       ├── constants.ts            # Timeout constants
 │       ├── logger.ts               # Custom logger with colors
-│       ├── selectors.ts            # Selectors
 │       ├── services.ts             # Services
 │       ├── testDataGenerator.ts    # Random test data generation
 │       └── index.ts
@@ -190,6 +199,8 @@ app/apk/app-debug.apk
 emulator -list-avds
 
 # Start emulator
+appium
+OR
 emulator -avd <emulator_name> -no-snapshot-load
 ```
 
@@ -381,6 +392,7 @@ The test plan includes:
 
 Tests output to console with colored logs:
 
+
 ```
 Todo App - Task Management
   ✅ should add a task (3.2s)
@@ -409,26 +421,10 @@ Todo App - Navigation
 
 18 passing (45.6s)
 ```
+## 📈 Allure Reports
+![Allure Report Example](./assets/allureReportExample1.png)
+![Allure Report Example](./assets/allureReportExample2.png)
 
-### Custom Logger
-
-The framework includes a custom logger with timestamps and color-coding:
-
-```typescript
-import { logger } from "./utils";
-
-logger.info("Task added successfully");
-logger.warn("Element took longer than expected");
-logger.error("Failed to find element", error);
-logger.debug("Page source captured for debugging");
-```
-
-### Log Levels
-
-- 🔴 **ERROR** - Critical failures
-- 🟡 **WARN** - Warnings and slower operations
-- 🟢 **INFO** - Successful operations
-- 🔵 **DEBUG** - Detailed debugging information
 
 ## 🐛 Troubleshooting
 

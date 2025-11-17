@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist reports",
     "build": "npm run clean && tsc"
   },
   "devDependencies": {
@@ -40,5 +40,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "webdriverio": "^8.40.0"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.19"
   }
 }

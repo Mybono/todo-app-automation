@@ -92,6 +92,16 @@ export class TaskScreen {
    */
   async fillField(fields: EditTaskFields) {
     try {
+      await browser.waitUntil(
+        async () => {
+          const elems = await $$(editTextWidget);
+          return elems.length >= 2;
+        },
+        {
+          timeout: timeout.elementAppear,
+          timeoutMsg: `[fillField]: Expected at least 2 inputs of type ${editTextWidget}`,
+        }
+      );
       const inputs = await $$(editTextWidget);
 
       if (fields.title !== undefined) {

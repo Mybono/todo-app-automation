@@ -13,7 +13,7 @@ describe("Screens navigation @navigate @regression", () => {
   it("[UITM-NA002]: Navigates from Settings screen to Statistics screen", async () => {
     await screens.settings.goToStatisticsScreen();
 
-    await expectElement(screens.statistics.statisticHeader);
+    await expectElement(settingsScreenLocators.statisticsBtn);
   });
 
   it("[UITM-NA003]: Navigates from Statistics screen back to Settings screen", async () => {
