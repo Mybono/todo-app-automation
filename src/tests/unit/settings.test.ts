@@ -1,9 +1,11 @@
 import "./setup";
-import { settingsScreenLocators, mainScreenLocators } from "../../constants";
 import { SettingsScreen } from "../../screens/settings.screen";
 import * as utils from "../../utils";
 import { screens } from "../../screens";
 import { createMockElement, resetAllMocks } from "./setup";
+
+// Import mocked constants
+const { settingsScreenLocators, mainScreenLocators } = require("../../constants");
 
 describe("SettingsScreen Unit Tests", () => {
   let settingsScreen: SettingsScreen;
@@ -24,30 +26,30 @@ describe("SettingsScreen Unit Tests", () => {
       await settingsScreen.goToNavigateScreen();
 
       expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.burgerMenuBtn,
+        settingsScreenLocators.burgerMenuBtn
       );
       expect(utils.expectElement).toHaveBeenCalledWith(
-        settingsScreenLocators.todoHeader,
+        settingsScreenLocators.todoHeader
       );
     });
 
     it("should throw error when burger menu click fails", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Burger menu not found"),
+        new Error("Burger menu not found")
       );
 
       await expect(settingsScreen.goToNavigateScreen()).rejects.toThrow(
-        "[goToNavigateScreen]: Burger menu not found",
+        "[goToNavigateScreen]: Burger menu not found"
       );
     });
 
     it("should throw error when Todo header is not displayed", async () => {
       (utils.expectElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Todo header not found"),
+        new Error("Todo header not found")
       );
 
       await expect(settingsScreen.goToNavigateScreen()).rejects.toThrow(
-        "[goToNavigateScreen]: Todo header not found",
+        "[goToNavigateScreen]: Todo header not found"
       );
     });
 
@@ -75,27 +77,27 @@ describe("SettingsScreen Unit Tests", () => {
       await settingsScreen.goToStatisticsScreen();
 
       expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.statisticsBtn,
+        settingsScreenLocators.statisticsBtn
       );
     });
 
     it("should throw error when statistics button click fails", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Statistics button not found"),
+        new Error("Statistics button not found")
       );
 
       await expect(settingsScreen.goToStatisticsScreen()).rejects.toThrow(
-        "[goToStatisticsScreen]: Statistics button not found",
+        "[goToStatisticsScreen]: Statistics button not found"
       );
     });
 
     it("should throw error when statistics header is not displayed", async () => {
       (utils.expectElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Statistics header not found"),
+        new Error("Statistics header not found")
       );
 
       await expect(settingsScreen.goToStatisticsScreen()).rejects.toThrow(
-        "[goToStatisticsScreen]: Statistics header not found",
+        "[goToStatisticsScreen]: Statistics header not found"
       );
     });
 
@@ -103,7 +105,7 @@ describe("SettingsScreen Unit Tests", () => {
       await settingsScreen.goToStatisticsScreen();
 
       expect(utils.expectElement).toHaveBeenCalledWith(
-        '//android.widget.TextView[@text="Statistics"]',
+        '//android.widget.TextView[@text="Statistics"]'
       );
     });
   });
@@ -113,30 +115,30 @@ describe("SettingsScreen Unit Tests", () => {
       await settingsScreen.goToTasksScreen();
 
       expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.taskListBtn,
+        settingsScreenLocators.taskListBtn
       );
       expect(utils.expectElement).toHaveBeenCalledWith(
-        mainScreenLocators.todoTitle,
+        mainScreenLocators.todoTitle
       );
     });
 
     it("should throw error when task list button click fails", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Task list button not found"),
+        new Error("Task list button not found")
       );
 
       await expect(settingsScreen.goToTasksScreen()).rejects.toThrow(
-        "[goToStatisticsScreen]: Task list button not found",
+        "[goToStatisticsScreen]: Task list button not found"
       );
     });
 
     it("should throw error when todo title is not displayed", async () => {
       (utils.expectElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Todo title not found"),
+        new Error("Todo title not found")
       );
 
       await expect(settingsScreen.goToTasksScreen()).rejects.toThrow(
-        "[goToStatisticsScreen]: Todo title not found",
+        "[goToStatisticsScreen]: Todo title not found"
       );
     });
 
@@ -144,7 +146,7 @@ describe("SettingsScreen Unit Tests", () => {
       await settingsScreen.goToTasksScreen();
 
       expect(utils.expectElement).toHaveBeenCalledWith(
-        '//android.widget.TextView[@text="Todo"]',
+        '//android.widget.TextView[@text="Todo"]'
       );
     });
 
@@ -174,7 +176,7 @@ describe("SettingsScreen Unit Tests", () => {
       expect(utils.clickElement).toHaveBeenCalledTimes(1);
       expect(utils.expectElement).toHaveBeenCalledTimes(1);
       expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.statisticsBtn,
+        settingsScreenLocators.statisticsBtn
       );
     });
 
@@ -184,7 +186,7 @@ describe("SettingsScreen Unit Tests", () => {
       expect(utils.clickElement).toHaveBeenCalledTimes(1);
       expect(utils.expectElement).toHaveBeenCalledTimes(1);
       expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.taskListBtn,
+        settingsScreenLocators.taskListBtn
       );
     });
 
@@ -192,10 +194,10 @@ describe("SettingsScreen Unit Tests", () => {
       await settingsScreen.goToNavigateScreen();
 
       expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.burgerMenuBtn,
+        settingsScreenLocators.burgerMenuBtn
       );
       expect(utils.expectElement).toHaveBeenCalledWith(
-        settingsScreenLocators.todoHeader,
+        settingsScreenLocators.todoHeader
       );
     });
   });
@@ -203,31 +205,31 @@ describe("SettingsScreen Unit Tests", () => {
   describe("Error handling", () => {
     it("should handle network timeout in goToNavigateScreen", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Timeout exceeded"),
+        new Error("Timeout exceeded")
       );
 
       await expect(settingsScreen.goToNavigateScreen()).rejects.toThrow(
-        "[goToNavigateScreen]: Timeout exceeded",
+        "[goToNavigateScreen]: Timeout exceeded"
       );
     });
 
     it("should handle network timeout in goToStatisticsScreen", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Timeout exceeded"),
+        new Error("Timeout exceeded")
       );
 
       await expect(settingsScreen.goToStatisticsScreen()).rejects.toThrow(
-        "[goToStatisticsScreen]: Timeout exceeded",
+        "[goToStatisticsScreen]: Timeout exceeded"
       );
     });
 
     it("should handle network timeout in goToTasksScreen", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Timeout exceeded"),
+        new Error("Timeout exceeded")
       );
 
       await expect(settingsScreen.goToTasksScreen()).rejects.toThrow(
-        "[goToStatisticsScreen]: Timeout exceeded",
+        "[goToStatisticsScreen]: Timeout exceeded"
       );
     });
 
@@ -236,7 +238,7 @@ describe("SettingsScreen Unit Tests", () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(originalError);
 
       await expect(settingsScreen.goToNavigateScreen()).rejects.toThrow(
-        "[goToNavigateScreen]: Custom error message",
+        "[goToNavigateScreen]: Custom error message"
       );
     });
 
@@ -245,7 +247,7 @@ describe("SettingsScreen Unit Tests", () => {
       (utils.expectElement as jest.Mock).mockRejectedValueOnce(originalError);
 
       await expect(settingsScreen.goToStatisticsScreen()).rejects.toThrow(
-        "[goToStatisticsScreen]: Statistics error",
+        "[goToStatisticsScreen]: Statistics error"
       );
     });
   });
