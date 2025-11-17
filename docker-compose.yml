@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  todo-tests:
+    build: .
+    container_name: todo-app-tests
+    ports:
+      - "4723:4723" # Expose Appium port
+    volumes:
+      - .:/usr/src/todo-app-automation
+      - ./reports:/usr/src/todo-app-automation/reports
+    environment:
+      NODE_ENV: "test"
+    command: sh -c "appium & npm test"
