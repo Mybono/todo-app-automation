@@ -13,6 +13,7 @@
 Automated testing framework for Todo mobile application using Appium and WebDriverIO with TypeScript.
 
 ## 📋 Table of Contents
+
 - [Overview](#overview)
 - [Technology Stack](./docs/stack.md)
 - [Project Structure](./docs/structure.md)
@@ -26,17 +27,17 @@ Automated testing framework for Todo mobile application using Appium and WebDriv
 - [TODO](#todo)
 - [Notes](#notes)
 
-
 ## Overview
+
 This project implements automated tests for a Todo mobile application covering:
 
 - ✅ Task creation and management (add, edit, delete)
-- ✅  Task editing with validation
-- ✅  Task deletion with confirmation
-- ✅  Task completion/activation (checkbox functionality)
-- ✅  Task filtering (All, Active, Completed)
-- ✅  Navigation between screens (Tasks, Settings, Statistics)
-- ✅  UI validation and push notifications
+- ✅ Task editing with validation
+- ✅ Task deletion with confirmation
+- ✅ Task completion/activation (checkbox functionality)
+- ✅ Task filtering (All, Active, Completed)
+- ✅ Navigation between screens (Tasks, Settings, Statistics)
+- ✅ UI validation and push notifications
 
 ## [Technology Stack](./docs/stack.md)
 
@@ -103,6 +104,7 @@ adb devices
 ```
 
 ## Alternative Installation via Docker
+
 You can run all tests and the Appium server without installing Node.js, Appium, or Android SDK locally by using our prebuilt Docker image.
 
 ### Pull and Run the Docker Image
@@ -113,28 +115,31 @@ docker pull mybono/todo-app-automation:latest
 ```
 
 ### Run tests inside the container
+
 ```bash
 docker run --rm -it \
   -v $(pwd)/reports:/usr/src/app/reports \
   -p 4723:4723 \
   mybono/todo-app-automation:latest
 ```
+
 ## 📘 Explanation of Flags
 
-| Flag | Description |
-|------|-------------|
+| Flag                                     | Description                                                               |
+| ---------------------------------------- | ------------------------------------------------------------------------- |
 | `-v $(pwd)/reports:/usr/src/app/reports` | Mounts local reports folder so test reports persist outside the container |
-| `-p 4723:4723` | Exposes Appium default port |
-| `--rm` | Removes container after execution |
-| `-it` | Interactive mode (shows logs in real time) |
+| `-p 4723:4723`                           | Exposes Appium default port                                               |
+| `--rm`                                   | Removes container after execution                                         |
+| `-it`                                    | Interactive mode (shows logs in real time)                                |
 
 ---
+
 🔍 Note about `--rm`
--  `--rm` deletes the container after tests finish, but the Docker image remains on your machine.
-You will NOT need to download it again unless you manually delete the image.
 
-## 📦 [Docker Hub Image](https://hub.docker.com/r/mybono/todo-app-automation) 
+- `--rm` deletes the container after tests finish, but the Docker image remains on your machine.
+  You will NOT need to download it again unless you manually delete the image.
 
+## 📦 [Docker Hub Image](https://hub.docker.com/r/mybono/todo-app-automation)
 
 ## ✅ Benefits
 

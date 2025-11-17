@@ -1,6 +1,7 @@
 ## Prerequisites
 
 ### Required Software
+
 1. **Java Development Kit (JDK)**
    - Version: 11 or higher
    - Required for Android SDK
@@ -8,6 +9,7 @@
    ```bash
    java -version
    ```
+
 2. **Android SDK & Platform Tools**
    - Android SDK Platform 34 (Android 14)
    - Android SDK Build-Tools
@@ -51,6 +53,5 @@
    ```
 
    Ensure all checks pass ✅
-
 
 [⬅️ Back to README](../README.md#overview)
