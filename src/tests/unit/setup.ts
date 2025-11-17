@@ -1,12 +1,11 @@
-
-import { 
-  mainScreenLocators, 
-  settingsScreenLocators, 
+import {
+  mainScreenLocators,
+  settingsScreenLocators,
   taskScreenLocators,
   push,
   headers,
-  timeout 
-} from '../../constants';
+  timeout,
+} from "../../constants";
 
 // Mock WebDriverIO driver globally
 global.driver = {
@@ -32,15 +31,15 @@ global.$$ = jest.fn() as any;
 export const mockFillTask = jest.fn().mockResolvedValue(undefined);
 export const mockSelectTask = jest.fn().mockResolvedValue(undefined);
 
-// Mock constants module 
+// Mock constants module
 jest.mock("../../constants", () => {
   const actualConstants = jest.requireActual("../../constants");
-  
+
   return {
     ...actualConstants,
     getTextSelector: jest.fn((text: string) => `mock-text-selector-${text}`),
     getCheckBoxSelector: jest.fn((isCompleted: boolean) =>
-      isCompleted ? "mock-checkbox-true" : "mock-checkbox-false"
+      isCompleted ? "mock-checkbox-true" : "mock-checkbox-false",
     ),
     fetchSource: jest.fn(),
   };
@@ -68,7 +67,7 @@ jest.mock("../../utils", () => ({
 // Mock screensInit module
 jest.mock("../../screens/screensInit", () => {
   const { mockFillTask, mockSelectTask } = require("./setup");
-  
+
   return {
     screens: {
       task: {
@@ -86,11 +85,11 @@ jest.mock("../../screens/screensInit", () => {
 
 export {
   mainScreenLocators,
-  settingsScreenLocators, 
+  settingsScreenLocators,
   taskScreenLocators,
   push,
   headers,
-  timeout
+  timeout,
 };
 
 /**
@@ -141,7 +140,7 @@ export function resetAllMocks() {
   const mockElements = createMockElements();
   (global.$$ as jest.Mock).mockResolvedValue(mockElements);
   (global.browser.waitUntil as jest.Mock).mockResolvedValue(true);
-  
+
   // Reset our custom mocks
   mockFillTask.mockClear().mockResolvedValue(undefined);
   mockSelectTask.mockClear().mockResolvedValue(undefined);

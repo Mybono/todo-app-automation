@@ -1,4 +1,4 @@
-import "./setup"; 
+import "./setup";
 import { MainScreen } from "../../screens/main.screen";
 import { taskStatuses } from "../../types";
 import * as utils from "../../utils";
@@ -15,7 +15,7 @@ const {
 // Mock the actual screens module to use our mocks
 jest.mock("../../screens/screensInit", () => {
   const { mockFillTask, mockSelectTask } = require("./setup");
-  
+
   return {
     screens: {
       task: {
@@ -44,7 +44,7 @@ describe("MainScreen Unit Tests", () => {
     (global.$ as jest.Mock).mockReturnValue(mockElement);
     (utils.clickElement as jest.Mock).mockResolvedValue(undefined);
     (utils.expectElement as jest.Mock).mockResolvedValue(undefined);
-    
+
     // Reset our custom mocks
     mockFillTask.mockClear().mockResolvedValue(undefined);
     mockSelectTask.mockClear().mockResolvedValue(undefined);
@@ -62,7 +62,7 @@ describe("MainScreen Unit Tests", () => {
       const result = await mainScreen.addTask(task);
 
       expect(utils.clickElement).toHaveBeenCalledWith(
-        mainScreenLocators.addTaskBtn
+        mainScreenLocators.addTaskBtn,
       );
       expect(mockFillTask).toHaveBeenCalledWith({
         title: "Test Task",
@@ -70,15 +70,15 @@ describe("MainScreen Unit Tests", () => {
         status: undefined,
       });
       expect(utils.expectElement).toHaveBeenCalledWith(
-        mainScreenLocators.todoTitle
+        mainScreenLocators.todoTitle,
       );
       expect(utils.expectElement).toHaveBeenCalledWith(
-        mainScreenLocators.allTaskTitle
+        mainScreenLocators.allTaskTitle,
       );
       expect(getTextSelector).toHaveBeenCalledWith("Test Task");
       expect(result).toBe("mock-text-selector-Test Task");
       expect(utils.logger.info).toHaveBeenCalledWith(
-        '[addTask] Task "Test Task" added successfully.'
+        '[addTask] Task "Test Task" added successfully.',
       );
     });
 
@@ -136,13 +136,13 @@ describe("MainScreen Unit Tests", () => {
       await mainScreen.applyFilter("all");
 
       expect(utils.clickElement).toHaveBeenCalledWith(
-        mainScreenLocators.filterBtn
+        mainScreenLocators.filterBtn,
       );
       expect(utils.clickElement).toHaveBeenCalledWith(
-        mainScreenLocators.filterAll
+        mainScreenLocators.filterAll,
       );
       expect(utils.logger.info).toHaveBeenCalledWith(
-        "[applyFilter] Applied filter: all"
+        "[applyFilter] Applied filter: all",
       );
     });
 
@@ -150,13 +150,13 @@ describe("MainScreen Unit Tests", () => {
       await mainScreen.applyFilter("active");
 
       expect(utils.clickElement).toHaveBeenCalledWith(
-        mainScreenLocators.filterBtn
+        mainScreenLocators.filterBtn,
       );
       expect(utils.clickElement).toHaveBeenCalledWith(
-        mainScreenLocators.filterActive
+        mainScreenLocators.filterActive,
       );
       expect(utils.logger.info).toHaveBeenCalledWith(
-        "[applyFilter] Applied filter: active"
+        "[applyFilter] Applied filter: active",
       );
     });
 
@@ -164,13 +164,13 @@ describe("MainScreen Unit Tests", () => {
       await mainScreen.applyFilter("completed");
 
       expect(utils.clickElement).toHaveBeenCalledWith(
-        mainScreenLocators.filterBtn
+        mainScreenLocators.filterBtn,
       );
       expect(utils.clickElement).toHaveBeenCalledWith(
-        mainScreenLocators.filterCompleted
+        mainScreenLocators.filterCompleted,
       );
       expect(utils.logger.info).toHaveBeenCalledWith(
-        "[applyFilter] Applied filter: completed"
+        "[applyFilter] Applied filter: completed",
       );
     });
   });
@@ -185,7 +185,7 @@ describe("MainScreen Unit Tests", () => {
       expect(getCheckBoxSelector).toHaveBeenCalledWith(true);
       expect(utils.expectElement).toHaveBeenCalledWith("mock-checkbox-true");
       expect(utils.logger.info).toHaveBeenCalledWith(
-        "[markTaskComplete] Task marked as completed"
+        "[markTaskComplete] Task marked as completed",
       );
     });
 
@@ -197,7 +197,7 @@ describe("MainScreen Unit Tests", () => {
       expect(getCheckBoxSelector).toHaveBeenCalledWith(false);
       expect(utils.expectElement).toHaveBeenCalledWith("mock-checkbox-false");
       expect(utils.logger.info).toHaveBeenCalledWith(
-        "[markTaskComplete] Task marked as active"
+        "[markTaskComplete] Task marked as active",
       );
     });
 
@@ -232,7 +232,7 @@ describe("MainScreen Unit Tests", () => {
       expect(mockElement.getAttribute).toHaveBeenCalledWith("checked");
       expect(mockElement.click).not.toHaveBeenCalled();
       expect(utils.logger.log).toHaveBeenCalledWith(
-        "Checkbox already in desired state"
+        "Checkbox already in desired state",
       );
       expect(result).toBe(mockElement);
     });

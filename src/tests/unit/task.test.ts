@@ -48,7 +48,7 @@ describe("TaskScreen Unit Tests", () => {
       expect(mockElements[0].setValue).toHaveBeenCalledWith("Test Task");
       expect(mockElements[1].setValue).toHaveBeenCalledWith("Test Description");
       expect(utils.clickElement).toHaveBeenCalledWith(
-        taskScreenLocators.saveTaskBtn
+        taskScreenLocators.saveTaskBtn,
       );
       expect(screens.main.toggleCheckbox).not.toHaveBeenCalled();
     });
@@ -64,7 +64,7 @@ describe("TaskScreen Unit Tests", () => {
         waitForDisplayed: jest.fn().mockResolvedValue(undefined),
       };
       (screens.main.toggleCheckbox as jest.Mock).mockResolvedValue(
-        mockCheckedCheckbox
+        mockCheckedCheckbox,
       );
 
       await taskScreen.fillTask(task);
@@ -72,12 +72,12 @@ describe("TaskScreen Unit Tests", () => {
       expect(mockElements[0].setValue).toHaveBeenCalledWith("Completed Task");
       expect(mockElements[1].setValue).toHaveBeenCalledWith("Description");
       expect(utils.clickElement).toHaveBeenCalledWith(
-        taskScreenLocators.saveTaskBtn
+        taskScreenLocators.saveTaskBtn,
       );
       expect(getCheckBoxSelector).toHaveBeenCalledWith(false);
       expect(screens.main.toggleCheckbox).toHaveBeenCalledWith(
         "mock-checkbox-false",
-        true
+        true,
       );
       expect(mockCheckedCheckbox.waitForDisplayed).toHaveBeenCalledWith({
         timeout: timeout.elementAppear,
@@ -97,17 +97,17 @@ describe("TaskScreen Unit Tests", () => {
 
       expect(utils.clickElement).toHaveBeenCalledWith("mock-selector");
       expect(utils.expectElement).toHaveBeenCalledWith(
-        taskScreenLocators.taskDetailsHeader
+        taskScreenLocators.taskDetailsHeader,
       );
       expect(utils.clickElement).toHaveBeenCalledWith(
-        taskScreenLocators.editBtn
+        taskScreenLocators.editBtn,
       );
       expect(mockElements[0].setValue).toHaveBeenCalledWith("Updated Title");
       expect(mockElements[1].setValue).toHaveBeenCalledWith(
-        "Updated Description"
+        "Updated Description",
       );
       expect(utils.clickElement).toHaveBeenCalledWith(
-        taskScreenLocators.saveTaskBtn
+        taskScreenLocators.saveTaskBtn,
       );
       expect(getTextSelector).toHaveBeenCalledWith("Updated Title");
       expect(result).toBe("mock-text-selector-Updated Title");
@@ -123,14 +123,14 @@ describe("TaskScreen Unit Tests", () => {
       expect(utils._.getRandomText).toHaveBeenCalled();
       expect(mockElements[0].setValue).toHaveBeenCalledWith("Random Title");
       expect(mockElements[1].setValue).toHaveBeenCalledWith(
-        "Random Description"
+        "Random Description",
       );
       expect(result).toBe("mock-text-selector-Random Title");
     });
 
     it("should throw error when selectTask fails", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Task not found")
+        new Error("Task not found"),
       );
 
       const task = {
@@ -140,7 +140,7 @@ describe("TaskScreen Unit Tests", () => {
       };
 
       await expect(taskScreen.editTask(task)).rejects.toThrow(
-        "[editTask]: [selectTask]: Task not found"
+        "[editTask]: [selectTask]: Task not found",
       );
     });
   });
@@ -153,30 +153,30 @@ describe("TaskScreen Unit Tests", () => {
 
       expect(utils.clickElement).toHaveBeenCalledWith(titleSelector);
       expect(utils.expectElement).toHaveBeenCalledWith(
-        taskScreenLocators.taskDetailsHeader
+        taskScreenLocators.taskDetailsHeader,
       );
       expect(utils.clickElement).toHaveBeenCalledWith(
-        taskScreenLocators.deleteBtn
+        taskScreenLocators.deleteBtn,
       );
     });
 
     it("should throw error when task selection fails", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Task not found")
+        new Error("Task not found"),
       );
 
       await expect(taskScreen.deleteTask("invalid-selector")).rejects.toThrow(
-        "[deleteTask]: [selectTask]: Task not found"
+        "[deleteTask]: [selectTask]: Task not found",
       );
     });
 
     it("should throw error when expectElement fails", async () => {
       (utils.expectElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Task details not displayed")
+        new Error("Task details not displayed"),
       );
 
       await expect(taskScreen.deleteTask("mock-selector")).rejects.toThrow(
-        "[deleteTask]: [selectTask]: Task details not displayed"
+        "[deleteTask]: [selectTask]: Task details not displayed",
       );
     });
   });
@@ -192,7 +192,7 @@ describe("TaskScreen Unit Tests", () => {
       expect(mockElements[0].setValue).toHaveBeenCalledWith("New Title");
       expect(mockElements[1].setValue).not.toHaveBeenCalled();
       expect(utils.logger.info).toHaveBeenCalledWith(
-        '[fillField] Title edited to "New Title" successfully.'
+        '[fillField] Title edited to "New Title" successfully.',
       );
     });
 
@@ -206,7 +206,7 @@ describe("TaskScreen Unit Tests", () => {
       expect(mockElements[1].setValue).toHaveBeenCalledWith("New Description");
       expect(mockElements[0].setValue).not.toHaveBeenCalled();
       expect(utils.logger.info).toHaveBeenCalledWith(
-        '[fillField] Text edited to "New Description" successfully.'
+        '[fillField] Text edited to "New Description" successfully.',
       );
     });
 
@@ -218,13 +218,13 @@ describe("TaskScreen Unit Tests", () => {
 
       expect(mockElements[0].setValue).toHaveBeenCalledWith("Updated Title");
       expect(mockElements[1].setValue).toHaveBeenCalledWith(
-        "Updated Description"
+        "Updated Description",
       );
       expect(utils.logger.info).toHaveBeenCalledWith(
-        '[fillField] Title edited to "Updated Title" successfully.'
+        '[fillField] Title edited to "Updated Title" successfully.',
       );
       expect(utils.logger.info).toHaveBeenCalledWith(
-        '[fillField] Text edited to "Updated Description" successfully.'
+        '[fillField] Text edited to "Updated Description" successfully.',
       );
     });
 
@@ -251,30 +251,30 @@ describe("TaskScreen Unit Tests", () => {
 
       expect(utils.clickElement).toHaveBeenCalledWith(selector);
       expect(utils.expectElement).toHaveBeenCalledWith(
-        taskScreenLocators.taskDetailsHeader
+        taskScreenLocators.taskDetailsHeader,
       );
       expect(utils.logger.info).toHaveBeenCalledWith(
-        "[selectTask] Task selected successfully. mock-task-selector"
+        "[selectTask] Task selected successfully. mock-task-selector",
       );
     });
 
     it("should throw error when task click fails", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Element not clickable")
+        new Error("Element not clickable"),
       );
 
       await expect(taskScreen.selectTask("invalid-selector")).rejects.toThrow(
-        "[selectTask]: Element not clickable"
+        "[selectTask]: Element not clickable",
       );
     });
 
     it("should throw error when details header not displayed", async () => {
       (utils.expectElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Header not found")
+        new Error("Header not found"),
       );
 
       await expect(taskScreen.selectTask("mock-selector")).rejects.toThrow(
-        "[selectTask]: Header not found"
+        "[selectTask]: Header not found",
       );
     });
   });
@@ -284,20 +284,20 @@ describe("TaskScreen Unit Tests", () => {
       await taskScreen.backToMain();
 
       expect(utils.clickElement).toHaveBeenCalledWith(
-        taskScreenLocators.backBtn
+        taskScreenLocators.backBtn,
       );
       expect(utils.logger.info).toHaveBeenCalledWith(
-        "[backToMain] Navigated to main screen successfully."
+        "[backToMain] Navigated to main screen successfully.",
       );
     });
 
     it("should throw error when back button click fails", async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error("Back button not found")
+        new Error("Back button not found"),
       );
 
       await expect(taskScreen.backToMain()).rejects.toThrow(
-        "[backToMain]: Back button not found"
+        "[backToMain]: Back button not found",
       );
     });
   });
