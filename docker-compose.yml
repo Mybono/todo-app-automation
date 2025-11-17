@@ -5,11 +5,9 @@ services:
     build: .
     container_name: todo-app-tests
     ports:
-      - "4723:4723"  # Expose Appium port to host
+      - "4723:4723"
     volumes:
-      - .:/usr/src/app                  # Mount project directory
-      - ./reports:/usr/src/app/reports  # Mount reports folder to persist results
+      - .:/usr/src/app
+      - ./reports:/usr/src/app/reports
     environment:
       NODE_ENV: "test"
-    # Command is already defined in Dockerfile, can be overridden if needed
-    command: sh -c "npm install -g appium appium-uiautomator2-driver allure-commandline && appium & npm test"
