@@ -13,6 +13,7 @@
 Automated testing framework for Todo mobile application using Appium and WebDriverIO with TypeScript.
 
 ## 📋 Table of Contents
+
 - [Overview](#overview)
 - [Technology Stack](./docs/stack.md)
 - [Project Structure](./docs/structure.md)
@@ -27,6 +28,7 @@ Automated testing framework for Todo mobile application using Appium and WebDriv
 - [Notes](#notes)
 
 ## Overview
+
 This project implements automated tests for a Todo mobile application covering:
 
 - ✅ Task creation and management (add, edit, delete)
@@ -38,10 +40,13 @@ This project implements automated tests for a Todo mobile application covering:
 - ✅ UI validation and push notifications
 
 ## [Technology Stack](./docs/stack.md)
+
 ## [Project Structure](./docs/structure.md)
+
 ## [Prerequisites](./docs/prerequisites.md)
 
 ## Installation
+
 ### 1. Clone Repository
 
 ```bash
@@ -50,6 +55,7 @@ cd todo-app-automation
 ```
 
 ### 2. Install Dependencies
+
 ```bash
 npm install
 ```
@@ -334,7 +340,6 @@ npm run report
 - [Android Debug Bridge (ADB)](https://developer.android.com/tools/adb)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Mocha Test Framework](https://mochajs.org/)
-
 
 ---
 

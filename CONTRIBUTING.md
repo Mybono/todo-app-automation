@@ -8,6 +8,7 @@
 ## Support
 
 For questions, issues, or contributions:
+
 - Open an issue on GitHub
 - Check the [Test Documentation](./docs/TestPlan.md)
 - Review the [Troubleshooting](#-troubleshooting) section
