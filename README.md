@@ -341,24 +341,6 @@ npm run report
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Mocha Test Framework](https://mochajs.org/)
 
-## Contributing
-
-1. Create feature branch: `git checkout -b feature/new-tests`
-2. Make changes and ensure tests pass: `npm test`
-3. Run linting: `npm run lint:fix`
-4. Format code: `npm run format`
-5. Commit: `git commit -m "feat: add new test cases"`
-6. Push: `git push origin feature/new-tests`
-7. Create Pull Request
-
-## Support
-
-For questions, issues, or contributions:
-
-- Open an issue on GitHub
-- Check the [Test Documentation](./docs/TestPlan.md)
-- Review the [Troubleshooting](#-troubleshooting) section
-
 ---
 
 _Last Updated: November 2025_
