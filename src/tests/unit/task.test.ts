@@ -119,9 +119,11 @@ describe("TaskScreen Unit Tests", () => {
 
       expect(utils._.getRandomText).toHaveBeenCalled();
       expect(mockElements[0].setValue).toHaveBeenCalledWith("Random Title");
-      expect(mockElements[1].setValue).toHaveBeenCalledWith("Random Description");
+      expect(mockElements[1].setValue).toHaveBeenCalledWith(
+        "Random Description",
+      );
       expect(result).toBe(
-        'android=new UiSelector().className("android.widget.TextView").textContains("Random Title")'
+        'android=new UiSelector().className("android.widget.TextView").textContains("Random Title")',
       );
     });
 

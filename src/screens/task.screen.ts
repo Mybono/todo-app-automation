@@ -100,7 +100,7 @@ export class TaskScreen {
         {
           timeout: timeout.elementAppear,
           timeoutMsg: `[fillField]: Expected at least 2 inputs of type ${editTextWidget}`,
-        }
+        },
       );
       const inputs = await $$(editTextWidget);
 

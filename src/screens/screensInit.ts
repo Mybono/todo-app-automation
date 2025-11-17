@@ -1,8 +1,4 @@
-import {
-  TaskScreen,
-  MainScreen,
-  SettingsScreen,
-} from "../screens";
+import { TaskScreen, MainScreen, SettingsScreen } from "../screens";
 
 class ScreenFactory {
   private static _task: TaskScreen;

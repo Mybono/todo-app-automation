@@ -52,10 +52,10 @@ export const config = {
         logger.log(`🧹 Clearing package: ${pkg}`);
         try {
           execSync(`adb -s emulator-5554 shell pm clear ${pkg}`);
-        } catch { }
+        } catch {}
         try {
           execSync(`adb -s emulator-5554 uninstall ${pkg}`);
-        } catch { }
+        } catch {}
       }
 
       logger.log("✅ Appium packages cleaned successfully!");
@@ -67,7 +67,19 @@ export const config = {
   afterTest: async function (
     test: { title: string },
     context: any,
-    { error, result, duration, passed, retries }: { error?: any; result?: any; duration?: number; passed: boolean; retries?: any }
+    {
+      error,
+      result,
+      duration,
+      passed,
+      retries,
+    }: {
+      error?: any;
+      result?: any;
+      duration?: number;
+      passed: boolean;
+      retries?: any;
+    },
   ) {
     if (!passed) {
       try {
@@ -77,19 +89,27 @@ export const config = {
         }
 
         const timestamp = dayjs().format("YYYYMMDD_HHmmss");
-        const sanitizedTestName = test.title.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_-]/g, "");
+        const sanitizedTestName = test.title
+          .replace(/\s+/g, "_")
+          .replace(/[^a-zA-Z0-9_-]/g, "");
         const screenshotName = `${sanitizedTestName}_${timestamp}.png`;
         const screenshotPath = path.join(screenshotDir, screenshotName);
 
         await browser.saveScreenshot(screenshotPath);
 
         const fileBuffer = fs.readFileSync(screenshotPath);
-        await allure.addAttachment("Screenshot on Failure", fileBuffer, "image/png");
+        await allure.addAttachment(
+          "Screenshot on Failure",
+          fileBuffer,
+          "image/png",
+        );
 
         logger.log(`[afterTest] Screenshot saved: ${screenshotPath}`);
       } catch (err) {
-        logger.warn(`[afterTest] Failed to save screenshot: ${(err as Error).message}`);
+        logger.warn(
+          `[afterTest] Failed to save screenshot: ${(err as Error).message}`,
+        );
       }
     }
-  }
+  },
 };

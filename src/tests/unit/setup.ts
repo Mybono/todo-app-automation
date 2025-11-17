@@ -12,7 +12,6 @@ global.driver = {
 global.$ = jest.fn() as any;
 global.$$ = jest.fn() as any;
 
-
 // Mock all utils
 jest.mock("../../utils", () => ({
   _: {
@@ -61,7 +60,7 @@ jest.mock("../../screens", () => ({
       }),
     },
     task: {
-            fillTask: jest.fn(),
+      fillTask: jest.fn(),
       selectTask: jest.fn(),
       // fillTask: jest.fn().mockResolvedValue(undefined),
       // selectTask: jest.fn().mockResolvedValue(undefined),

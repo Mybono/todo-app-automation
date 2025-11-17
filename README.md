@@ -74,12 +74,12 @@ todo-app-automation/
 │   │   │   ├── main.test.ts        # ✅ Task management (add, edit, delete)
 │   │   │   ├── checkbox.test.ts.   # ☑️ Task completion/activation
 │   │   │   ├── filter.test.ts      # 🔍 Task filtering
-│   │   │   └── navigate.test.ts.   # 🧭 Screen navigation        
+│   │   │   └── navigate.test.ts.   # 🧭 Screen navigation
 │   │   └── unit/                   # unit tests Jest
 │   │       ├── main.test.ts
 │   │       ├── settings.test.ts
 │   │       └── task.test.ts
-│   │ 
+│   │
 │   ├── constants/                             # Locators
 │   │   ├── mainScreen.locators.screen.ts      # Main Screen
 │   │   ├── settingsScreen.locators.screen.ts  # Settings Screen locators
@@ -392,7 +392,6 @@ The test plan includes:
 
 Tests output to console with colored logs:
 
-
 ```
 Todo App - Task Management
   ✅ should add a task (3.2s)
@@ -421,10 +420,11 @@ Todo App - Navigation
 
 18 passing (45.6s)
 ```
+
 ## 📈 Allure Reports
+
 ![Allure Report Example](./assets/allureReportExample1.png)
 ![Allure Report Example](./assets/allureReportExample2.png)
-
 
 ## 🐛 Troubleshooting
 
