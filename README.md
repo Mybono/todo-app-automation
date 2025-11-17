@@ -12,6 +12,7 @@
 Automated testing framework for Todo mobile application using Appium and WebDriverIO with TypeScript.
 
 ## 📋 Table of Contents
+
 - [Overview](#overview)
 - [Technology Stack](./docs/stack.md)
 - [Project Structure](./docs/structure.md)
@@ -25,11 +26,11 @@ Automated testing framework for Todo mobile application using Appium and WebDriv
 - [TODO](#todo)
 - [Notes](#notes)
 
-
 <br>
 <br>
 
 ## Overview
+
 This project implements automated tests for a Todo mobile application covering:
 
 - ✅ Task creation and management (add, edit, delete)
@@ -45,7 +46,9 @@ This project implements automated tests for a Todo mobile application covering:
 ## [Project Structure](./docs/structure.md)
 
 ## Prerequisites
+
 ### Required Software
+
 1. **Java Development Kit (JDK)**
    - Version: 11 or higher
    - Required for Android SDK
@@ -53,6 +56,7 @@ This project implements automated tests for a Todo mobile application covering:
    ```bash
    java -version
    ```
+
 2. **Android SDK & Platform Tools**
    - Android SDK Platform 34 (Android 14)
    - Android SDK Build-Tools
@@ -65,6 +69,7 @@ This project implements automated tests for a Todo mobile application covering:
    export PATH=$PATH:$ANDROID_HOME/platform-tools
    export PATH=$PATH:$ANDROID_HOME/tools
    ```
+
 3. **Node.js & npm**
    - Version: 20.x or higher
 
@@ -72,26 +77,32 @@ This project implements automated tests for a Todo mobile application covering:
    node -v
    npm -v
    ```
+
 4. **Android Emulator**
    - Device: Any Android device/emulator
    - Platform: Android 16 (API 34) or higher
    - Resolution: 1080x2400 recommended
+
 ### Environment Setup
+
 1. **Verify Android Debug Bridge (ADB)**
 
    ```bash
    adb version
    adb devices
    ```
+
 2. **Check Appium Installation**
 
    ```bash
    npm install -g appium-doctor
    appium-doctor --android
    ```
+
    Ensure all checks pass ✅
 
 ## Installation
+
 ### 1. Clone Repository
 
 ```bash
@@ -100,23 +111,27 @@ cd todo-app-automation
 ```
 
 ### 2. Install Dependencies
+
 ```bash
 npm install
 ```
 
 This installs:
+
 - WebDriverIO and Appium drivers
 - TypeScript compiler
 - Testing frameworks (Mocha, Chai)
 - Linting tools (ESLint, Prettier)
 
 ### 3. Install Appium Globally (Optional)
+
 ```bash
 npm install -g appium
 appium driver install uiautomator2
 ```
 
 ### 4. Prepare APK
+
 Place your application APK in:
 
 ```
@@ -124,6 +139,7 @@ app/apk/app-debug.apk
 ```
 
 ### 5. Start Android Emulator
+
 ```bash
 # List available emulators
 emulator -list-avds
@@ -135,28 +151,32 @@ emulator -avd <emulator_name> -no-snapshot-load
 ```
 
 Or start via Android Studio AVD Manager.
+
 ### 6. Verify Device Connection
+
 ```bash
 adb devices
 # Output should show: emulator-5554    device
 ```
 
-
 ## Running Tests
+
 ### Build & Run All Tests
+
 ```bash
 npm test
 ```
 
 This command:
+
 1. Compiles TypeScript (`npm run build`)
 2. Starts Appium server automatically
 3. Executes all tests in `src/tests/`
 
 ### 📸 Screenshots on Test Failure
+
 All failed E2E tests automatically capture screenshots for easier debugging.  
 Screenshots are saved to: reports/screenshots
-
 
 ### Generate Report
 
@@ -184,6 +204,7 @@ npm run build
 ```
 
 ### Manual Appium Server (Optional)
+
 If you want to control Appium server manually:
 
 ```bash
@@ -195,7 +216,9 @@ npx wdio run wdio.conf.ts
 ```
 
 ## CI/CD Pipeline
+
 ### GitHub Actions Workflow
+
 The project includes automated PR quality checks in `.github/workflows/pr-quality-check.yml`:
 
 ```yaml
@@ -208,9 +231,11 @@ on:
 ```
 
 ### Pipeline Stages
+
 ![Pipeline Example](./assets/pipelineExample.png)
 
 #### 1. **Unit Tests** 🧪
+
 - Runs unit tests using **Jest** with coverage.
 - Jest unit tests cover the **core logic** of the main application classes:
   - **MainScreen** – task creation, selection, and completion logic.
@@ -220,6 +245,7 @@ on:
 ![Unit Example](./assets/unitTestEx.png)
 
 #### 2. **Lint TypeScript** 🧹
+
 - Runs ESLint on all `.ts` files
 - Checks code quality and standards
 - Non-blocking (warnings only)
@@ -229,6 +255,7 @@ npm run lint
 ```
 
 #### 3. **Dependency Check** 📦
+
 - Detects changes in `package.json` or `package-lock.json`
 - Alerts reviewers about:
   - Security vulnerabilities
@@ -236,26 +263,29 @@ npm run lint
   - Bundle size impact
 
 #### 4. **Auto-format with Prettier** 🎨
+
 - Automatically formats code
 - Commits changes back to PR
 - Excludes `.github/` workflows
 - Only commits if changes detected
 
 **Auto-commit behavior:**
+
 ```bash
 git commit -m "style: auto-format code with Prettier"
 git push origin HEAD:<branch-name>
 ```
 
 ### How It Works
+
 1. **Developer creates PR** → Pipeline triggers
 2. **Linting runs** → Shows code quality issues
 3. **Dependency check** → Alerts on package changes
 4. **Prettier runs** → Automatically formats & commits
 5. **Tests run locally** → Manual verification before merge
 
-
 ## [Test Documentation](./docs/TestPlan.md)
+
 **📄 Complete test documentation is available at: [docs/TestPlan.md](./docs/TestPlan.md)**
 
 The test plan includes:
@@ -271,12 +301,14 @@ The test plan includes:
 - **Traceability Matrix** - Complete mapping from inputs to test cases
 
 ## Test Reports
+
 ### Console Output
+
 Tests output to console with colored logs:
 [Full Console Logs](./docs/test-logs.md)
 
-
 ### Allure Reports
+
 ```bash
 npm run report
 ```
@@ -284,10 +316,10 @@ npm run report
 ![Allure Report Example](./assets/allureReportExample1.png)
 ![Allure Report Example](./assets/allureReportExample2.png)
 
-
 ## [Troubleshooting](./docs/troubleshooting.md)
 
 ## TODO
+
 - Develop test scenarios and implement tests to verify the app's behavior under unexpected device events:
   - Network loss (Wi-Fi / mobile data)
   - Screen rotation (portrait ↔ landscape)
@@ -300,6 +332,7 @@ npm run report
 ## [NOTES](./docs/notes.md)
 
 ### Best Practices Implemented
+
 - ✅ Page Object Model for maintainability
 - ✅ Factory pattern for screen initialization
 - ✅ Custom logger with log levels
@@ -311,6 +344,7 @@ npm run report
 - ✅ Prettier for consistent formatting
 
 ## Resources
+
 - [WebDriverIO Documentation](https://webdriver.io/)
 - [Appium Documentation](https://appium.io/docs/en/latest/)
 - [UiAutomator2 Driver](https://github.com/appium/appium-uiautomator2-driver)
@@ -319,6 +353,7 @@ npm run report
 - [Mocha Test Framework](https://mochajs.org/)
 
 ## Contributing
+
 1. Create feature branch: `git checkout -b feature/new-tests`
 2. Make changes and ensure tests pass: `npm test`
 3. Run linting: `npm run lint:fix`
@@ -328,10 +363,13 @@ npm run report
 7. Create Pull Request
 
 ## Support
+
 For questions, issues, or contributions:
+
 - Open an issue on GitHub
 - Check the [Test Documentation](./docs/TestPlan.md)
 - Review the [Troubleshooting](#-troubleshooting) section
 
 ---
+
 _Last Updated: November 2025_

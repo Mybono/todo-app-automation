@@ -1,6 +1,7 @@
-
 ## 🐛 Troubleshooting
+
 ### Common Issues
+
 #### 1. **Appium Server Won't Start**
 
 ```bash
@@ -15,6 +16,7 @@ adb uninstall io.appium.settings
 ```
 
 #### 2. **Emulator Not Detected**
+
 ```bash
 # Restart ADB
 adb kill-server
