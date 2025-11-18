@@ -27,3 +27,4 @@ appium_device.log\
 /allure-results
 /allure-report
 /coverage
+.idea/
