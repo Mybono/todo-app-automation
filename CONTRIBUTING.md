@@ -21,7 +21,7 @@ This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDU
 
 ### [Prerequisites](./docs/PREREQUISITES.md)
 
-### [Installation](./docs/INSTALLATION.md)
+### [Installation](./docs/INSTALL.md)
 
 ### Reporting Bugs
 

@@ -41,7 +41,7 @@ This project implements automated tests for a Todo mobile application covering:
 
 ## [Prerequisites](./docs/PREREQUISITES.md)
 
-## [Installation](./docs/INSTALLATION.md)
+## [Installation](./docs/INSTALL.md)
 
 ## [Technology Stack](./docs/STACK.md)
 

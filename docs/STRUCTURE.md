@@ -10,7 +10,7 @@ todo-app-automation/
 │       └── app-debug.apk           # Android application (not in repo)
 ├── docs/
 │   ├── TEST_PLAN.md                # 📋 Complete test documentation
-│   ├── INSTALLATION.md
+│   ├── INSTALL.md
 │   ├── PREREQUISITES.md
 │   ├── TROUBLESHOOTING.md
 │   ├── STACK.md
