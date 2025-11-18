@@ -2,22 +2,24 @@
 const getRandomInt = (min: number, max: number): number => {
   min = Math.ceil(min);
   max = Math.floor(max);
+
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 // Character sets
-const LETTERS = "abcdefghijklmnopqrstuvwxyz";
-const NUMBERS = "0123456789";
-const SPACES = " ";
+const LETTERS = 'abcdefghijklmnopqrstuvwxyz';
+const NUMBERS = '0123456789';
+const SPACES = ' ';
 
 /** Lightweight utility class for generating random test data */
 class TestDataGenerator {
   /** Generates a random string of a specified length using the given character set */
   public generateRandomString(length: number, chars: string): string {
-    let result = "";
+    let result = '';
     for (let i = 0; i < length; i++) {
       result += chars.charAt(getRandomInt(0, chars.length - 1));
     }
+
     return result;
   }
 

@@ -1,4 +1,4 @@
-type LogLevel = "log" | "info" | "warn" | "error" | "debug";
+type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
 
 class Logger {
   private logs: string[] = [];
@@ -11,7 +11,7 @@ class Logger {
     debug: 3,
   };
 
-  private currentLevel: LogLevel = "info";
+  private currentLevel: LogLevel = 'info';
 
   private getTimestamp(): string {
     return new Date().toISOString();
@@ -23,53 +23,55 @@ class Logger {
 
   private colorize(level: LogLevel, message: string): string {
     const colors: Record<LogLevel, string> = {
-      error: "\x1b[31m", // red
-      warn: "\x1b[33m", // yellow
-      info: "\x1b[32m", // green
-      log: "\x1b[37m", // white
-      debug: "\x1b[36m", // cyan
+      error: '\x1b[31m', // red
+      warn: '\x1b[33m', // yellow
+      info: '\x1b[32m', // green
+      log: '\x1b[37m', // white
+      debug: '\x1b[36m', // cyan
     };
-    const reset = "\x1b[0m";
+    const reset = '\x1b[0m';
+
     return `${colors[level]}${message}${reset}`;
   }
 
-  private logMessage(level: LogLevel, message: string, error?: unknown) {
+  private logMessage(level: LogLevel, message: string, error?: unknown): void {
     if (!this.shouldLog(level)) return;
 
     const timestamp = this.getTimestamp();
     const fullMessage =
       `[${timestamp}] [${level.toUpperCase()}] ${message}` +
-      (error instanceof Error ? `\n${error.stack}` : "");
+      (error instanceof Error ? `\n${error.stack}` : '');
 
     this.logs.push(fullMessage);
+    /* eslint-disable-next-line no-console */
     console.log(this.colorize(level, fullMessage));
   }
 
-  public log(msg: string) {
-    this.logMessage("log", msg);
+  public log(msg: string): void {
+    this.logMessage('log', msg);
   }
 
-  public info(msg: string) {
-    this.logMessage("info", msg);
+  public info(msg: string): void {
+    this.logMessage('info', msg);
   }
 
-  public warn(msg: string) {
-    this.logMessage("warn", msg);
+  public warn(msg: string): void {
+    this.logMessage('warn', msg);
   }
 
-  public error(msg: string, err?: unknown) {
-    this.logMessage("error", msg, err);
+  public error(msg: string, err?: unknown): void {
+    this.logMessage('error', msg, err);
   }
 
-  public debug(msg: string) {
-    this.logMessage("debug", msg);
+  public debug(msg: string): void {
+    this.logMessage('debug', msg);
   }
 
   public getLogs(): string[] {
     return this.logs;
   }
 
-  public clear() {
+  public clear(): void {
     this.logs = [];
   }
 }

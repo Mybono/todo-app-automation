@@ -122,8 +122,8 @@ npm run report
 ```typescript
 // Add task
 const taskSelector = await screens.main.addTask({
-  title: "Buy milk",
-  text: "From store",
+  title: 'Buy milk',
+  text: 'From store',
   status: taskStatuses.active,
 });
 
@@ -140,8 +140,8 @@ await screens.main.markTaskComplete(true, taskSelector);
 // Edit task
 await screens.task.editTask({
   selector: taskSelector,
-  title: "New title",
-  text: "New description",
+  title: 'New title',
+  text: 'New description',
 });
 
 // Delete task

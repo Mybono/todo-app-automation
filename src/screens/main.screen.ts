@@ -1,12 +1,7 @@
-import { _, clickElement, expectElement, logger } from "../utils";
-import {
-  getTextSelector,
-  getCheckBoxSelector,
-  mainScreenLocators,
-  push,
-} from "../constants";
-import { Task, taskStatuses, FilterType } from "../types";
-import { screens } from "../screens";
+import { _, clickElement, expectElement, logger } from '../utils';
+import { getTextSelector, getCheckBoxSelector, mainScreenLocators, push } from '../constants';
+import { Task, taskStatuses, FilterType } from '../types';
+import { screens } from '../screens';
 
 export class MainScreen {
   /**
@@ -33,7 +28,7 @@ export class MainScreen {
   async addTask(task: Task): Promise<string> {
     let title = task.title;
     let text = task.text;
-    let taskStaus = task.status;
+    const taskStaus = task.status;
     try {
       if (!task.title || !task.text) {
         const randomData = _.getRandomText();
@@ -58,11 +53,10 @@ export class MainScreen {
       await expectElement(taskTitleSelector);
 
       logger.info(`[addTask] Task "${title}" added successfully.`);
+
       return taskTitleSelector;
     } catch (error) {
-      throw new Error(
-        `[addTask]: Error in addTask: ${(error as Error).message}`,
-      );
+      throw new Error(`[addTask]: Error in addTask: ${(error as Error).message}`);
     }
   }
 
@@ -89,13 +83,13 @@ export class MainScreen {
 
       let filterSelector: string;
       switch (filterType) {
-        case "all":
+        case 'all':
           filterSelector = mainScreenLocators.filterAll;
           break;
-        case "active":
+        case 'active':
           filterSelector = mainScreenLocators.filterActive;
           break;
-        case "completed":
+        case 'completed':
           filterSelector = mainScreenLocators.filterCompleted;
           break;
       }
@@ -110,15 +104,20 @@ export class MainScreen {
   /**
    * Marks a task as completed or active.
    *
-   * Optionally selects the task first if a titleSelector is provided, then clicks the checkbox to update its status.
+   * Optionally selects the task first if a titleSelector is provided,
+   * then clicks the checkbox to update its status.
    * Waits for the checkbox state to reflect the new status before resolving.
    *
-   * @param {boolean} isCompleted - Target status for the task. `true` to mark as completed, `false` to mark as active.
-   * @param {string} [titleSelector] - Optional selector for the task title. If provided, the task will be selected before updating its status.
+   * @param {boolean} isCompleted - Target status for the task. `true` to mark as completed,
+   * `false` to mark as active.
+   * @param {string} [titleSelector] - Optional selector for the task title.
+   * If provided, the task will be selected before updating its status.
    *
-   * @throws {Error} Throws error if the task cannot be selected, the checkbox cannot be clicked, or the updated checkbox state is not displayed.
+   * @throws {Error} Throws error if the task cannot be selected,
+   * the checkbox cannot be clicked, or the updated checkbox state is not displayed.
    *
-   * @returns {Promise<void>} Resolves when the task status has been successfully updated and verified.
+   * @returns {Promise<void>} Resolves when the task status
+   * has been successfully updated and verified.
    *
    * @example
    * //Mark a task as completed by title selector
@@ -127,10 +126,7 @@ export class MainScreen {
    * //Mark the currently selected task as active
    * await screens.main.markTaskComplete(false);
    */
-  async markTaskComplete(
-    isCompleted: boolean,
-    titleSelector?: string,
-  ): Promise<void> {
+  async markTaskComplete(isCompleted: boolean, titleSelector?: string): Promise<void> {
     try {
       if (titleSelector) {
         await screens.task.selectTask(titleSelector);
@@ -142,25 +138,25 @@ export class MainScreen {
       const checkboxUpdatedSelector = getCheckBoxSelector(isCompleted);
       await expectElement(checkboxUpdatedSelector);
 
-      logger.info(
-        `[markTaskComplete] Task marked as ${isCompleted ? "completed" : "active"}`,
-      );
+      logger.info(`[markTaskComplete] Task marked as ${isCompleted ? 'completed' : 'active'}`);
     } catch (error) {
       throw new Error(`[markTaskComplete]: ${(error as Error).message}`);
     }
   }
 
-  async toggleCheckbox(selector: string, isCompleted: boolean) {
+  async toggleCheckbox(selector: string, isCompleted: boolean): Promise<WebdriverIO.Element> {
     try {
       const checkbox = await $(selector);
-      const currentState = (await checkbox.getAttribute("checked")) === "true";
+      const currentState = (await checkbox.getAttribute('checked')) === 'true';
 
       if (currentState !== isCompleted) {
         await checkbox.click();
         const newSelector = getCheckBoxSelector(isCompleted);
+
         return await $(newSelector);
       } else {
-        logger.log("Checkbox already in desired state");
+        logger.log('Checkbox already in desired state');
+
         return checkbox;
       }
     } catch (error) {

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   mainScreenLocators,
   settingsScreenLocators,
@@ -5,7 +7,7 @@ import {
   push,
   headers,
   timeout,
-} from "../../constants";
+} from '../../constants';
 
 // Mock WebDriverIO driver globally
 global.driver = {
@@ -13,7 +15,7 @@ global.driver = {
   $$: jest.fn(),
   pause: jest.fn(),
   waitUntil: jest.fn().mockResolvedValue(true),
-  getPageSource: jest.fn().mockResolvedValue("<mock>Page Source</mock>"),
+  getPageSource: jest.fn().mockResolvedValue('<mock>Page Source</mock>'),
 } as any;
 
 // Mock browser object
@@ -32,25 +34,25 @@ export const mockFillTask = jest.fn().mockResolvedValue(undefined);
 export const mockSelectTask = jest.fn().mockResolvedValue(undefined);
 
 // Mock constants module
-jest.mock("../../constants", () => {
-  const actualConstants = jest.requireActual("../../constants");
+jest.mock('../../constants', () => {
+  const actualConstants = jest.requireActual('../../constants');
 
   return {
     ...actualConstants,
     getTextSelector: jest.fn((text: string) => `mock-text-selector-${text}`),
     getCheckBoxSelector: jest.fn((isCompleted: boolean) =>
-      isCompleted ? "mock-checkbox-true" : "mock-checkbox-false",
+      isCompleted ? 'mock-checkbox-true' : 'mock-checkbox-false',
     ),
     fetchSource: jest.fn(),
   };
 });
 
 // Mock utils module
-jest.mock("../../utils", () => ({
+jest.mock('../../utils', () => ({
   _: {
     getRandomText: jest.fn(() => ({
-      title: "Random Title",
-      text: "Random Description",
+      title: 'Random Title',
+      text: 'Random Description',
     })),
   },
   clickElement: jest.fn().mockResolvedValue(undefined),
@@ -65,8 +67,8 @@ jest.mock("../../utils", () => ({
 }));
 
 // Mock screensInit module
-jest.mock("../../screens/screensInit", () => {
-  const { mockFillTask, mockSelectTask } = require("./setup");
+jest.mock('../../screens/screensInit', () => {
+  const { mockFillTask, mockSelectTask } = require('./setup');
 
   return {
     screens: {
@@ -83,14 +85,7 @@ jest.mock("../../screens/screensInit", () => {
   };
 });
 
-export {
-  mainScreenLocators,
-  settingsScreenLocators,
-  taskScreenLocators,
-  push,
-  headers,
-  timeout,
-};
+export { mainScreenLocators, settingsScreenLocators, taskScreenLocators, push, headers, timeout };
 
 /**
  * Creates a mock element with common WebDriverIO methods
@@ -100,9 +95,9 @@ export function createMockElement(overrides?: Partial<any>): any {
     waitForDisplayed: jest.fn().mockResolvedValue(true),
     click: jest.fn().mockResolvedValue(undefined),
     isDisplayed: jest.fn().mockResolvedValue(true),
-    getAttribute: jest.fn().mockResolvedValue("false"),
+    getAttribute: jest.fn().mockResolvedValue('false'),
     setValue: jest.fn().mockResolvedValue(undefined),
-    getText: jest.fn().mockResolvedValue(""),
+    getText: jest.fn().mockResolvedValue(''),
     ...overrides,
   };
 }
@@ -120,16 +115,17 @@ export function createMockElements(count: number = 2): any[] {
       click: jest.fn().mockResolvedValue(undefined),
     });
   }
+
   return elements;
 }
 
 /**
  * Resets all mocks to their default state
  */
-export function resetAllMocks() {
+export function resetAllMocks(): void {
   jest.clearAllMocks();
 
-  const utils = require("../../utils");
+  const utils = require('../../utils');
   (utils.clickElement as jest.Mock).mockResolvedValue(undefined);
   (utils.expectElement as jest.Mock).mockResolvedValue(undefined);
 
@@ -146,7 +142,7 @@ export function resetAllMocks() {
   mockSelectTask.mockClear().mockResolvedValue(undefined);
 
   // Reset mocked functions from constants
-  const constants = require("../../constants");
+  const constants = require('../../constants');
   constants.getTextSelector.mockClear();
   constants.getCheckBoxSelector.mockClear();
   constants.fetchSource.mockClear();

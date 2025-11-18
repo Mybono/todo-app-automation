@@ -1,14 +1,14 @@
-import { logger } from "../utils";
+import { logger } from '../utils';
 
-export function getTextSelector(title: string) {
+export function getTextSelector(title: string): string {
   return `android=new UiSelector().className("android.widget.TextView").textContains("${title}")`;
 }
 
-export async function fetchSource() {
+export async function fetchSource(): Promise<void> {
   const source = await driver.getPageSource();
-  logger.warn("\n========== LIST WITH TASK ==========");
+  logger.warn('\n========== LIST WITH TASK ==========');
   logger.log(source);
-  logger.warn("====================================\n");
+  logger.warn('====================================\n');
 }
 
 export const push = {
@@ -24,16 +24,15 @@ export const headers = {
   completedTasks: '//android.widget.TextView[@text="Completed Tasks"]',
   allTasks: '//android.widget.TextView[@text="All Tasks"]',
   noActiveTasks: '//android.widget.TextView[@text="You have no active tasks!"]',
-  noCompletedTasks:
-    '//android.widget.TextView[@text="You have no completed tasks!"]',
+  noCompletedTasks: '//android.widget.TextView[@text="You have no completed tasks!"]',
   noAllTasks: '//android.widget.TextView[@text="You have no tasks!"]',
 };
 
-export function getCheckBoxSelector(isChecked: boolean) {
+export function getCheckBoxSelector(isChecked: boolean): string {
   return `android=new UiSelector().className("android.widget.CheckBox").checked(${isChecked})`;
 }
 
-export const editTextWidget = "android.widget.EditText";
+export const editTextWidget = 'android.widget.EditText';
 
 /**
  * Timeout constants for various operations in milliseconds.

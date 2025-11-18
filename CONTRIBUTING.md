@@ -143,7 +143,7 @@ export class MainScreen {
 }
 
 // ❌ Bad - Direct element interaction in tests
-it("should add task", async () => {
+it('should add task', async () => {
   const button = await $('//button[@id="add"]');
   await button.click();
 });
@@ -161,14 +161,14 @@ it("should add task", async () => {
 **Example:**
 
 ```typescript
-describe("MainScreen Unit Tests", () => {
+describe('MainScreen Unit Tests', () => {
   beforeEach(() => {
     mainScreen = new MainScreen();
     jest.clearAllMocks();
   });
 
-  it("should add task with title and text", async () => {
-    const task = { title: "Test", text: "Description" };
+  it('should add task with title and text', async () => {
+    const task = { title: 'Test', text: 'Description' };
     await mainScreen.addTask(task);
 
     expect(utils.clickElement).toHaveBeenCalled();
@@ -187,10 +187,10 @@ describe("MainScreen Unit Tests", () => {
 **Example:**
 
 ```typescript
-it("[UITM-TA001]: Adds a new task with title and description", async () => {
+it('[UITM-TA001]: Adds a new task with title and description', async () => {
   await screens.main.addTask({
-    title: "Buy milk",
-    text: "Remember to buy milk from the store",
+    title: 'Buy milk',
+    text: 'Remember to buy milk from the store',
   });
 
   await expectElement(push.taskAdded);

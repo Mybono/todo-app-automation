@@ -1,13 +1,13 @@
-import { _, clickElement, expectElement, logger } from "../utils";
+import { _, clickElement, expectElement, logger } from '../utils';
 import {
   getTextSelector,
   getCheckBoxSelector,
   timeout,
   editTextWidget,
   taskScreenLocators,
-} from "../constants";
-import { Task, EditTaskFields, taskStatuses } from "../types";
-import { screens } from "../screens";
+} from '../constants';
+import { Task, EditTaskFields, taskStatuses } from '../types';
+import { screens } from '../screens';
 
 export class TaskScreen {
   /**
@@ -28,14 +28,14 @@ export class TaskScreen {
    * });
    */
   async fillTask(task: Task): Promise<void> {
-    let title = task.title;
-    let text = task.text;
+    const title = task.title;
+    const text = task.text;
     try {
       await this.fillField({ title: title, text: text });
       await clickElement(taskScreenLocators.saveTaskBtn);
       if (task.status === taskStatuses.completed) {
         const checkbox = getCheckBoxSelector(false);
-        let checkedCheckbox = await screens.main.toggleCheckbox(checkbox, true);
+        const checkedCheckbox = await screens.main.toggleCheckbox(checkbox, true);
         await checkedCheckbox.waitForDisplayed({
           timeout: timeout.elementAppear,
         });
@@ -64,13 +64,14 @@ export class TaskScreen {
 
       await clickElement(taskScreenLocators.saveTaskBtn);
       selector = getTextSelector(title);
+
       return selector;
     } catch (error) {
       throw new Error(`[editTask]: ${(error as Error).message}`);
     }
   }
 
-  async deleteTask(titleSelector: string) {
+  async deleteTask(titleSelector: string): Promise<void> {
     try {
       await this.selectTask(titleSelector);
       await expectElement(taskScreenLocators.taskDetailsHeader);
@@ -90,11 +91,12 @@ export class TaskScreen {
    * await editFields({ text: "New description" });
    * await editFields({ title: "New title", text: "New description" });
    */
-  async fillField(fields: EditTaskFields) {
+  async fillField(fields: EditTaskFields): Promise<void> {
     try {
       await browser.waitUntil(
         async () => {
           const elems = await $$(editTextWidget);
+
           return elems.length >= 2;
         },
         {
@@ -107,24 +109,20 @@ export class TaskScreen {
       if (fields.title !== undefined) {
         await inputs[0].waitForDisplayed({ timeout: timeout.elementAppear });
         await inputs[0].setValue(fields.title);
-        logger.info(
-          `[fillField] Title edited to "${fields.title}" successfully.`,
-        );
+        logger.info(`[fillField] Title edited to "${fields.title}" successfully.`);
       }
 
       if (fields.text !== undefined) {
         await inputs[1].waitForDisplayed({ timeout: timeout.elementAppear });
         await inputs[1].setValue(fields.text);
-        logger.info(
-          `[fillField] Text edited to "${fields.text}" successfully.`,
-        );
+        logger.info(`[fillField] Text edited to "${fields.text}" successfully.`);
       }
     } catch (error) {
       throw new Error(`[fillField]: ${(error as Error).message}`);
     }
   }
 
-  async selectTask(selector: string) {
+  async selectTask(selector: string): Promise<void> {
     try {
       await clickElement(selector);
       await expectElement(taskScreenLocators.taskDetailsHeader);
@@ -134,10 +132,10 @@ export class TaskScreen {
     }
   }
 
-  async backToMain() {
+  async backToMain(): Promise<void> {
     try {
       await clickElement(taskScreenLocators.backBtn);
-      logger.info(`[backToMain] Navigated to main screen successfully.`);
+      logger.info('[backToMain] Navigated to main screen successfully.');
     } catch (error) {
       throw new Error(`[backToMain]: ${(error as Error).message}`);
     }
