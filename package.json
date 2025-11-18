@@ -9,7 +9,8 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
-    "clean": "rm -rf dist reports",
+    "clean": "rm -rf dist",
+    "clean:reports": "rm -rf reports",
     "build": "npm run clean && tsc"
   },
   "devDependencies": {

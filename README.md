@@ -11,17 +11,16 @@
 [![Docker Image](https://img.shields.io/badge/Docker-Latest%20Image-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/mybono/todo-app-automation)
 
 ## 📋 Table of Contents
-
 - [Overview](#overview)
-- [Technology Stack](./docs/stack.md)
-- [Project Structure](./docs/structure.md)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Technology Stack](./docs/stack.md)
 - [Running Tests](#running-tests)
 - [CI/CD Pipeline](#cicd-pipeline)
 - [Test Documentation](./docs/TestPlan.md)
+- [Project Structure](./docs/structure.md)
 - [Test Reports](#test-reports)
-- [API Documentation](#)
+- [API Documentation](#api-documentation)
 - [Troubleshooting](./docs/troubleshooting.md)
 - [Contributing](./CONTRIBUTING.md)
 - [TODO](#todo)
@@ -39,82 +38,44 @@ This project implements automated tests for a Todo mobile application covering:
 - ✅ Navigation between screens (Tasks, Settings, Statistics)
 - ✅ UI validation and push notifications
 
-## [Technology Stack](./docs/stack.md)
-
-## [Project Structure](./docs/structure.md)
-
 ## [Prerequisites](./docs/prerequisites.md)
 
 ## [Installation](./docs/Installation.md)
 
-## CI/CD Pipeline
+## [Technology Stack](./docs/stack.md)
 
-### GitHub Actions Workflow
+## [Project Structure](./docs/structure.md)
 
-The project includes automated PR quality checks in `.github/workflows/pr-quality-check.yml`:
+## Running Tests
 
-```yaml
-name: 🔍 PR Checks
-
-on:
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize, reopened]
+### All Tests
+```bash
+npm test
 ```
 
-### Pipeline Stages
+### Specific Suite
+```bash
+# Build first (if not built)
+npm run build
 
+# Then run specific test
+npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/main.test.js       # Task Management
+npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/checkbox.test.js   # Checkbox Actions
+npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/filter.test.js     # Filters
+npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/navigate.test.js   # Navigation
+```
+
+## CI/CD Pipeline
 ![Pipeline Example](./assets/pipelineExample.png)
 
-#### 1. **Unit Tests** 🧪
+GitHub Actions automatically runs on every Pull Request:
 
-- Runs unit tests using **Jest** with coverage.
-- Jest unit tests cover the **core logic** of the main application classes:
-  - **MainScreen** – task creation, selection, and completion logic.
-  - **SettingsScreen** – applying filters, navigating menus, opening statistics.
-  - **TaskScreen** – task editing, saving, and deletion workflows.
+1. **🧹 Lint** - ESLint checks code quality
+2. **📦 Dependencies** - Checks for security issues
+3. **🎨 Format** - Auto-formats with Prettier
+4. **✅ Tests** - Runs unit tests with Jest
 
-![Unit Example](./assets/unitTestEx.png)
-
-#### 2. **Lint TypeScript** 🧹
-
-- Runs ESLint on all `.ts` files
-- Checks code quality and standards
-- Non-blocking (warnings only)
-
-```bash
-npm run lint
-```
-
-#### 3. **Dependency Check** 📦
-
-- Detects changes in `package.json` or `package-lock.json`
-- Alerts reviewers about:
-  - Security vulnerabilities
-  - License compliance
-  - Bundle size impact
-
-#### 4. **Auto-format with Prettier** 🎨
-
-- Automatically formats code
-- Commits changes back to PR
-- Excludes `.github/` workflows
-- Only commits if changes detected
-
-**Auto-commit behavior:**
-
-```bash
-git commit -m "style: auto-format code with Prettier"
-git push origin HEAD:<branch-name>
-```
-
-### How It Works
-
-1. **Developer creates PR** → Pipeline triggers
-2. **Linting runs** → Shows code quality issues
-3. **Dependency check** → Alerts on package changes
-4. **Prettier runs** → Automatically formats & commits
-5. **Tests run locally** → Manual verification before merge
+View pipeline: [`.github/workflows/pr-quality-check.yml`](.github/workflows/pr-quality-check.yml)
 
 ## [Test Documentation](./docs/TestPlan.md)
 
@@ -133,7 +94,6 @@ The test plan includes:
 - **Traceability Matrix** - Complete mapping from inputs to test cases
 
 ## Test Reports
-
 ### Console Output
 
 Tests output to console with colored logs:
@@ -148,10 +108,9 @@ npm run report
 ![Allure Report Example](./assets/allureReportExample1.png)
 ![Allure Report Example](./assets/allureReportExample2.png)
 
+
 ## API Documentation
-
 #### Main Screen
-
 ```typescript
 // Add task
 const taskSelector = await screens.main.addTask({
@@ -168,7 +127,6 @@ await screens.main.markTaskComplete(true, taskSelector);
 ```
 
 #### Task Screen
-
 ```typescript
 // Edit task
 await screens.task.editTask({
@@ -190,9 +148,12 @@ await screens.task.deleteTask(taskSelector);
   - Screen rotation (portrait ↔ landscape)
   - Device lock and unlock
   - Background app interruptions
+  - Low battery simulation
   - Sudden screen off
-  - Battery drain / low battery simulation
-- Develop & Implement Slack notification servise
+- Develop Slack notification service
+- Add iOS support
+- Implement parallel test execution
+
 
 ## [NOTES](./docs/notes.md)
 
@@ -201,6 +162,7 @@ await screens.task.deleteTask(taskSelector);
 - ✅ Page Object Model for maintainability
 - ✅ Factory pattern for screen initialization
 - ✅ Custom logger with log levels
+- ✅ Unit tests
 - ✅ Timeout constants for consistency
 - ✅ Random test data generation
 - ✅ Error handling with descriptive messages
@@ -219,4 +181,13 @@ await screens.task.deleteTask(taskSelector);
 
 ---
 
-_Last Updated: November 2025_
+<div align="center">
+
+
+[![Stars](https://img.shields.io/github/stars/Mybono/todo-app-automation?style=social)](https://github.com/Mybono/todo-app-automation/stargazers)
+[![Forks](https://img.shields.io/github/forks/Mybono/todo-app-automation?style=social)](https://github.com/Mybono/todo-app-automation/network/members)
+
+*Last updated: November 2025*
+
+</div>
+

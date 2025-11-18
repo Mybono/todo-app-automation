@@ -105,3 +105,5 @@
 - Push messages are validated using `expectElement(push.message)` helper.
 - Screens are abstracted via `screens` page objects.
 - This document covers inputs, requirements, test cases, and links them to automated tests for full traceability.
+
+[⬅️ Back to README](../README.md#table-of-contents)

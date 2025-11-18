@@ -12,4 +12,5 @@
 | **ESLint**       | 9.39.1  | Code linting                   |
 | **Prettier**     | 3.0.0   | Code formatting                |
 
-[⬅️ Back to README](../README.md#overview)
+
+[⬅️ Back to README](../README.md#table-of-contents)

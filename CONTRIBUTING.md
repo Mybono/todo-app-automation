@@ -225,6 +225,7 @@ git checkout -b docs/update-readme
 - Add tests for new features
 - Update documentation if needed
 - Follow existing code style
+- Write down the changes in the [CHANGELOG.md](./docs/CHANGELOG.MD)
 
 ### 3. Test Your Changes
 
