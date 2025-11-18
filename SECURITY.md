@@ -4,9 +4,9 @@
 
 We release security updates for the following versions:
 
-| Version | Supported          | Status |
-| ------- | ------------------ | ------ |
-| 1.0.x   | :white_check_mark: | Active |
+| Version | Supported          | Status        |
+| ------- | ------------------ | ------------- |
+| 1.0.x   | :white_check_mark: | Active        |
 | < 1.0   | :x:                | Not supported |
 
 ## 🚨 Reporting a Vulnerability
@@ -34,7 +34,7 @@ We take security seriously. If you discover a security vulnerability in this pro
 ```
 Subject: [SECURITY] Vulnerability Report: <Brief Description>
 
-**Vulnerability Type:** 
+**Vulnerability Type:**
 (e.g., Command Injection, Path Traversal, etc.)
 
 **Affected Component:**
@@ -44,9 +44,9 @@ Subject: [SECURITY] Vulnerability Report: <Brief Description>
 [Detailed description of the vulnerability]
 
 **Steps to Reproduce:**
-1. 
-2. 
-3. 
+1.
+2.
+3.
 
 **Impact:**
 [What can an attacker do? What data is at risk?]
@@ -60,22 +60,22 @@ Subject: [SECURITY] Vulnerability Report: <Brief Description>
 
 ## 📅 Response Timeline
 
-| Phase | Timeline | Description |
-|-------|----------|-------------|
-| **Initial Response** | Within 48 hours | We acknowledge receipt of your report |
-| **Investigation** | 3-7 days | We analyze and verify the vulnerability |
-| **Status Update** | Within 7 days | We provide an assessment and timeline |
-| **Fix Development** | Varies by severity | We develop and test a fix |
-| **Disclosure** | After fix release | Coordinated disclosure with reporter |
+| Phase                | Timeline           | Description                             |
+| -------------------- | ------------------ | --------------------------------------- |
+| **Initial Response** | Within 48 hours    | We acknowledge receipt of your report   |
+| **Investigation**    | 3-7 days           | We analyze and verify the vulnerability |
+| **Status Update**    | Within 7 days      | We provide an assessment and timeline   |
+| **Fix Development**  | Varies by severity | We develop and test a fix               |
+| **Disclosure**       | After fix release  | Coordinated disclosure with reporter    |
 
 ### Severity-Based Fix Timeline
 
-| Severity | Fix Timeline | Example |
-|----------|-------------|---------|
-| **Critical** | 1-3 days | Remote code execution, data breach |
-| **High** | 3-7 days | Authentication bypass, privilege escalation |
-| **Medium** | 7-14 days | XSS, CSRF, information disclosure |
-| **Low** | 14-30 days | Minor information leaks, low-impact issues |
+| Severity     | Fix Timeline | Example                                     |
+| ------------ | ------------ | ------------------------------------------- |
+| **Critical** | 1-3 days     | Remote code execution, data breach          |
+| **High**     | 3-7 days     | Authentication bypass, privilege escalation |
+| **Medium**   | 7-14 days    | XSS, CSRF, information disclosure           |
+| **Low**      | 14-30 days   | Minor information leaks, low-impact issues  |
 
 ## 🛡️ Security Best Practices
 
@@ -104,13 +104,13 @@ const apiKey = "sk_live_123456789";
 // ✅ Good - Use fake/random data
 const testUser = {
   email: `test_${Date.now()}@example.com`,
-  password: 'TestPass123!'
+  password: "TestPass123!",
 };
 
 // ❌ Bad - Don't use real user data
 const testUser = {
-  email: 'john.doe@company.com',
-  password: 'RealPassword123'
+  email: "john.doe@company.com",
+  password: "RealPassword123",
 };
 ```
 
@@ -156,7 +156,7 @@ const selector = `android=new UiSelector().text("${title}")`;
 
 ```typescript
 // ✅ Good - Validate paths
-const safePath = path.join(__dirname, 'reports', sanitizeFilename(name));
+const safePath = path.join(__dirname, "reports", sanitizeFilename(name));
 
 // ❌ Bad - Path traversal vulnerability
 const unsafePath = `./reports/${userInput}`;
@@ -182,16 +182,17 @@ Before submitting a PR, ensure:
 
 ## 🏆 Recognition
 
-We appreciate security researchers who help us keep this project secure. 
+We appreciate security researchers who help us keep this project secure.
 
 ### Hall of Fame
 
 Security researchers who responsibly disclose vulnerabilities will be:
+
 - Credited in release notes (if desired)
 - Listed in this file (with permission)
 - Thanked publicly in the community
 
-*Currently, no vulnerabilities have been reported.*
+_Currently, no vulnerabilities have been reported._
 
 ## 📚 Security Resources
 
@@ -210,6 +211,7 @@ Security researchers who responsibly disclose vulnerabilities will be:
 ## 🔐 Encryption & Data Protection
 
 This project handles:
+
 - ✅ **Test automation** - No sensitive data processing
 - ✅ **Screenshots** - Stored locally, not transmitted
 - ✅ **Logs** - May contain test data, clean after runs
@@ -226,12 +228,14 @@ This project handles:
 ## 📞 Contact
 
 For security concerns, contact the maintainers:
+
 - Open a security advisory on GitHub (preferred)
 - Email the repository owner (find in GitHub profile)
 
 ## 📄 Disclosure Policy
 
 We follow **coordinated disclosure**:
+
 1. You report the vulnerability privately
 2. We acknowledge and investigate
 3. We develop and test a fix
@@ -242,6 +246,7 @@ We follow **coordinated disclosure**:
 ## ⚖️ Safe Harbor
 
 We support safe harbor for security researchers who:
+
 - Make a good faith effort to avoid harm
 - Follow this disclosure policy
 - Don't access/modify data beyond what's needed

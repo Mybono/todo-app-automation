@@ -1,8 +1,6 @@
 ## 📝 Description
 
-
 ## 🔗 Related Issue
-
 
 ## 🧪 Type of Change
 

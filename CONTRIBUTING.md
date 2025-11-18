@@ -26,6 +26,7 @@ This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDU
 ### Reporting Bugs
 
 Found a bug? Help us fix it!
+
 1. **Check existing issues** to avoid duplicates
 2. [Use the bug report template](./docs/bug_report.yml) when creating a new issue
 3. **Include these details:**
@@ -75,7 +76,8 @@ npm run test:unit
 ```
 
 ### Code Quality
-Automatically executed when opening the PR 🚀 
+
+Automatically executed when opening the PR 🚀
 
 ```bash
 # Lint code
@@ -97,12 +99,14 @@ npm run clean
 ## Coding Standards
 
 ### TypeScript Guidelines
+
 - **Use TypeScript strict mode** for type safety
 - **Document public APIs** with JSDoc comments
 - **Avoid `any` type** - use proper typing
 - **Export types** for reusable interfaces
 
 **Example:**
+
 ```typescript
 /**
  * Adds a new task to the application
@@ -115,6 +119,7 @@ async addTask(task: Task): Promise<string> {
 ```
 
 ### Code Style
+
 - **Indentation:** 2 spaces
 - **Line length:** Max 100 characters
 - **Naming conventions:**
@@ -124,6 +129,7 @@ async addTask(task: Task): Promise<string> {
   - Files: `camelCase.ts` (e.g., `main.screen.ts`)
 
 ### Project Patterns
+
 We use the **Page Object Model (POM)** pattern:
 
 ```typescript
@@ -137,13 +143,14 @@ export class MainScreen {
 }
 
 // ❌ Bad - Direct element interaction in tests
-it('should add task', async () => {
+it("should add task", async () => {
   const button = await $('//button[@id="add"]');
   await button.click();
 });
 ```
 
 ## Testing Guidelines
+
 ### Unit Tests
 
 - **Test utilities and helpers** in `src/tests/unit/`
@@ -152,17 +159,18 @@ it('should add task', async () => {
 - **Test edge cases** and error handling
 
 **Example:**
+
 ```typescript
-describe('MainScreen Unit Tests', () => {
+describe("MainScreen Unit Tests", () => {
   beforeEach(() => {
     mainScreen = new MainScreen();
     jest.clearAllMocks();
   });
 
-  it('should add task with title and text', async () => {
+  it("should add task with title and text", async () => {
     const task = { title: "Test", text: "Description" };
     await mainScreen.addTask(task);
-    
+
     expect(utils.clickElement).toHaveBeenCalled();
     expect(screens.task.fillTask).toHaveBeenCalledWith(task);
   });
@@ -170,36 +178,41 @@ describe('MainScreen Unit Tests', () => {
 ```
 
 ### E2E Tests
+
 - **Follow test plan** in [`docs/TestPlan.md`](./docs/TestPlan.md)
 - **Use descriptive test IDs** (e.g., `[UITM-TA001]`)
 - **One assertion per test** when possible
 - **Clean up test data** after each test
 
 **Example:**
+
 ```typescript
 it("[UITM-TA001]: Adds a new task with title and description", async () => {
   await screens.main.addTask({
     title: "Buy milk",
-    text: "Remember to buy milk from the store"
+    text: "Remember to buy milk from the store",
   });
-  
+
   await expectElement(push.taskAdded);
 });
 ```
 
 ### Test Coverage Requirements
 
-| File Type | Coverage Target |
-|-----------|----------------|
-| Screens (POM) | 70%+ |
-| Utils/Helpers | 80%+ |
-| Constants | 100% |
+| File Type     | Coverage Target |
+| ------------- | --------------- |
+| Screens (POM) | 70%+            |
+| Utils/Helpers | 80%+            |
+| Constants     | 100%            |
 
 ## Pull Request Process
+
 follow the [pull_reuest_template](./docs/pull_request_template.md)
 
 ### 1. Create a Branch
+
 Use descriptive branch names:
+
 ```bash
 git checkout -b feature/add-swipe-gesture
 git checkout -b fix/checkbox-not-working
@@ -207,12 +220,14 @@ git checkout -b docs/update-readme
 ```
 
 ### 2. Make Your Changes
+
 - Write clean, documented code
 - Add tests for new features
 - Update documentation if needed
 - Follow existing code style
 
 ### 3. Test Your Changes
+
 ```bash
 npm run lint        # Check code style
 npm run format      # Format code
@@ -222,6 +237,7 @@ npm run test:unit   # Run unit tests
 ```
 
 ### 4. Commit Your Changes
+
 Use [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```bash
@@ -234,6 +250,7 @@ git commit -m "chore: update dependencies"
 ```
 
 **Commit types:**
+
 - `feat:` New feature
 - `fix:` Bug fix
 - `docs:` Documentation changes
@@ -243,17 +260,20 @@ git commit -m "chore: update dependencies"
 - `chore:` Build, dependencies, tooling
 
 ### 5. Push and Create PR
+
 ```bash
 git push origin feature/add-swipe-gesture
 ```
 
 Then:
+
 1. Go to GitHub and create a Pull Request
 2. Fill out the [PR template](./docs/pull_request_template.md)
 3. Link related issues
 4. Request review from maintainers
 
 ### 6. PR Review Process
+
 - **CI/CD checks must pass** (lint, format, tests)
 - **At least one approval** required
 - **Address review comments** promptly
@@ -262,6 +282,7 @@ Then:
 ## [Project Structure](./docs/structure.md)
 
 ### Key Files
+
 - `wdio.conf.ts` - WebDriverIO configuration
 - `jest.config.js` - Jest configuration for unit tests
 - `tsconfig.json` - TypeScript configuration
@@ -269,17 +290,21 @@ Then:
 - `.prettierrc` - Prettier formatting rules
 
 ## Good First Issues
+
 Looking for a good starting point? Check out issues labeled:
+
 - `good first issue` - Perfect for newcomers
 - `help wanted` - We need your expertise
 - `documentation` - Improve our docs
 
 ## Questions?
+
 - **Open an issue** for general questions
 - **Check existing discussions** first
 - **Review documentation** in `docs/` and `README.md`
 
 ## 🙏 Thank You!
+
 Every contribution, no matter how small, makes a difference. Thank you for helping improve this project!
 
 ---

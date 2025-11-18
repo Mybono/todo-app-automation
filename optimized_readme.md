@@ -67,8 +67,8 @@ That's it! 🎉
 
 ## [Project Structure](./docs/structure.md)
 
-
 **Key Design Patterns:**
+
 - ✅ Page Object Model (POM)
 - ✅ Factory Pattern for screens
 - ✅ Custom logger with levels
@@ -101,6 +101,7 @@ npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/navigate.test.js
 ```
 
 ### Unit Tests
+
 ```bash
 # Run unit tests with coverage
 npm run test:unit
@@ -148,28 +149,28 @@ Todo App - Checkbox Actions
 18 passing (45.6s)
 ```
 
-
 ---
 
 ## Documentation
 
-| Document | Description |
-|----------|-------------|
-| **[Test Plan](./docs/TestPlan.md)** | Complete test cases, requirements, traceability matrix |
+| Document                                  | Description                                            |
+| ----------------------------------------- | ------------------------------------------------------ |
+| **[Test Plan](./docs/TestPlan.md)**       | Complete test cases, requirements, traceability matrix |
 | **[Contributing Guide](CONTRIBUTING.md)** | How to contribute, development setup, coding standards |
-| **[Code of Conduct](CODE_OF_CONDUCT.md)** | Community guidelines and enforcement |
-| **[Security Policy](SECURITY.md)** | Reporting vulnerabilities, security best practices |
-| **[License](LICENSE)** | MIT License details |
+| **[Code of Conduct](CODE_OF_CONDUCT.md)** | Community guidelines and enforcement                   |
+| **[Security Policy](SECURITY.md)**        | Reporting vulnerabilities, security best practices     |
+| **[License](LICENSE)**                    | MIT License details                                    |
 
 ### API Documentation
 
 #### Main Screen
+
 ```typescript
 // Add task
 const taskSelector = await screens.main.addTask({
   title: "Buy milk",
   text: "From store",
-  status: taskStatuses.active
+  status: taskStatuses.active,
 });
 
 // Apply filter
@@ -186,7 +187,7 @@ await screens.main.markTaskComplete(true, taskSelector);
 await screens.task.editTask({
   selector: taskSelector,
   title: "New title",
-  text: "New description"
+  text: "New description",
 });
 
 // Delete task
@@ -196,20 +197,24 @@ await screens.task.deleteTask(taskSelector);
 ---
 
 ## Contributing
+
 We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) to get started.
 
 ---
 
 ## Security
+
 Found a security vulnerability? Please review our [Security Policy](SECURITY.md) and report it responsibly.
 **DO NOT** open public issues for security vulnerabilities.
 
 ---
 
 ## [Troubleshooting](./docs/troubleshooting.md)
+
 ## CI/CD Pipeline
 
 Our GitHub Actions workflow automatically:
+
 - Lints TypeScript code
 - Checks dependencies for security issues
 - Auto-formats code with Prettier

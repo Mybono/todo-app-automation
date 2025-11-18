@@ -10,8 +10,8 @@
 [![WebDriverIO](https://img.shields.io/badge/E2E-WebDriverIO-blueviolet)](https://webdriver.io/)
 [![Docker Image](https://img.shields.io/badge/Docker-Latest%20Image-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/mybono/todo-app-automation)
 
-
 ## 📋 Table of Contents
+
 - [Overview](#overview)
 - [Technology Stack](./docs/stack.md)
 - [Project Structure](./docs/structure.md)
@@ -50,6 +50,7 @@ This project implements automated tests for a Todo mobile application covering:
 ## CI/CD Pipeline
 
 ### GitHub Actions Workflow
+
 The project includes automated PR quality checks in `.github/workflows/pr-quality-check.yml`:
 
 ```yaml
@@ -150,12 +151,13 @@ npm run report
 ## API Documentation
 
 #### Main Screen
+
 ```typescript
 // Add task
 const taskSelector = await screens.main.addTask({
   title: "Buy milk",
   text: "From store",
-  status: taskStatuses.active
+  status: taskStatuses.active,
 });
 
 // Apply filter
@@ -172,12 +174,13 @@ await screens.main.markTaskComplete(true, taskSelector);
 await screens.task.editTask({
   selector: taskSelector,
   title: "New title",
-  text: "New description"
+  text: "New description",
 });
 
 // Delete task
 await screens.task.deleteTask(taskSelector);
 ```
+
 ## [Troubleshooting](./docs/troubleshooting.md)
 
 ## TODO

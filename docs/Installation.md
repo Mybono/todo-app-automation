@@ -107,7 +107,6 @@ This command:
 2. Starts Appium server automatically
 3. Executes all tests in `src/tests/`
 
-
 ### 📸 Screenshots on Test Failure
 
 All failed E2E tests automatically capture screenshots for easier debugging.  
