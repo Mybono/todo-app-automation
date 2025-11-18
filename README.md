@@ -1,4 +1,5 @@
 # 📱 Todo App - Mobile Test Automation
+
 ![Build](https://img.shields.io/github/actions/workflow/status/Mybono/sdk_automation/publish.yml?branch=main&label=CI&color=blue)
 [![Test Framework](https://img.shields.io/badge/Framework-WebDriverIO-orange)](https://webdriver.io/)
 [![Appium](https://img.shields.io/badge/Appium-v3.1.1-purple)](https://appium.io/)
