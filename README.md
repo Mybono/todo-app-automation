@@ -11,6 +11,7 @@
 [![Docker Image](https://img.shields.io/badge/Docker-Latest%20Image-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/mybono/todo-app-automation)
 
 ## 📋 Table of Contents
+
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -49,11 +50,13 @@ This project implements automated tests for a Todo mobile application covering:
 ## Running Tests
 
 ### All Tests
+
 ```bash
 npm test
 ```
 
 ### Specific Suite
+
 ```bash
 # Build first (if not built)
 npm run build
@@ -66,6 +69,7 @@ npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/navigate.test.js   # Navigatio
 ```
 
 ## CI/CD Pipeline
+
 ![Pipeline Example](./assets/pipelineExample.png)
 
 GitHub Actions automatically runs on every Pull Request:
@@ -94,6 +98,7 @@ The test plan includes:
 - **Traceability Matrix** - Complete mapping from inputs to test cases
 
 ## Test Reports
+
 ### Console Output
 
 Tests output to console with colored logs:
@@ -108,9 +113,10 @@ npm run report
 ![Allure Report Example](./assets/allureReportExample1.png)
 ![Allure Report Example](./assets/allureReportExample2.png)
 
-
 ## API Documentation
+
 #### Main Screen
+
 ```typescript
 // Add task
 const taskSelector = await screens.main.addTask({
@@ -127,6 +133,7 @@ await screens.main.markTaskComplete(true, taskSelector);
 ```
 
 #### Task Screen
+
 ```typescript
 // Edit task
 await screens.task.editTask({
@@ -142,6 +149,7 @@ await screens.task.deleteTask(taskSelector);
 ## [Troubleshooting](./docs/TROUBLESHOOTING.md)
 
 ## TODO
+
 - Develop test scenarios and implement tests to verify the app's behavior under unexpected device events:
   - Network loss (Wi-Fi / mobile data)
   - Screen rotation (portrait ↔ landscape)
@@ -152,7 +160,6 @@ await screens.task.deleteTask(taskSelector);
 - Develop Slack notification service
 - Add iOS support
 - Implement parallel test execution
-
 
 ## [NOTES](./docs/NOTES.md)
 
@@ -182,13 +189,11 @@ await screens.task.deleteTask(taskSelector);
 
 <div align="center">
 
-
 [![Stars](https://img.shields.io/github/stars/Mybono/todo-app-automation?style=social)](https://github.com/Mybono/todo-app-automation/stargazers)
 [![Forks](https://img.shields.io/github/forks/Mybono/todo-app-automation?style=social)](https://github.com/Mybono/todo-app-automation/network/members)
 
-*Last updated: November 2025*
+_Last updated: November 2025_
 
 </div>
-
 
 docker buildx build --platform linux/amd64,linux/arm64 -t mybono/todo-app-automation:latest --push .

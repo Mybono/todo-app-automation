@@ -1,5 +1,6 @@
 # 📘 Installation & Setup Guide
-- **Local environment** (Node.js + Appium + Android Studio), or  
+
+- **Local environment** (Node.js + Appium + Android Studio), or
 - **Docker environment** (no local installations required)
 
 ### 1. Clone Repository
@@ -24,7 +25,6 @@ If you want to run tests locally (without Docker), you must install and configur
 - Download: https://developer.android.com/studio
 
 - Ensure the following components are installed:
-
   - Android SDK
 
   - SDK Platform Tools
@@ -38,7 +38,6 @@ If you want to run tests locally (without Docker), you must install and configur
 - Open Tools → Device Manager
 
 - Create a device:
-
   - Device: emulator-5554
 
   - System Image: Android 16
@@ -63,23 +62,28 @@ appium
 OR
 emulator -avd emulator-5554 -no-snapshot-load
 ```
+
 Or start via Android Studio AVD Manager.
 
 ### 6. Verify Device Connection
+
 ```bash
 adb devices
 # Output should show: emulator-5554    device
 ```
 
 ## Alternative Installation via Docker 🐳
+
 This image is prebuilt and extremely small. It contains:
+
 - Node.js runtime
 - Compiled TypeScript tests
 - Minimal project files
 
-```Appium and drivers are installed dynamically at runtime, so you don’t need them in the image itself.```
+`Appium and drivers are installed dynamically at runtime, so you don’t need them in the image itself.`
 
 ### Install Docker (Required)
+
 To run the container, you must have **Docker Desktop** installed.
 
 - **Windows / macOS:**  
@@ -89,6 +93,7 @@ To run the container, you must have **Docker Desktop** installed.
   Follow the official installation guide: https://docs.docker.com/engine/install/
 
 Verify Docker is installed:
+
 ```bash
 docker --version
 ```
@@ -99,18 +104,22 @@ docker --version
 # Pull the image from Docker Hub
 docker pull mybono/todo-app-automation:latest
 ```
+
 The image works correctly on macOS and Windows.
 
 ### Run tests inside the container
+
 macOS:
+
 ```bash
 docker run --rm -it \
   -v $(pwd)/reports:/usr/src/app/reports \
   -p 4723:4723 \
   mybono/todo-app-automation:latest
 ```
- 
+
 Windows:
+
 ```bash
 docker run --rm -it `
   -v "${PWD}\reports:/usr/src/app/reports" `
@@ -119,13 +128,14 @@ docker run --rm -it `
 ```
 
 🔍 Note about `--rm`
+
 - `--rm` deletes the container after tests finish, but the Docker image remains on your machine.
   You will NOT need to download it again unless you manually delete the image.
-
 
 <br>
 
 ## Running Tests
+
 ### Build & Run All Tests
 
 ```bash
@@ -133,11 +143,13 @@ npm test
 ```
 
 This command:
+
 1. Compiles TypeScript (`npm run build`)
 2. Starts Appium server automatically
 3. Executes all tests in `src/tests/`
 
 ### 📸 Screenshots on Test Failure
+
 All failed E2E tests automatically capture screenshots for easier debugging.  
 Screenshots are saved to: reports/screenshots
 
