@@ -1,30 +1,31 @@
-import { capabilities } from "./src/config";
-import { logger } from "./src/utils/logger";
-import { execSync } from "child_process";
-import fs from "fs";
-import path from "path";
-import dayjs from "dayjs";
+/* eslint-disable */
+import { capabilities } from './src/config';
+import { logger } from './src/utils/logger';
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import dayjs from 'dayjs';
 
 declare const browser: WebdriverIO.Browser;
 declare const allure: any;
 
 export const config = {
-  runner: "local",
-  path: "/",
+  runner: 'local',
+  path: '/',
   port: 4723,
 
-  specs: ["./dist/tests/e2e/**/*.js"],
+  specs: ['./dist/tests/e2e/**/*.js'],
   maxInstances: 1,
 
   capabilities: capabilities as any,
 
-  framework: "mocha",
+  framework: 'mocha',
   reporters: [
-    "spec",
+    'spec',
     [
-      "allure",
+      'allure',
       {
-        outputDir: "reports/allure-results",
+        outputDir: 'reports/allure-results',
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
       },
@@ -32,7 +33,7 @@ export const config = {
   ],
 
   mochaOpts: {
-    ui: "bdd",
+    ui: 'bdd',
     timeout: 60000,
   },
 
@@ -40,12 +41,12 @@ export const config = {
 
   onPrepare: function () {
     try {
-      logger.log("💥 Cleaning Appium packages...");
+      logger.log('💥 Cleaning Appium packages...');
 
       const packages = [
-        "io.appium.uiautomator2.server",
-        "io.appium.uiautomator2.server.test",
-        "io.appium.settings",
+        'io.appium.uiautomator2.server',
+        'io.appium.uiautomator2.server.test',
+        'io.appium.settings',
       ];
 
       for (const pkg of packages) {
@@ -58,7 +59,7 @@ export const config = {
         } catch {}
       }
 
-      logger.log("✅ Appium packages cleaned successfully!");
+      logger.log('✅ Appium packages cleaned successfully!');
     } catch (e) {
       logger.warn(`⚠️ Cleanup failed, continuing anyway: ${e}`);
     }
@@ -83,32 +84,24 @@ export const config = {
   ) {
     if (!passed) {
       try {
-        const screenshotDir = path.join("reports", "screenshots");
+        const screenshotDir = path.join('reports', 'screenshots');
         if (!fs.existsSync(screenshotDir)) {
           fs.mkdirSync(screenshotDir, { recursive: true });
         }
 
-        const timestamp = dayjs().format("YYYYMMDD_HHmmss");
-        const sanitizedTestName = test.title
-          .replace(/\s+/g, "_")
-          .replace(/[^a-zA-Z0-9_-]/g, "");
+        const timestamp = dayjs().format('YYYYMMDD_HHmmss');
+        const sanitizedTestName = test.title.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
         const screenshotName = `${sanitizedTestName}_${timestamp}.png`;
         const screenshotPath = path.join(screenshotDir, screenshotName);
 
         await browser.saveScreenshot(screenshotPath);
 
         const fileBuffer = fs.readFileSync(screenshotPath);
-        await allure.addAttachment(
-          "Screenshot on Failure",
-          fileBuffer,
-          "image/png",
-        );
+        await allure.addAttachment('Screenshot on Failure', fileBuffer, 'image/png');
 
         logger.log(`[afterTest] Screenshot saved: ${screenshotPath}`);
       } catch (err) {
-        logger.warn(
-          `[afterTest] Failed to save screenshot: ${(err as Error).message}`,
-        );
+        logger.warn(`[afterTest] Failed to save screenshot: ${(err as Error).message}`);
       }
     }
   },

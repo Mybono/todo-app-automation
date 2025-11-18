@@ -35,10 +35,7 @@ export class TaskScreen {
       await clickElement(taskScreenLocators.saveTaskBtn);
       if (task.status === taskStatuses.completed) {
         const checkbox = getCheckBoxSelector(false);
-        const checkedCheckbox = await screens.main.toggleCheckbox(
-          checkbox,
-          true,
-        );
+        const checkedCheckbox = await screens.main.toggleCheckbox(checkbox, true);
         await checkedCheckbox.waitForDisplayed({
           timeout: timeout.elementAppear,
         });
@@ -97,7 +94,7 @@ export class TaskScreen {
   async fillField(fields: EditTaskFields) {
     try {
       await browser.waitUntil(
-        async() => {
+        async () => {
           const elems = await $$(editTextWidget);
 
           return elems.length >= 2;
@@ -112,17 +109,13 @@ export class TaskScreen {
       if (fields.title !== undefined) {
         await inputs[0].waitForDisplayed({ timeout: timeout.elementAppear });
         await inputs[0].setValue(fields.title);
-        logger.info(
-          `[fillField] Title edited to "${fields.title}" successfully.`,
-        );
+        logger.info(`[fillField] Title edited to "${fields.title}" successfully.`);
       }
 
       if (fields.text !== undefined) {
         await inputs[1].waitForDisplayed({ timeout: timeout.elementAppear });
         await inputs[1].setValue(fields.text);
-        logger.info(
-          `[fillField] Text edited to "${fields.text}" successfully.`,
-        );
+        logger.info(`[fillField] Text edited to "${fields.text}" successfully.`);
       }
     } catch (error) {
       throw new Error(`[fillField]: ${(error as Error).message}`);

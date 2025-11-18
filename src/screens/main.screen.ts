@@ -1,10 +1,5 @@
 import { _, clickElement, expectElement, logger } from '../utils';
-import {
-  getTextSelector,
-  getCheckBoxSelector,
-  mainScreenLocators,
-  push,
-} from '../constants';
+import { getTextSelector, getCheckBoxSelector, mainScreenLocators, push } from '../constants';
 import { Task, taskStatuses, FilterType } from '../types';
 import { screens } from '../screens';
 
@@ -61,9 +56,7 @@ export class MainScreen {
 
       return taskTitleSelector;
     } catch (error) {
-      throw new Error(
-        `[addTask]: Error in addTask: ${(error as Error).message}`,
-      );
+      throw new Error(`[addTask]: Error in addTask: ${(error as Error).message}`);
     }
   }
 
@@ -133,10 +126,7 @@ export class MainScreen {
    * //Mark the currently selected task as active
    * await screens.main.markTaskComplete(false);
    */
-  async markTaskComplete(
-    isCompleted: boolean,
-    titleSelector?: string,
-  ): Promise<void> {
+  async markTaskComplete(isCompleted: boolean, titleSelector?: string): Promise<void> {
     try {
       if (titleSelector) {
         await screens.task.selectTask(titleSelector);
@@ -148,18 +138,13 @@ export class MainScreen {
       const checkboxUpdatedSelector = getCheckBoxSelector(isCompleted);
       await expectElement(checkboxUpdatedSelector);
 
-      logger.info(
-        `[markTaskComplete] Task marked as ${isCompleted ? 'completed' : 'active'}`,
-      );
+      logger.info(`[markTaskComplete] Task marked as ${isCompleted ? 'completed' : 'active'}`);
     } catch (error) {
       throw new Error(`[markTaskComplete]: ${(error as Error).message}`);
     }
   }
 
-  async toggleCheckbox(
-    selector: string,
-    isCompleted: boolean,
-  ): Promise<WebdriverIO.Element> {
+  async toggleCheckbox(selector: string, isCompleted: boolean): Promise<WebdriverIO.Element> {
     try {
       const checkbox = await $(selector);
       const currentState = (await checkbox.getAttribute('checked')) === 'true';

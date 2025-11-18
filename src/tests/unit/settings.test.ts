@@ -5,10 +5,7 @@ import { MockElement } from '../../types';
 import * as utils from '../../utils';
 
 // Import mocked constants
-const {
-  settingsScreenLocators,
-  mainScreenLocators,
-} = require('../../constants');
+const { settingsScreenLocators, mainScreenLocators } = require('../../constants');
 
 describe('SettingsScreen Unit Tests', () => {
   let settingsScreen: SettingsScreen;
@@ -25,38 +22,30 @@ describe('SettingsScreen Unit Tests', () => {
   });
 
   describe('goToNavigateScreen()', () => {
-    it('should open burger menu and wait for Todo header', async() => {
+    it('should open burger menu and wait for Todo header', async () => {
       await settingsScreen.goToNavigateScreen();
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.burgerMenuBtn,
-      );
-      await expect(utils.expectElement).toHaveBeenCalledWith(
-        settingsScreenLocators.todoHeader,
-      );
+      await expect(utils.clickElement).toHaveBeenCalledWith(settingsScreenLocators.burgerMenuBtn);
+      await expect(utils.expectElement).toHaveBeenCalledWith(settingsScreenLocators.todoHeader);
     });
 
-    it('should throw error when burger menu click fails', async() => {
-      (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error('Burger menu not found'),
-      );
+    it('should throw error when burger menu click fails', async () => {
+      (utils.clickElement as jest.Mock).mockRejectedValueOnce(new Error('Burger menu not found'));
 
       await expect(settingsScreen.goToNavigateScreen()).rejects.toThrow(
         '[goToNavigateScreen]: Burger menu not found',
       );
     });
 
-    it('should throw error when Todo header is not displayed', async() => {
-      (utils.expectElement as jest.Mock).mockRejectedValueOnce(
-        new Error('Todo header not found'),
-      );
+    it('should throw error when Todo header is not displayed', async () => {
+      (utils.expectElement as jest.Mock).mockRejectedValueOnce(new Error('Todo header not found'));
 
       await expect(settingsScreen.goToNavigateScreen()).rejects.toThrow(
         '[goToNavigateScreen]: Todo header not found',
       );
     });
 
-    it('should call clickElement before expectElement', async() => {
+    it('should call clickElement before expectElement', async () => {
       const callOrder: string[] = [];
 
       (utils.clickElement as jest.Mock).mockImplementation(() => {
@@ -78,15 +67,13 @@ describe('SettingsScreen Unit Tests', () => {
   });
 
   describe('goToStatisticsScreen()', () => {
-    it('should click statistics button and wait for statistics header', async() => {
+    it('should click statistics button and wait for statistics header', async () => {
       await settingsScreen.goToStatisticsScreen();
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.statisticsBtn,
-      );
+      await expect(utils.clickElement).toHaveBeenCalledWith(settingsScreenLocators.statisticsBtn);
     });
 
-    it('should throw error when statistics button click fails', async() => {
+    it('should throw error when statistics button click fails', async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
         new Error('Statistics button not found'),
       );
@@ -96,7 +83,7 @@ describe('SettingsScreen Unit Tests', () => {
       );
     });
 
-    it('should throw error when statistics header is not displayed', async() => {
+    it('should throw error when statistics header is not displayed', async () => {
       (utils.expectElement as jest.Mock).mockRejectedValueOnce(
         new Error('Statistics header not found'),
       );
@@ -106,7 +93,7 @@ describe('SettingsScreen Unit Tests', () => {
       );
     });
 
-    it('should use correct statistics header selector from screens', async() => {
+    it('should use correct statistics header selector from screens', async () => {
       await settingsScreen.goToStatisticsScreen();
 
       await expect(utils.expectElement).toHaveBeenCalledWith(
@@ -116,18 +103,14 @@ describe('SettingsScreen Unit Tests', () => {
   });
 
   describe('goToTasksScreen()', () => {
-    it('should click task list button and wait for todo title', async() => {
+    it('should click task list button and wait for todo title', async () => {
       await settingsScreen.goToTasksScreen();
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.taskListBtn,
-      );
-      await expect(utils.expectElement).toHaveBeenCalledWith(
-        mainScreenLocators.todoTitle,
-      );
+      await expect(utils.clickElement).toHaveBeenCalledWith(settingsScreenLocators.taskListBtn);
+      await expect(utils.expectElement).toHaveBeenCalledWith(mainScreenLocators.todoTitle);
     });
 
-    it('should throw error when task list button click fails', async() => {
+    it('should throw error when task list button click fails', async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(
         new Error('Task list button not found'),
       );
@@ -137,17 +120,15 @@ describe('SettingsScreen Unit Tests', () => {
       );
     });
 
-    it('should throw error when todo title is not displayed', async() => {
-      (utils.expectElement as jest.Mock).mockRejectedValueOnce(
-        new Error('Todo title not found'),
-      );
+    it('should throw error when todo title is not displayed', async () => {
+      (utils.expectElement as jest.Mock).mockRejectedValueOnce(new Error('Todo title not found'));
 
       await expect(settingsScreen.goToTasksScreen()).rejects.toThrow(
         '[goToStatisticsScreen]: Todo title not found',
       );
     });
 
-    it('should use correct todo title selector from screens.main', async() => {
+    it('should use correct todo title selector from screens.main', async () => {
       await settingsScreen.goToTasksScreen();
 
       await expect(utils.expectElement).toHaveBeenCalledWith(
@@ -155,7 +136,7 @@ describe('SettingsScreen Unit Tests', () => {
       );
     });
 
-    it('should call clickElement before expectElement', async() => {
+    it('should call clickElement before expectElement', async () => {
       const callOrder: string[] = [];
 
       (utils.clickElement as jest.Mock).mockImplementation(() => {
@@ -177,70 +158,56 @@ describe('SettingsScreen Unit Tests', () => {
   });
 
   describe('Navigation flow', () => {
-    it('should navigate from settings to statistics and verify', async() => {
+    it('should navigate from settings to statistics and verify', async () => {
       await settingsScreen.goToStatisticsScreen();
 
       await expect(utils.clickElement).toHaveBeenCalledTimes(1);
       await expect(utils.expectElement).toHaveBeenCalledTimes(1);
-      await expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.statisticsBtn,
-      );
+      await expect(utils.clickElement).toHaveBeenCalledWith(settingsScreenLocators.statisticsBtn);
     });
 
-    it('should navigate from settings to tasks and verify', async() => {
+    it('should navigate from settings to tasks and verify', async () => {
       await settingsScreen.goToTasksScreen();
 
       await expect(utils.clickElement).toHaveBeenCalledTimes(1);
       await expect(utils.expectElement).toHaveBeenCalledTimes(1);
-      await expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.taskListBtn,
-      );
+      await expect(utils.clickElement).toHaveBeenCalledWith(settingsScreenLocators.taskListBtn);
     });
 
-    it('should open navigation menu successfully', async() => {
+    it('should open navigation menu successfully', async () => {
       await settingsScreen.goToNavigateScreen();
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(
-        settingsScreenLocators.burgerMenuBtn,
-      );
-      await expect(utils.expectElement).toHaveBeenCalledWith(
-        settingsScreenLocators.todoHeader,
-      );
+      await expect(utils.clickElement).toHaveBeenCalledWith(settingsScreenLocators.burgerMenuBtn);
+      await expect(utils.expectElement).toHaveBeenCalledWith(settingsScreenLocators.todoHeader);
     });
   });
 
   describe('Error handling', () => {
-    it('should handle network timeout in goToNavigateScreen', async() => {
-      (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error('Timeout exceeded'),
-      );
+    it('should handle network timeout in goToNavigateScreen', async () => {
+      (utils.clickElement as jest.Mock).mockRejectedValueOnce(new Error('Timeout exceeded'));
 
       await expect(settingsScreen.goToNavigateScreen()).rejects.toThrow(
         '[goToNavigateScreen]: Timeout exceeded',
       );
     });
 
-    it('should handle network timeout in goToStatisticsScreen', async() => {
-      (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error('Timeout exceeded'),
-      );
+    it('should handle network timeout in goToStatisticsScreen', async () => {
+      (utils.clickElement as jest.Mock).mockRejectedValueOnce(new Error('Timeout exceeded'));
 
       await expect(settingsScreen.goToStatisticsScreen()).rejects.toThrow(
         '[goToStatisticsScreen]: Timeout exceeded',
       );
     });
 
-    it('should handle network timeout in goToTasksScreen', async() => {
-      (utils.clickElement as jest.Mock).mockRejectedValueOnce(
-        new Error('Timeout exceeded'),
-      );
+    it('should handle network timeout in goToTasksScreen', async () => {
+      (utils.clickElement as jest.Mock).mockRejectedValueOnce(new Error('Timeout exceeded'));
 
       await expect(settingsScreen.goToTasksScreen()).rejects.toThrow(
         '[goToStatisticsScreen]: Timeout exceeded',
       );
     });
 
-    it('should preserve error message in goToNavigateScreen', async() => {
+    it('should preserve error message in goToNavigateScreen', async () => {
       const originalError = new Error('Custom error message');
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(originalError);
 
@@ -249,7 +216,7 @@ describe('SettingsScreen Unit Tests', () => {
       );
     });
 
-    it('should preserve error message in goToStatisticsScreen', async() => {
+    it('should preserve error message in goToStatisticsScreen', async () => {
       const originalError = new Error('Statistics error');
       (utils.expectElement as jest.Mock).mockRejectedValueOnce(originalError);
 

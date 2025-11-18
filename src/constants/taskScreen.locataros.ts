@@ -7,6 +7,5 @@ export const taskScreenLocators = {
   taskDetailsHeader: '//android.widget.TextView[@text="Task Details"]',
   taskTextInput:
     '//android.widget.EditText[.//android.widget.TextView[@text="Enter your task here."]]',
-  taskTitleInput:
-    '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]',
+  taskTitleInput: '//android.widget.EditText[.//android.widget.TextView[@text="Title"]]',
 };

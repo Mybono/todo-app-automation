@@ -104,13 +104,13 @@ const apiKey = "sk_live_123456789";
 // ✅ Good - Use fake/random data
 const testUser = {
   email: `test_${Date.now()}@example.com`,
-  password: "TestPass123!",
+  password: 'TestPass123!',
 };
 
 // ❌ Bad - Don't use real user data
 const testUser = {
-  email: "john.doe@company.com",
-  password: "RealPassword123",
+  email: 'john.doe@company.com',
+  password: 'RealPassword123',
 };
 ```
 
@@ -156,7 +156,7 @@ const selector = `android=new UiSelector().text("${title}")`;
 
 ```typescript
 // ✅ Good - Validate paths
-const safePath = path.join(__dirname, "reports", sanitizeFilename(name));
+const safePath = path.join(__dirname, 'reports', sanitizeFilename(name));
 
 // ❌ Bad - Path traversal vulnerability
 const unsafePath = `./reports/${userInput}`;

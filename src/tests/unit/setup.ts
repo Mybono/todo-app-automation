@@ -83,14 +83,7 @@ jest.mock('../../screens/screensInit', () => {
   };
 });
 
-export {
-  mainScreenLocators,
-  settingsScreenLocators,
-  taskScreenLocators,
-  push,
-  headers,
-  timeout,
-};
+export { mainScreenLocators, settingsScreenLocators, taskScreenLocators, push, headers, timeout };
 
 /**
  * Creates a mock element with common WebDriverIO methods

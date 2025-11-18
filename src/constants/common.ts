@@ -24,8 +24,7 @@ export const headers = {
   completedTasks: '//android.widget.TextView[@text="Completed Tasks"]',
   allTasks: '//android.widget.TextView[@text="All Tasks"]',
   noActiveTasks: '//android.widget.TextView[@text="You have no active tasks!"]',
-  noCompletedTasks:
-    '//android.widget.TextView[@text="You have no completed tasks!"]',
+  noCompletedTasks: '//android.widget.TextView[@text="You have no completed tasks!"]',
   noAllTasks: '//android.widget.TextView[@text="You have no tasks!"]',
 };
 
