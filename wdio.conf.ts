@@ -14,7 +14,7 @@ export const config = {
   path: '/',
   port: 4723,
 
-  specs: ['./dist/tests/e2e/**/*.js'],
+  specs: ['./dist/src/tests/e2e/**/*.js'],
   maxInstances: 1,
 
   capabilities: capabilities as any,
