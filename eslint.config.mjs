@@ -33,6 +33,28 @@ export default [
       "@typescript-eslint/no-explicit-any": ["warn"],
       "@typescript-eslint/no-floating-promises": ["error"],
       "max-len": ["warn", { code: 100 }],
+
+      // ---- Formatting / Style Rules ----
+      semi: ["error", "always"],
+      quotes: ["error", "single", { avoidEscape: true }],
+      "object-curly-spacing": ["error", "always"],
+      "space-infix-ops": "error",
+      "space-before-function-paren": ["error", "never"],
+      "keyword-spacing": ["error", { before: true, after: true }],
+      "padding-line-between-statements": [
+        "error",
+        { blankLine: "always", prev: "block", next: "*" },
+        { blankLine: "always", prev: "*", next: "return" },
+      ],
+
+      //Prettier integration
+      "prettier/prettier": ["error", {
+        semi: true,
+        singleQuote: true,
+        bracketSpacing: true,
+        arrowParens: "avoid",
+        printWidth: 100
+      }],
     },
   },
 ];

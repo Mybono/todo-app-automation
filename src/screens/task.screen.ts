@@ -1,13 +1,13 @@
-import { _, clickElement, expectElement, logger } from "../utils";
+import { _, clickElement, expectElement, logger } from '../utils';
 import {
   getTextSelector,
   getCheckBoxSelector,
   timeout,
   editTextWidget,
   taskScreenLocators,
-} from "../constants";
-import { Task, EditTaskFields, taskStatuses } from "../types";
-import { screens } from "../screens";
+} from '../constants';
+import { Task, EditTaskFields, taskStatuses } from '../types';
+import { screens } from '../screens';
 
 export class TaskScreen {
   /**
@@ -28,14 +28,17 @@ export class TaskScreen {
    * });
    */
   async fillTask(task: Task): Promise<void> {
-    let title = task.title;
-    let text = task.text;
+    const title = task.title;
+    const text = task.text;
     try {
       await this.fillField({ title: title, text: text });
       await clickElement(taskScreenLocators.saveTaskBtn);
       if (task.status === taskStatuses.completed) {
         const checkbox = getCheckBoxSelector(false);
-        let checkedCheckbox = await screens.main.toggleCheckbox(checkbox, true);
+        const checkedCheckbox = await screens.main.toggleCheckbox(
+          checkbox,
+          true,
+        );
         await checkedCheckbox.waitForDisplayed({
           timeout: timeout.elementAppear,
         });
@@ -64,6 +67,7 @@ export class TaskScreen {
 
       await clickElement(taskScreenLocators.saveTaskBtn);
       selector = getTextSelector(title);
+
       return selector;
     } catch (error) {
       throw new Error(`[editTask]: ${(error as Error).message}`);
@@ -93,8 +97,9 @@ export class TaskScreen {
   async fillField(fields: EditTaskFields) {
     try {
       await browser.waitUntil(
-        async () => {
+        async() => {
           const elems = await $$(editTextWidget);
+
           return elems.length >= 2;
         },
         {
@@ -137,7 +142,7 @@ export class TaskScreen {
   async backToMain() {
     try {
       await clickElement(taskScreenLocators.backBtn);
-      logger.info(`[backToMain] Navigated to main screen successfully.`);
+      logger.info('[backToMain] Navigated to main screen successfully.');
     } catch (error) {
       throw new Error(`[backToMain]: ${(error as Error).message}`);
     }

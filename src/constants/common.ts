@@ -1,4 +1,4 @@
-import { logger } from "../utils";
+import { logger } from '../utils';
 
 export function getTextSelector(title: string) {
   return `android=new UiSelector().className("android.widget.TextView").textContains("${title}")`;
@@ -6,9 +6,9 @@ export function getTextSelector(title: string) {
 
 export async function fetchSource() {
   const source = await driver.getPageSource();
-  logger.warn("\n========== LIST WITH TASK ==========");
+  logger.warn('\n========== LIST WITH TASK ==========');
   logger.log(source);
-  logger.warn("====================================\n");
+  logger.warn('====================================\n');
 }
 
 export const push = {
@@ -33,7 +33,7 @@ export function getCheckBoxSelector(isChecked: boolean) {
   return `android=new UiSelector().className("android.widget.CheckBox").checked(${isChecked})`;
 }
 
-export const editTextWidget = "android.widget.EditText";
+export const editTextWidget = 'android.widget.EditText';
 
 /**
  * Timeout constants for various operations in milliseconds.

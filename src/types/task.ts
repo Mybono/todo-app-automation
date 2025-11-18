@@ -12,6 +12,6 @@ export interface EditTaskFields {
 }
 
 export const taskStatuses = {
-  active: "active",
-  completed: "completed",
+  active: 'active',
+  completed: 'completed',
 } as const;

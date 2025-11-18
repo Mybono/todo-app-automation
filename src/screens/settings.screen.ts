@@ -1,5 +1,5 @@
-import { mainScreenLocators, settingsScreenLocators } from "../constants";
-import { _, clickElement, expectElement } from "../utils";
+import { mainScreenLocators, settingsScreenLocators } from '../constants';
+import { _, clickElement, expectElement } from '../utils';
 
 export class SettingsScreen {
   async goToNavigateScreen() {

@@ -1,4 +1,4 @@
-type LogLevel = "log" | "info" | "warn" | "error" | "debug";
+type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
 
 class Logger {
   private logs: string[] = [];
@@ -11,7 +11,7 @@ class Logger {
     debug: 3,
   };
 
-  private currentLevel: LogLevel = "info";
+  private currentLevel: LogLevel = 'info';
 
   private getTimestamp(): string {
     return new Date().toISOString();
@@ -23,13 +23,14 @@ class Logger {
 
   private colorize(level: LogLevel, message: string): string {
     const colors: Record<LogLevel, string> = {
-      error: "\x1b[31m", // red
-      warn: "\x1b[33m", // yellow
-      info: "\x1b[32m", // green
-      log: "\x1b[37m", // white
-      debug: "\x1b[36m", // cyan
+      error: '\x1b[31m', // red
+      warn: '\x1b[33m', // yellow
+      info: '\x1b[32m', // green
+      log: '\x1b[37m', // white
+      debug: '\x1b[36m', // cyan
     };
-    const reset = "\x1b[0m";
+    const reset = '\x1b[0m';
+
     return `${colors[level]}${message}${reset}`;
   }
 
@@ -39,30 +40,30 @@ class Logger {
     const timestamp = this.getTimestamp();
     const fullMessage =
       `[${timestamp}] [${level.toUpperCase()}] ${message}` +
-      (error instanceof Error ? `\n${error.stack}` : "");
+      (error instanceof Error ? `\n${error.stack}` : '');
 
     this.logs.push(fullMessage);
     console.log(this.colorize(level, fullMessage));
   }
 
   public log(msg: string) {
-    this.logMessage("log", msg);
+    this.logMessage('log', msg);
   }
 
   public info(msg: string) {
-    this.logMessage("info", msg);
+    this.logMessage('info', msg);
   }
 
   public warn(msg: string) {
-    this.logMessage("warn", msg);
+    this.logMessage('warn', msg);
   }
 
   public error(msg: string, err?: unknown) {
-    this.logMessage("error", msg, err);
+    this.logMessage('error', msg, err);
   }
 
   public debug(msg: string) {
-    this.logMessage("debug", msg);
+    this.logMessage('debug', msg);
   }
 
   public getLogs(): string[] {
