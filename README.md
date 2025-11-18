@@ -74,10 +74,11 @@ npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/navigate.test.js   # Navigatio
 
 GitHub Actions automatically runs on every Pull Request:
 
-1. **🧹 Lint** - ESLint checks code quality
-2. **📦 Dependencies** - Checks for security issues
-3. **🎨 Format** - Auto-formats with Prettier
-4. **✅ Tests** - Runs unit tests with Jest
+1. **✅ Unit Tests** - Runs unit tests with Jest
+2. **🧹 Lint** - ESLint checks code quality
+3. **📦 Dependencies** - Checks for security issues
+4. **🎨 Auto Format** - Auto-formats with Prettier
+5. **🔤 Spellcheck** - Checks spelling in documentation and code comments
 
 View pipeline: [`.github/workflows/pr-quality-check.yml`](.github/workflows/pr-quality-check.yml)
 
