@@ -2,7 +2,7 @@ import { mainScreenLocators, settingsScreenLocators } from '../constants';
 import { _, clickElement, expectElement } from '../utils';
 
 export class SettingsScreen {
-  async goToNavigateScreen() {
+  async goToNavigateScreen(): Promise<void> {
     try {
       await clickElement(settingsScreenLocators.burgerMenuBtn);
       await expectElement(settingsScreenLocators.todoHeader);
@@ -11,7 +11,7 @@ export class SettingsScreen {
     }
   }
 
-  async goToStatisticsScreen() {
+  async goToStatisticsScreen(): Promise<void> {
     try {
       await clickElement(settingsScreenLocators.statisticsBtn);
       await expectElement(settingsScreenLocators.statisticsBtn);
@@ -20,7 +20,7 @@ export class SettingsScreen {
     }
   }
 
-  async goToTasksScreen() {
+  async goToTasksScreen(): Promise<void> {
     try {
       await clickElement(settingsScreenLocators.taskListBtn);
       await expectElement(mainScreenLocators.todoTitle);

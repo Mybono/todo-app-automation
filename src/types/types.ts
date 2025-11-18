@@ -5,6 +5,7 @@ export const filter = {
   all: 'all',
 } as const;
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface MockElement {
   setValue?: jest.Mock;
   waitForDisplayed?: jest.Mock;

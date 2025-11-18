@@ -34,7 +34,7 @@ class Logger {
     return `${colors[level]}${message}${reset}`;
   }
 
-  private logMessage(level: LogLevel, message: string, error?: unknown) {
+  private logMessage(level: LogLevel, message: string, error?: unknown): void {
     if (!this.shouldLog(level)) return;
 
     const timestamp = this.getTimestamp();
@@ -43,26 +43,27 @@ class Logger {
       (error instanceof Error ? `\n${error.stack}` : '');
 
     this.logs.push(fullMessage);
+    /* eslint-disable-next-line no-console */
     console.log(this.colorize(level, fullMessage));
   }
 
-  public log(msg: string) {
+  public log(msg: string): void {
     this.logMessage('log', msg);
   }
 
-  public info(msg: string) {
+  public info(msg: string): void {
     this.logMessage('info', msg);
   }
 
-  public warn(msg: string) {
+  public warn(msg: string): void {
     this.logMessage('warn', msg);
   }
 
-  public error(msg: string, err?: unknown) {
+  public error(msg: string, err?: unknown): void {
     this.logMessage('error', msg, err);
   }
 
-  public debug(msg: string) {
+  public debug(msg: string): void {
     this.logMessage('debug', msg);
   }
 
@@ -70,7 +71,7 @@ class Logger {
     return this.logs;
   }
 
-  public clear() {
+  public clear(): void {
     this.logs = [];
   }
 }

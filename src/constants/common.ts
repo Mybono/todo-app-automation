@@ -1,10 +1,10 @@
 import { logger } from '../utils';
 
-export function getTextSelector(title: string) {
+export function getTextSelector(title: string): string {
   return `android=new UiSelector().className("android.widget.TextView").textContains("${title}")`;
 }
 
-export async function fetchSource() {
+export async function fetchSource(): Promise<void> {
   const source = await driver.getPageSource();
   logger.warn('\n========== LIST WITH TASK ==========');
   logger.log(source);
@@ -28,7 +28,7 @@ export const headers = {
   noAllTasks: '//android.widget.TextView[@text="You have no tasks!"]',
 };
 
-export function getCheckBoxSelector(isChecked: boolean) {
+export function getCheckBoxSelector(isChecked: boolean): string {
   return `android=new UiSelector().className("android.widget.CheckBox").checked(${isChecked})`;
 }
 

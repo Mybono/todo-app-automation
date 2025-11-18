@@ -3,7 +3,7 @@ import { timeout } from '../constants';
 /**
  * Waits for an element to be visible and asserts that it is displayed.
  */
-export async function expectElement(selector: string) {
+export async function expectElement(selector: string): Promise<WebdriverIO.Element> {
   try {
     const element = await driver!.$(selector);
     await element.waitForDisplayed({ timeout: timeout.elementAppear });
@@ -20,7 +20,7 @@ export async function expectElement(selector: string) {
 /**
  * Waits for an element to be visible and clicks on it.
  */
-export async function clickElement(selector: string) {
+export async function clickElement(selector: string): Promise<void> {
   try {
     const element = await driver!.$(selector);
     await element.waitForDisplayed({ timeout: timeout.elementAppear });

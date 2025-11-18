@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   mainScreenLocators,
   settingsScreenLocators,
@@ -120,7 +122,7 @@ export function createMockElements(count: number = 2): any[] {
 /**
  * Resets all mocks to their default state
  */
-export function resetAllMocks() {
+export function resetAllMocks(): void {
   jest.clearAllMocks();
 
   const utils = require('../../utils');

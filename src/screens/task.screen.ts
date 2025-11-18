@@ -71,7 +71,7 @@ export class TaskScreen {
     }
   }
 
-  async deleteTask(titleSelector: string) {
+  async deleteTask(titleSelector: string): Promise<void> {
     try {
       await this.selectTask(titleSelector);
       await expectElement(taskScreenLocators.taskDetailsHeader);
@@ -91,7 +91,7 @@ export class TaskScreen {
    * await editFields({ text: "New description" });
    * await editFields({ title: "New title", text: "New description" });
    */
-  async fillField(fields: EditTaskFields) {
+  async fillField(fields: EditTaskFields): Promise<void> {
     try {
       await browser.waitUntil(
         async () => {
@@ -122,7 +122,7 @@ export class TaskScreen {
     }
   }
 
-  async selectTask(selector: string) {
+  async selectTask(selector: string): Promise<void> {
     try {
       await clickElement(selector);
       await expectElement(taskScreenLocators.taskDetailsHeader);
@@ -132,7 +132,7 @@ export class TaskScreen {
     }
   }
 
-  async backToMain() {
+  async backToMain(): Promise<void> {
     try {
       await clickElement(taskScreenLocators.backBtn);
       logger.info('[backToMain] Navigated to main screen successfully.');
