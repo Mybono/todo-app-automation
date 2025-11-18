@@ -1,6 +1,6 @@
 # 📱 Todo App - Mobile Test Automation
 
-[![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue)](https://github.com/yourusername/todo-app-automation/actions)
+![Build](https://img.shields.io/github/actions/workflow/status/Mybono/sdk_automation/publish.yml?branch=main&label=CI&color=blue)
 [![Test Framework](https://img.shields.io/badge/Framework-WebDriverIO-orange)](https://webdriver.io/)
 [![Appium](https://img.shields.io/badge/Appium-v3.1.1-purple)](https://appium.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org/)
