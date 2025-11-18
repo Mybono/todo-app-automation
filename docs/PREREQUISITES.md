@@ -3,7 +3,7 @@
 ### Required Software
 
 1. **Java Development Kit (JDK)**
-   - Version: 11 or higher
+   - Version: 16 or higher
    - Required for Android SDK
 
    ```bash
@@ -11,7 +11,7 @@
    ```
 
 2. **Android SDK & Platform Tools**
-   - Android SDK Platform 34 (Android 14)
+   - Android SDK Platform 36 (Android 16)
    - Android SDK Build-Tools
    - Android Emulator
 
