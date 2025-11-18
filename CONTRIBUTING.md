@@ -19,9 +19,9 @@ This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDU
 
 ## Getting Started
 
-### [Prerequisites](./docs/prerequisites.md)
+### [Prerequisites](./docs/PREREQUISITES.md)
 
-### [Installation](./docs/Installation.md)
+### [Installation](./docs/INSTALLATION.md)
 
 ### Reporting Bugs
 
@@ -179,7 +179,7 @@ describe("MainScreen Unit Tests", () => {
 
 ### E2E Tests
 
-- **Follow test plan** in [`docs/TestPlan.md`](./docs/TestPlan.md)
+- **Follow test plan** in [`docs/TEST_PLAN.md`](./docs/TEST_PLAN.md)
 - **Use descriptive test IDs** (e.g., `[UITM-TA001]`)
 - **One assertion per test** when possible
 - **Clean up test data** after each test
@@ -280,7 +280,7 @@ Then:
 - **Address review comments** promptly
 - **Keep PR focused** - one feature/fix per PR
 
-## [Project Structure](./docs/structure.md)
+## [Project Structure](./docs/STRUCTURE.md)
 
 ### Key Files
 

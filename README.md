@@ -14,14 +14,14 @@
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Technology Stack](./docs/stack.md)
+- [Technology Stack](./docs/STACK.md)
 - [Running Tests](#running-tests)
 - [CI/CD Pipeline](#cicd-pipeline)
-- [Test Documentation](./docs/TestPlan.md)
-- [Project Structure](./docs/structure.md)
+- [Test Documentation](./docs/TEST_PLAN.md)
+- [Project Structure](./docs/STRUCTURE.md)
 - [Test Reports](#test-reports)
 - [API Documentation](#api-documentation)
-- [Troubleshooting](./docs/troubleshooting.md)
+- [Troubleshooting](./docs/TROUBLESHOOTING.md)
 - [Contributing](./CONTRIBUTING.md)
 - [TODO](#todo)
 - [Notes](#notes)
@@ -38,13 +38,13 @@ This project implements automated tests for a Todo mobile application covering:
 - ✅ Navigation between screens (Tasks, Settings, Statistics)
 - ✅ UI validation and push notifications
 
-## [Prerequisites](./docs/prerequisites.md)
+## [Prerequisites](./docs/PREREQUISITES.md)
 
-## [Installation](./docs/Installation.md)
+## [Installation](./docs/INSTALLATION.md)
 
-## [Technology Stack](./docs/stack.md)
+## [Technology Stack](./docs/STACK.md)
 
-## [Project Structure](./docs/structure.md)
+## [Project Structure](./docs/STRUCTURE.md)
 
 ## Running Tests
 
@@ -77,9 +77,9 @@ GitHub Actions automatically runs on every Pull Request:
 
 View pipeline: [`.github/workflows/pr-quality-check.yml`](.github/workflows/pr-quality-check.yml)
 
-## [Test Documentation](./docs/TestPlan.md)
+## [Test Documentation](./docs/TEST_PLAN.md)
 
-**📄 Complete test documentation is available at: [docs/TestPlan.md](./docs/TestPlan.md)**
+**📄 Complete test documentation is available at: [docs/TEST_PLAN.md](./docs/TEST_PLAN.md)**
 
 The test plan includes:
 
@@ -97,7 +97,7 @@ The test plan includes:
 ### Console Output
 
 Tests output to console with colored logs:
-[Full Console Logs](./docs/test-logs.md)
+[Full Console Logs](./docs/test.logs.md)
 
 ### Allure Reports
 
@@ -139,10 +139,9 @@ await screens.task.editTask({
 await screens.task.deleteTask(taskSelector);
 ```
 
-## [Troubleshooting](./docs/troubleshooting.md)
+## [Troubleshooting](./docs/TROUBLESHOOTING.md)
 
 ## TODO
-
 - Develop test scenarios and implement tests to verify the app's behavior under unexpected device events:
   - Network loss (Wi-Fi / mobile data)
   - Screen rotation (portrait ↔ landscape)
@@ -155,7 +154,7 @@ await screens.task.deleteTask(taskSelector);
 - Implement parallel test execution
 
 
-## [NOTES](./docs/notes.md)
+## [NOTES](./docs/NOTES.md)
 
 ### Best Practices Implemented
 
@@ -191,3 +190,5 @@ await screens.task.deleteTask(taskSelector);
 
 </div>
 
+
+docker buildx build --platform linux/amd64,linux/arm64 -t mybono/todo-app-automation:latest --push .
