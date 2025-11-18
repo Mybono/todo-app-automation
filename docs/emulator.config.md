@@ -9,4 +9,4 @@ Current configuration in `capabilities.ts`:
 - **Window animation**: Disabled (for faster test execution)
 - **Command timeout**: 300 seconds
 
-[⬅️ Back to README](../README.md#emulator-configuration)
+[⬅️ Back to README](../README.md#table-of-contents)

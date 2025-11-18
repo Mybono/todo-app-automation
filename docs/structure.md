@@ -9,7 +9,14 @@ todo-app-automation/
 │   └── apk/
 │       └── app-debug.apk           # Android application (not in repo)
 ├── docs/
-│   └── TestPlan.md                 # 📋 Complete test documentation
+│   ├── TEST_PLAN.md                # 📋 Complete test documentation
+│   ├── INSTALLATION.md
+│   ├── PREREQUISITES.md
+│   ├── TROUBLESHOOTING.md
+│   ├── STACK.md
+│   ├── CHANGELOG.md
+│   └── emulator.config.md
+│
 ├── src/
 │   ├── config/
 │   │   ├── capabilities.ts         # Appium capabilities configuration

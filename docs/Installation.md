@@ -1,4 +1,7 @@
-## Installation
+# 📘 Installation & Setup Guide
+
+- **Local environment** (Node.js + Appium + Android Studio), or
+- **Docker environment** (no local installations required)
 
 ### 1. Clone Repository
 
@@ -13,14 +16,35 @@ cd todo-app-automation
 npm install
 ```
 
-This installs:
+### 3. Android Studio Setup (Required for Local Testing)
 
-- WebDriverIO and Appium drivers
-- TypeScript compiler
-- Testing frameworks (Mocha, Chai)
-- Linting tools (ESLint, Prettier)
+If you want to run tests locally (without Docker), you must install and configure Android Studio.
 
-### 3. Install Appium Globally (Optional)
+#### 3.1 Install Android Studio
+
+- Download: https://developer.android.com/studio
+
+- Ensure the following components are installed:
+  - Android SDK
+
+  - SDK Platform Tools
+
+  - Android Emulator
+
+  - Android System Images
+
+#### 3.2 Create an Android Virtual Device (AVD)
+
+- Open Tools → Device Manager
+
+- Create a device:
+  - Device: emulator-5554
+
+  - System Image: Android 16
+
+- Start the AVD from Device Manager.
+
+### 4. Install Appium Globally
 
 ```bash
 npm install -g appium
@@ -36,7 +60,7 @@ emulator -list-avds
 # Start emulator
 appium
 OR
-emulator -avd <emulator_name> -no-snapshot-load
+emulator -avd emulator-5554 -no-snapshot-load
 ```
 
 Or start via Android Studio AVD Manager.
@@ -48,9 +72,31 @@ adb devices
 # Output should show: emulator-5554    device
 ```
 
-## Alternative Installation via Docker
+## Alternative Installation via Docker 🐳
 
-You can run all tests and the Appium server without installing Node.js, Appium, or Android SDK locally by using our prebuilt Docker image.
+This image is prebuilt and extremely small. It contains:
+
+- Node.js runtime
+- Compiled TypeScript tests
+- Minimal project files
+
+`Appium and drivers are installed dynamically at runtime, so you don’t need them in the image itself.`
+
+### Install Docker (Required)
+
+To run the container, you must have **Docker Desktop** installed.
+
+- **Windows / macOS:**  
+  Download here → https://www.docker.com/products/docker-desktop/
+
+- **Linux:**  
+  Follow the official installation guide: https://docs.docker.com/engine/install/
+
+Verify Docker is installed:
+
+```bash
+docker --version
+```
 
 ### Pull and Run the Docker Image
 
@@ -59,7 +105,11 @@ You can run all tests and the Appium server without installing Node.js, Appium, 
 docker pull mybono/todo-app-automation:latest
 ```
 
+The image works correctly on macOS and Windows.
+
 ### Run tests inside the container
+
+macOS:
 
 ```bash
 docker run --rm -it \
@@ -68,30 +118,21 @@ docker run --rm -it \
   mybono/todo-app-automation:latest
 ```
 
-## 📘 Explanation of Flags
+Windows:
 
-| Flag                                     | Description                                                               |
-| ---------------------------------------- | ------------------------------------------------------------------------- |
-| `-v $(pwd)/reports:/usr/src/app/reports` | Mounts local reports folder so test reports persist outside the container |
-| `-p 4723:4723`                           | Exposes Appium default port                                               |
-| `--rm`                                   | Removes container after execution                                         |
-| `-it`                                    | Interactive mode (shows logs in real time)                                |
-
----
+```bash
+docker run --rm -it `
+  -v "${PWD}\reports:/usr/src/app/reports" `
+  -p 4723:4723 `
+  mybono/todo-app-automation:latest
+```
 
 🔍 Note about `--rm`
 
 - `--rm` deletes the container after tests finish, but the Docker image remains on your machine.
   You will NOT need to download it again unless you manually delete the image.
 
-## 📦 [Docker Hub Image](https://hub.docker.com/r/mybono/todo-app-automation)
-
-## ✅ Benefits
-
-- No need to install **Node.js**, **Appium**, **Android SDK**
-- Fully isolated test environment
-- Consistent behavior across all machines
-- Ready-to-run **CI/CD friendly** setup
+<br>
 
 ## Running Tests
 
@@ -148,3 +189,5 @@ appium --log-level debug:debug --relaxed-security
 # Terminal 2: Run tests
 npx wdio run wdio.conf.ts
 ```
+
+[⬅️ Back to README](../README.md#table-of-contents)

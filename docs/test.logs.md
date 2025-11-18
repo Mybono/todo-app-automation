@@ -27,4 +27,4 @@ Todo App - Navigation
 18 passing (45.6s)
 ```
 
-[⬅️ Back to README](../README.md#overview)
+[⬅️ Back to README](../README.md#table-of-contents)

@@ -13,16 +13,16 @@
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Technology Stack](./docs/stack.md)
-- [Project Structure](./docs/structure.md)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Technology Stack](./docs/STACK.md)
 - [Running Tests](#running-tests)
 - [CI/CD Pipeline](#cicd-pipeline)
-- [Test Documentation](./docs/TestPlan.md)
+- [Test Documentation](./docs/TEST_PLAN.md)
+- [Project Structure](./docs/STRUCTURE.md)
 - [Test Reports](#test-reports)
-- [API Documentation](#)
-- [Troubleshooting](./docs/troubleshooting.md)
+- [API Documentation](#api-documentation)
+- [Troubleshooting](./docs/TROUBLESHOOTING.md)
 - [Contributing](./CONTRIBUTING.md)
 - [TODO](#todo)
 - [Notes](#notes)
@@ -39,86 +39,51 @@ This project implements automated tests for a Todo mobile application covering:
 - ✅ Navigation between screens (Tasks, Settings, Statistics)
 - ✅ UI validation and push notifications
 
-## [Technology Stack](./docs/stack.md)
+## [Prerequisites](./docs/PREREQUISITES.md)
 
-## [Project Structure](./docs/structure.md)
+## [Installation](./docs/INSTALLATION.md)
 
-## [Prerequisites](./docs/prerequisites.md)
+## [Technology Stack](./docs/STACK.md)
 
-## [Installation](./docs/Installation.md)
+## [Project Structure](./docs/STRUCTURE.md)
+
+## Running Tests
+
+### All Tests
+
+```bash
+npm test
+```
+
+### Specific Suite
+
+```bash
+# Build first (if not built)
+npm run build
+
+# Then run specific test
+npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/main.test.js       # Task Management
+npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/checkbox.test.js   # Checkbox Actions
+npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/filter.test.js     # Filters
+npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/navigate.test.js   # Navigation
+```
 
 ## CI/CD Pipeline
 
-### GitHub Actions Workflow
-
-The project includes automated PR quality checks in `.github/workflows/pr-quality-check.yml`:
-
-```yaml
-name: 🔍 PR Checks
-
-on:
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize, reopened]
-```
-
-### Pipeline Stages
-
 ![Pipeline Example](./assets/pipelineExample.png)
 
-#### 1. **Unit Tests** 🧪
+GitHub Actions automatically runs on every Pull Request:
 
-- Runs unit tests using **Jest** with coverage.
-- Jest unit tests cover the **core logic** of the main application classes:
-  - **MainScreen** – task creation, selection, and completion logic.
-  - **SettingsScreen** – applying filters, navigating menus, opening statistics.
-  - **TaskScreen** – task editing, saving, and deletion workflows.
+1. **🧹 Lint** - ESLint checks code quality
+2. **📦 Dependencies** - Checks for security issues
+3. **🎨 Format** - Auto-formats with Prettier
+4. **✅ Tests** - Runs unit tests with Jest
 
-![Unit Example](./assets/unitTestEx.png)
+View pipeline: [`.github/workflows/pr-quality-check.yml`](.github/workflows/pr-quality-check.yml)
 
-#### 2. **Lint TypeScript** 🧹
+## [Test Documentation](./docs/TEST_PLAN.md)
 
-- Runs ESLint on all `.ts` files
-- Checks code quality and standards
-- Non-blocking (warnings only)
-
-```bash
-npm run lint
-```
-
-#### 3. **Dependency Check** 📦
-
-- Detects changes in `package.json` or `package-lock.json`
-- Alerts reviewers about:
-  - Security vulnerabilities
-  - License compliance
-  - Bundle size impact
-
-#### 4. **Auto-format with Prettier** 🎨
-
-- Automatically formats code
-- Commits changes back to PR
-- Excludes `.github/` workflows
-- Only commits if changes detected
-
-**Auto-commit behavior:**
-
-```bash
-git commit -m "style: auto-format code with Prettier"
-git push origin HEAD:<branch-name>
-```
-
-### How It Works
-
-1. **Developer creates PR** → Pipeline triggers
-2. **Linting runs** → Shows code quality issues
-3. **Dependency check** → Alerts on package changes
-4. **Prettier runs** → Automatically formats & commits
-5. **Tests run locally** → Manual verification before merge
-
-## [Test Documentation](./docs/TestPlan.md)
-
-**📄 Complete test documentation is available at: [docs/TestPlan.md](./docs/TestPlan.md)**
+**📄 Complete test documentation is available at: [docs/TEST_PLAN.md](./docs/TEST_PLAN.md)**
 
 The test plan includes:
 
@@ -137,7 +102,7 @@ The test plan includes:
 ### Console Output
 
 Tests output to console with colored logs:
-[Full Console Logs](./docs/test-logs.md)
+[Full Console Logs](./docs/test.logs.md)
 
 ### Allure Reports
 
@@ -181,7 +146,7 @@ await screens.task.editTask({
 await screens.task.deleteTask(taskSelector);
 ```
 
-## [Troubleshooting](./docs/troubleshooting.md)
+## [Troubleshooting](./docs/TROUBLESHOOTING.md)
 
 ## TODO
 
@@ -190,17 +155,20 @@ await screens.task.deleteTask(taskSelector);
   - Screen rotation (portrait ↔ landscape)
   - Device lock and unlock
   - Background app interruptions
+  - Low battery simulation
   - Sudden screen off
-  - Battery drain / low battery simulation
-- Develop & Implement Slack notification servise
+- Develop Slack notification service
+- Add iOS support
+- Implement parallel test execution
 
-## [NOTES](./docs/notes.md)
+## [NOTES](./docs/NOTES.md)
 
 ### Best Practices Implemented
 
 - ✅ Page Object Model for maintainability
 - ✅ Factory pattern for screen initialization
 - ✅ Custom logger with log levels
+- ✅ Unit tests
 - ✅ Timeout constants for consistency
 - ✅ Random test data generation
 - ✅ Error handling with descriptive messages
@@ -219,4 +187,13 @@ await screens.task.deleteTask(taskSelector);
 
 ---
 
-_Last Updated: November 2025_
+<div align="center">
+
+[![Stars](https://img.shields.io/github/stars/Mybono/todo-app-automation?style=social)](https://github.com/Mybono/todo-app-automation/stargazers)
+[![Forks](https://img.shields.io/github/forks/Mybono/todo-app-automation?style=social)](https://github.com/Mybono/todo-app-automation/network/members)
+
+_Last updated: November 2025_
+
+</div>
+
+docker buildx build --platform linux/amd64,linux/arm64 -t mybono/todo-app-automation:latest --push .

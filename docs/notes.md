@@ -34,4 +34,4 @@ await screens.addEdit.editTask({ titleSelector, title: "New Title" });
 await screens.addEdit.deleteTask(taskSelector);
 ```
 
-[⬅️ Back to README](../README.md#overview)
+[⬅️ Back to README](../README.md#table-of-contents)
