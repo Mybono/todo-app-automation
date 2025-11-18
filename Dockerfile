@@ -28,8 +28,9 @@ RUN npm install
 # Copy compiled output and minimal runtime files
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/wdio.conf.ts ./
-COPY --from=builder /usr/src/app/src/config ./src/config
-COPY --from=builder /usr/src/app/src/screens ./src/screens
+
+# Copy entire src folder to include utils and everything else
+COPY --from=builder /usr/src/app/src ./src
 
 # Install global tools
 RUN npm install -g appium appium-uiautomator2-driver @wdio/cli allure-commandline
