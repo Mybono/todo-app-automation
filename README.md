@@ -188,13 +188,4 @@ await screens.task.deleteTask(taskSelector);
 
 ---
 
-<div align="center">
-
-[![Stars](https://img.shields.io/github/stars/Mybono/todo-app-automation?style=social)](https://github.com/Mybono/todo-app-automation/stargazers)
-[![Forks](https://img.shields.io/github/forks/Mybono/todo-app-automation?style=social)](https://github.com/Mybono/todo-app-automation/network/members)
-
 _Last updated: November 2025_
-
-</div>
-
-docker buildx build --platform linux/amd64,linux/arm64 -t mybono/todo-app-automation:latest --push .
