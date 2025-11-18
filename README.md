@@ -9,6 +9,7 @@
 [![Chai](https://img.shields.io/badge/Assertion-Chai-yellow)](https://www.chaijs.com/)
 [![WebDriverIO](https://img.shields.io/badge/E2E-WebDriverIO-blueviolet)](https://webdriver.io/)
 [![Docker Image](https://img.shields.io/badge/Docker-Latest%20Image-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/mybono/todo-app-automation)
+[![Hits](https://hits.sh/github.com/Mybono/todo-app-automation.svg?label=views)](https://hits.sh/github.com/Mybono/todo-app-automation/)
 
 ## 📋 Table of Contents
 
