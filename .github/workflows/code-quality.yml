@@ -10,9 +10,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run Code Checks
+      - name: Run PR CheckMate
         run: |
           docker run --rm \
-            -v $(pwd):/project \
+            -v ${{ github.workspace }}:/project \
+            -v ${{ github.workspace }}/node_modules:/project/node_modules \
             -w /project \
             mybono/pr-checkmate:latest all
+            
