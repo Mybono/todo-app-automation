@@ -6,9 +6,6 @@
     "test": "npm run build && wdio run wdio.conf.ts",
     "report": "allure generate reports/allure-results --clean && allure open",
     "test:unit": "jest --coverage",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix",
-    "format": "prettier --write .",
     "clean": "rm -rf dist",
     "clean:reports": "rm -rf reports",
     "build": "npm run clean && tsc"
@@ -17,8 +14,6 @@
     "@types/chai": "^4.3.5",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.4.0",
-    "@typescript-eslint/eslint-plugin": "^8.46.4",
-    "@typescript-eslint/parser": "^8.46.4",
     "@wdio/allure-reporter": "^9.20.0",
     "@wdio/appium-service": "^8.40.0",
     "@wdio/cli": "^8.40.0",
@@ -31,17 +26,13 @@
     "appium-uiautomator2-driver": "^6.1.1",
     "chai": "^4.3.8",
     "dotenv": "^17.2.3",
-    "eslint": "^9.39.1",
-    "eslint-config-prettier": "^9.1.2",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-prettier": "^5.5.4",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
-    "prettier": "^3.6.2",
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "webdriverio": "^8.40.0"
+    "webdriverio": "^8.40.0",
+    "pr-checkmate": "^1.0.20"
   },
   "dependencies": {
     "dayjs": "^1.11.19"
