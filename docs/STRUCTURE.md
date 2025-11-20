@@ -42,7 +42,7 @@ todo-app-automation/
 │   ├── constants/                             # Locators
 │   │   ├── mainScreen.locators.screen.ts      # Main Screen
 │   │   ├── settingsScreen.locators.screen.ts  # Settings Screen locators
-│   │   ├── taskScreen.locataros.test.ts       # TaskScreen locators
+│   │   ├── taskScreen.locators.test.ts       # TaskScreen locators
 │   │   ├── common.test.ts                     # generic locators
 │   │   └── index.ts
 │   └── utils/

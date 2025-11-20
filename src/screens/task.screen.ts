@@ -95,9 +95,9 @@ export class TaskScreen {
     try {
       await browser.waitUntil(
         async () => {
-          const elems = await $$(editTextWidget);
+          const elements = await $$(editTextWidget);
 
-          return elems.length >= 2;
+          return elements.length >= 2;
         },
         {
           timeout: timeout.elementAppear,
