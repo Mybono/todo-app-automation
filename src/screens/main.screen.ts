@@ -28,7 +28,7 @@ export class MainScreen {
   async addTask(task: Task): Promise<string> {
     let title = task.title;
     let text = task.text;
-    const taskStaus = task.status;
+    const taskStatus = task.status;
     try {
       if (!task.title || !task.text) {
         const randomData = _.getRandomText();
@@ -40,10 +40,10 @@ export class MainScreen {
       await screens.task.fillTask({
         title: title,
         text: text,
-        status: taskStaus,
+        status: taskStatus,
       });
 
-      if (taskStaus === taskStatuses.active) {
+      if (taskStatus === taskStatuses.active) {
         await expectElement(push.taskAdded);
       }
       await expectElement(mainScreenLocators.todoTitle);

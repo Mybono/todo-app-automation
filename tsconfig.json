@@ -11,7 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["node", "webdriverio", "@wdio/globals/types", "mocha", "jest"]
   },
-  "include": ["src/**/*.ts", "wdio.conf.ts"],
+  "include": ["src/**/*.ts", "wdio.conf.ts", "jest.config.js"],
   "exclude": ["node_modules", "dist"]
 }
-
