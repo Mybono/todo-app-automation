@@ -53,7 +53,6 @@ todo-app-automation/
 ├── dist/                           # Compiled TypeScript output
 ├── wdio.conf.ts                    # WebDriverIO configuration
 ├── tsconfig.json                   # TypeScript configuration
-├── eslint.config.mjs               # ESLint configuration
 ├── package.json                    # Project dependencies
 └── README.md                       # This file
 ```
