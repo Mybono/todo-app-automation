@@ -39,6 +39,7 @@ jobs:
 
   quality-checks:
     runs-on: ubuntu-latest
+    name: 🔍 PR-Checkmate 
 
     steps:
       - name: 📥 Checkout code
