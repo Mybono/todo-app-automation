@@ -166,6 +166,7 @@ await screens.task.deleteTask(taskSelector);
 - Implement parallel execution on multiple devices/simulators
 
 ### CI/CD Reliability
+- Implement parallel test execution
 - Capture screenshots and video for failed tests
 - Attach device logs for debugging
 
