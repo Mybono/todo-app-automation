@@ -159,9 +159,39 @@ await screens.task.deleteTask(taskSelector);
   - Background app interruptions
   - Low battery simulation
   - Sudden screen off
+  - Incoming notifications and calls
+  - App update / upgrade scenario (test app behavior after a new version is installed)
+  - Multi-language / localization checks
+  - Accessibility checks (screen reader, font size adjustments)
+
+- Implement strategies for flaky / unstable tests:
+  - Proper wait strategies (waitForExist, waitForDisplayed)
+  - Test retries and independent test design
+  - Use stable selectors (accessibilityId / resource-id)
+  - Separate UI-dependent and logic-dependent tests
+
 - Develop Slack notification service
-- Add iOS support
-- Implement parallel test execution
+- Add iOS support and ensure cross-platform consistency
+- Implement parallel test execution on multiple devices / simulators
+
+- Enhance test reporting and logging for CI/CD
+  - Capture screenshots and video for failed tests
+  - Attach device logs for debugging
+
+- Maintain and update Page Object Models
+  - Keep screens and components up to date with app changes
+  - Reuse common actions to reduce code duplication
+
+- Integrate test coverage metrics
+  - Track which requirements / user needs are covered
+  - Highlight untested scenarios for future work
+
+- **Performance and device variations**
+  - Measure app launch time and screen load time
+  - Test scrolling and UI responsiveness under load
+  - Verify behavior on different screen resolutions and device sizes (small, medium, large)
+  - Test memory and CPU usage on real devices and emulators
+
 
 ## [NOTES](./docs/NOTES.md)
 
