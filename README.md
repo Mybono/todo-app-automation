@@ -150,47 +150,60 @@ await screens.task.deleteTask(taskSelector);
 
 ## [Troubleshooting](./docs/TROUBLESHOOTING.md)
 
+<br>
+
 ## TODO
+### Device Events
+> P1 — Must Have (Critical)
+- Network loss (Wi-Fi / mobile data)
+- Screen rotation (portrait ↔ landscape)
+- Device lock and unlock
+- Background app interruptions
+- Sudden screen off
 
-- Develop test scenarios and implement tests to verify the app's behavior under unexpected device events:
-  - Network loss (Wi-Fi / mobile data)
-  - Screen rotation (portrait ↔ landscape)
-  - Device lock and unlock
-  - Background app interruptions
-  - Low battery simulation
-  - Sudden screen off
-  - Incoming notifications and calls
-  - App update / upgrade scenario (test app behavior after a new version is installed)
-  - Multi-language / localization checks
-  - Accessibility checks (screen reader, font size adjustments)
+### Cross-Platform & Execution
+- Add iOS support and ensure platform consistency
+- Implement parallel execution on multiple devices/simulators
 
-- Implement strategies for flaky / unstable tests:
-  - Proper wait strategies (waitForExist, waitForDisplayed)
-  - Test retries and independent test design
-  - Use stable selectors (accessibilityId / resource-id)
-  - Separate UI-dependent and logic-dependent tests
+### CI/CD Reliability
+- Implement parallel test execution
+- Capture screenshots and video for failed tests
+- Attach device logs for debugging
 
-- Develop Slack notification service
-- Add iOS support and ensure cross-platform consistency
-- Implement parallel test execution on multiple devices / simulators
+### Additional Device Event Scenarios
+> P2 — Should Have (Important)
+- Low battery simulation
+- Incoming notifications and calls
+- App update / upgrade scenario
+- Multi-language / localization checks
+- Accessibility checks (screen reader, font size adjustments)
 
-- Enhance test reporting and logging for CI/CD
-  - Capture screenshots and video for failed tests
-  - Attach device logs for debugging
-
+### Framework Improvements
 - Maintain and update Page Object Models
-  - Keep screens and components up to date with app changes
-  - Reuse common actions to reduce code duplication
+- Reuse common actions to reduce duplication
+- Develop Slack notification service
 
-- Integrate test coverage metrics
-  - Track which requirements / user needs are covered
-  - Highlight untested scenarios for future work
+### Test Coverage & Reporting
+- Integrate requirement-coverage tracking
+- Highlight untested scenarios
+- Extend reporting and logging capabilities
 
-- **Performance and device variations**
-  - Measure app launch time and screen load time
-  - Test scrolling and UI responsiveness under load
-  - Verify behavior on different screen resolutions and device sizes (small, medium, large)
-  - Test memory and CPU usage on real devices and emulators
+
+### Performance & Device Variations
+> P3 — Nice to Have (Enhancements)
+- Measure app launch time
+- Measure screen load time
+- Test scrolling and UI responsiveness under load
+- Verify behavior on different screen resolutions and device sizes
+- Test memory and CPU usage on real devices and emulators
+
+### Workflow & Project Automation
+- Add `"release": "standard-version"` for automatic CHANGELOG.MD generation
+- Add auto-merge workflow for PRs when all checks pass
+
+### Issue Templates
+- Add templates for Task, Bug, Feature, Documentation, Custom
+- Add detailed Bug Report template
 
 
 ## [NOTES](./docs/NOTES.md)
