@@ -10,7 +10,6 @@ const {
   taskScreenLocators,
   getCheckBoxSelector,
   getTextSelector,
-  editTextWidget,
   timeout,
 } = require('../../constants');
 
@@ -29,15 +28,15 @@ describe('TaskScreen Unit Tests', () => {
     // Setup mocks
     (global.driver.$ as jest.Mock).mockReturnValue(mockElement);
     (global.$ as jest.Mock).mockReturnValue(mockElement);
-    
+
     (global.$$ as jest.Mock).mockReturnValue(mockElements);
     (browser.$$ as jest.Mock).mockReturnValue(mockElements);
     ($$ as jest.Mock).mockReturnValue(mockElements);
-    
+
     (browser.waitUntil as jest.Mock).mockImplementation(async (condition: any) => {
       return await condition();
     });
-    
+
     (utils.clickElement as jest.Mock).mockResolvedValue(undefined);
     (utils.expectElement as jest.Mock).mockResolvedValue(undefined);
 
@@ -126,7 +125,7 @@ describe('TaskScreen Unit Tests', () => {
         selector: 'invalid-selector',
       };
 
-      expect(taskScreen.editTask(task)).rejects.toThrow(
+      await expect(taskScreen.editTask(task)).rejects.toThrow(
         '[editTask]: [selectTask]: Task not found',
       );
     });
@@ -146,7 +145,7 @@ describe('TaskScreen Unit Tests', () => {
     it('should throw error when task selection fails', async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(new Error('Task not found'));
 
-      expect(taskScreen.deleteTask('invalid-selector')).rejects.toThrow(
+      await expect(taskScreen.deleteTask('invalid-selector')).rejects.toThrow(
         '[deleteTask]: [selectTask]: Task not found',
       );
     });
@@ -156,7 +155,7 @@ describe('TaskScreen Unit Tests', () => {
         new Error('Task details not displayed'),
       );
 
-      expect(taskScreen.deleteTask('mock-selector')).rejects.toThrow(
+      await expect(taskScreen.deleteTask('mock-selector')).rejects.toThrow(
         '[deleteTask]: [selectTask]: Task details not displayed',
       );
     });
@@ -236,7 +235,7 @@ describe('TaskScreen Unit Tests', () => {
     it('should throw error when task click fails', async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(new Error('Element not clickable'));
 
-      expect(taskScreen.selectTask('invalid-selector')).rejects.toThrow(
+      await expect(taskScreen.selectTask('invalid-selector')).rejects.toThrow(
         '[selectTask]: Element not clickable',
       );
     });
@@ -244,7 +243,7 @@ describe('TaskScreen Unit Tests', () => {
     it('should throw error when details header not displayed', async () => {
       (utils.expectElement as jest.Mock).mockRejectedValueOnce(new Error('Header not found'));
 
-      expect(taskScreen.selectTask('mock-selector')).rejects.toThrow(
+      await expect(taskScreen.selectTask('mock-selector')).rejects.toThrow(
         '[selectTask]: Header not found',
       );
     });
@@ -263,7 +262,7 @@ describe('TaskScreen Unit Tests', () => {
     it('should throw error when back button click fails', async () => {
       (utils.clickElement as jest.Mock).mockRejectedValueOnce(new Error('Back button not found'));
 
-      expect(taskScreen.backToMain()).rejects.toThrow('[backToMain]: Back button not found');
+      await expect(taskScreen.backToMain()).rejects.toThrow('[backToMain]: Back button not found');
     });
   });
 });

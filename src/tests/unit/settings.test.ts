@@ -6,8 +6,9 @@ import * as utils from '../../utils';
 
 // Import mocked constants
 const { settingsScreenLocators, mainScreenLocators } = require('../../constants');
+
 jest.mock('@wdio/globals', () => ({
-  $: (selector: string) => global.$(selector),
+  $: (selector: string): ReturnType<typeof global.$> => global.$(selector),
 }));
 
 describe('SettingsScreen Unit Tests', () => {

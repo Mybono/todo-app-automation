@@ -32,9 +32,8 @@ jest.mock('../../screens/screensInit', () => {
 });
 
 jest.mock('@wdio/globals', () => ({
-  $: (selector: string) => global.$(selector),
+  $: (selector: string): ReturnType<typeof global.$> => global.$(selector),
 }));
-
 
 describe('MainScreen Unit Tests', () => {
   let mainScreen: MainScreen;

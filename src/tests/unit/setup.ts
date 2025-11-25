@@ -33,7 +33,7 @@ export function createMockElements(count: number = 2): any[] {
       getText: jest.fn().mockResolvedValue(`Element ${i}`),
     }),
   );
-  
+
   return elements;
 }
 
@@ -41,7 +41,6 @@ export function createMockElements(count: number = 2): any[] {
 // Mock @wdio/globals
 // --------------------
 jest.mock('@wdio/globals', () => {
-  // Создаем элементы внутри мока
   const mockElement = {
     waitForDisplayed: jest.fn().mockResolvedValue(true),
     waitUntil: jest.fn().mockResolvedValue(true),
@@ -64,9 +63,9 @@ jest.mock('@wdio/globals', () => {
       getText: jest.fn().mockResolvedValue('Element 1'),
     },
   ];
-  
+
   const mock$$ = jest.fn().mockReturnValue(mockElementsArray);
-  
+
   const mockBrowser = {
     $: jest.fn().mockReturnValue(mockElement),
     $$: mock$$,
@@ -114,6 +113,7 @@ export const mockSelectTask = jest.fn().mockResolvedValue(undefined);
 // --------------------
 jest.mock('../../constants', () => {
   const actualConstants = jest.requireActual('../../constants');
+
   return {
     ...actualConstants,
     getTextSelector: jest.fn((text: string) => `mock-text-selector-${text}`),
@@ -150,6 +150,7 @@ jest.mock('../../utils', () => ({
 // --------------------
 jest.mock('../../screens/screensInit', () => {
   const { mockFillTask, mockSelectTask } = require('./setup');
+
   return {
     screens: {
       task: {
@@ -168,14 +169,7 @@ jest.mock('../../screens/screensInit', () => {
 // --------------------
 // Export constants
 // --------------------
-export {
-  mainScreenLocators,
-  settingsScreenLocators,
-  taskScreenLocators,
-  push,
-  headers,
-  timeout,
-};
+export { mainScreenLocators, settingsScreenLocators, taskScreenLocators, push, headers, timeout };
 
 // --------------------
 // Reset all mocks
