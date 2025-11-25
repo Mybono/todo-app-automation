@@ -2,8 +2,8 @@ import { expectElement } from '../../utils';
 import { screens } from '../../screens';
 import { push } from '../../constants';
 
-describe('Task management @task @regression ', () => {
-  it('[UITM-TA001]: Adds a new task with title and description', async () => {
+describe('Task management @task @regression ', async function () {
+  it('[UITM-TA001]: Adds a new task with title and description @debug', async () => {
     await screens.main.addTask({
       title: 'Buy milk',
       text: 'Remember to buy milk from the store',

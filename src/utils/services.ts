@@ -1,13 +1,14 @@
 import { timeout } from '../constants';
+import { $, browser } from '@wdio/globals';
 
 /**
  * Waits for an element to be visible and asserts that it is displayed.
  */
-export async function expectElement(selector: string): Promise<WebdriverIO.Element> {
+export async function expectElement(selector: string): Promise<ReturnType<typeof $>>  {
   try {
-    const element = await driver!.$(selector);
+    const element = browser!.$(selector);
     await element.waitForDisplayed({ timeout: timeout.elementAppear });
-    await expect(await element.isDisplayed()).toBe(true);
+    expect(await element.isDisplayed()).toBe(true);
 
     return element;
   } catch (error) {
@@ -22,7 +23,7 @@ export async function expectElement(selector: string): Promise<WebdriverIO.Eleme
  */
 export async function clickElement(selector: string): Promise<void> {
   try {
-    const element = await driver!.$(selector);
+    const element = browser!.$(selector);
     await element.waitForDisplayed({ timeout: timeout.elementAppear });
     await element.click();
   } catch (error) {

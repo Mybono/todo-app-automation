@@ -1,8 +1,8 @@
 import './setup';
-import { MainScreen } from '../../screens/main.screen';
-import { taskStatuses, MockElement } from '../../types';
-import * as utils from '../../utils';
 import { createMockElement, mockFillTask, mockSelectTask } from './setup';
+import { taskStatuses, MockElement } from '../../types';
+import { MainScreen } from '../../screens/main.screen';
+import * as utils from '../../utils';
 
 // Import mocked constants
 const {

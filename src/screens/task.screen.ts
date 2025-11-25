@@ -7,8 +7,14 @@ import {
   taskScreenLocators,
 } from '../constants';
 import { Task, EditTaskFields, taskStatuses } from '../types';
+import { $$, browser } from '@wdio/globals';
 import { screens } from '../screens';
 
+declare module '@wdio/globals' {
+  interface Browser {
+    waitUntil<T>(condition: () => Promise<T> | T, options?: { timeout?: number; timeoutMsg?: string; interval?: number }): Promise<T>;
+  }
+}
 export class TaskScreen {
   /**
    * Fills out a task form with title and description, then saves it.
@@ -91,20 +97,21 @@ export class TaskScreen {
    * await editFields({ text: "New description" });
    * await editFields({ title: "New title", text: "New description" });
    */
-  async fillField(fields: EditTaskFields): Promise<void> {
+  async fillField(fields: EditTaskFields){
+
     try {
       await browser.waitUntil(
         async () => {
-          const elements = await $$(editTextWidget);
+          const elements = $$(editTextWidget);
 
-          return elements.length >= 2;
+          return await elements.length >= 2;
         },
         {
           timeout: timeout.elementAppear,
           timeoutMsg: `[fillField]: Expected at least 2 inputs of type ${editTextWidget}`,
         },
       );
-      const inputs = await $$(editTextWidget);
+      const inputs = $$(editTextWidget);
 
       if (fields.title !== undefined) {
         await inputs[0].waitForDisplayed({ timeout: timeout.elementAppear });

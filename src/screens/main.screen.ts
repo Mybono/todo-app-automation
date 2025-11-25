@@ -2,6 +2,7 @@ import { _, clickElement, expectElement, logger } from '../utils';
 import { getTextSelector, getCheckBoxSelector, mainScreenLocators, push } from '../constants';
 import { Task, taskStatuses, FilterType } from '../types';
 import { screens } from '../screens';
+import { $ } from '@wdio/globals';
 
 export class MainScreen {
   /**
@@ -144,16 +145,16 @@ export class MainScreen {
     }
   }
 
-  async toggleCheckbox(selector: string, isCompleted: boolean): Promise<WebdriverIO.Element> {
+async toggleCheckbox(selector: string, isCompleted: boolean): Promise<ReturnType<typeof $>>   {
     try {
-      const checkbox = await $(selector);
+      const checkbox = $(selector);
       const currentState = (await checkbox.getAttribute('checked')) === 'true';
 
       if (currentState !== isCompleted) {
         await checkbox.click();
         const newSelector = getCheckBoxSelector(isCompleted);
 
-        return await $(newSelector);
+        return $(newSelector);
       } else {
         logger.log('Checkbox already in desired state');
 
