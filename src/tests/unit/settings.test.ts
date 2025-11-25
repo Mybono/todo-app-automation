@@ -6,6 +6,9 @@ import * as utils from '../../utils';
 
 // Import mocked constants
 const { settingsScreenLocators, mainScreenLocators } = require('../../constants');
+jest.mock('@wdio/globals', () => ({
+  $: (selector: string) => global.$(selector),
+}));
 
 describe('SettingsScreen Unit Tests', () => {
   let settingsScreen: SettingsScreen;
@@ -25,8 +28,8 @@ describe('SettingsScreen Unit Tests', () => {
     it('should open burger menu and wait for Todo header', async () => {
       await settingsScreen.goToNavigateScreen();
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(settingsScreenLocators.burgerMenuBtn);
-      await expect(utils.expectElement).toHaveBeenCalledWith(settingsScreenLocators.todoHeader);
+      expect(utils.clickElement).toHaveBeenCalledWith(settingsScreenLocators.burgerMenuBtn);
+      expect(utils.expectElement).toHaveBeenCalledWith(settingsScreenLocators.todoHeader);
     });
 
     it('should throw error when burger menu click fails', async () => {

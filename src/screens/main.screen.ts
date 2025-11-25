@@ -145,7 +145,7 @@ export class MainScreen {
     }
   }
 
-async toggleCheckbox(selector: string, isCompleted: boolean): Promise<ReturnType<typeof $>>   {
+  async toggleCheckbox(selector: string, isCompleted: boolean): Promise<ReturnType<typeof $>> {
     try {
       const checkbox = $(selector);
       const currentState = (await checkbox.getAttribute('checked')) === 'true';

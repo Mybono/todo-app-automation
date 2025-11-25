@@ -12,7 +12,10 @@ import { screens } from '../screens';
 
 declare module '@wdio/globals' {
   interface Browser {
-    waitUntil<T>(condition: () => Promise<T> | T, options?: { timeout?: number; timeoutMsg?: string; interval?: number }): Promise<T>;
+    waitUntil<T>(
+      condition: () => Promise<T> | T,
+      options?: { timeout?: number; timeoutMsg?: string; interval?: number },
+    ): Promise<T>;
   }
 }
 export class TaskScreen {
@@ -97,14 +100,13 @@ export class TaskScreen {
    * await editFields({ text: "New description" });
    * await editFields({ title: "New title", text: "New description" });
    */
-  async fillField(fields: EditTaskFields){
-
+  async fillField(fields: EditTaskFields): Promise<void> {
     try {
       await browser.waitUntil(
         async () => {
           const elements = $$(editTextWidget);
 
-          return await elements.length >= 2;
+          return (await elements.length) >= 2;
         },
         {
           timeout: timeout.elementAppear,

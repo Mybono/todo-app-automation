@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Element } from 'webdriverio';
 
 declare module '@wdio/globals' {
@@ -7,10 +8,13 @@ declare module '@wdio/globals' {
      * @param condition - function returning a truthy value or Promise
      * @param options - timeout, interval, timeoutMsg
      */
-    waitUntil<T>(condition: () => Promise<T> | T, options?: {
-      timeout?: number;
-      interval?: number;
-      timeoutMsg?: string;
-    }): Promise<T>;
+    waitUntil<T>(
+      condition: () => Promise<T> | T,
+      options?: {
+        timeout?: number;
+        interval?: number;
+        timeoutMsg?: string;
+      },
+    ): Promise<T>;
   }
 }

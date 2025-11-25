@@ -31,6 +31,11 @@ jest.mock('../../screens/screensInit', () => {
   };
 });
 
+jest.mock('@wdio/globals', () => ({
+  $: (selector: string) => global.$(selector),
+}));
+
+
 describe('MainScreen Unit Tests', () => {
   let mainScreen: MainScreen;
   let mockElement: MockElement;
@@ -61,8 +66,8 @@ describe('MainScreen Unit Tests', () => {
 
       const result = await mainScreen.addTask(task);
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(mainScreenLocators.addTaskBtn);
-      await expect(mockFillTask).toHaveBeenCalledWith({
+      expect(utils.clickElement).toHaveBeenCalledWith(mainScreenLocators.addTaskBtn);
+      expect(mockFillTask).toHaveBeenCalledWith({
         title: 'Test Task',
         text: 'Test Description',
         status: undefined,
