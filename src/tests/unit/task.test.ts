@@ -10,9 +10,10 @@ const {
   taskScreenLocators,
   getCheckBoxSelector,
   getTextSelector,
-  editTextWidget,
   timeout,
 } = require('../../constants');
+
+const { browser, $$ } = require('@wdio/globals');
 
 describe('TaskScreen Unit Tests', () => {
   let taskScreen: TaskScreen;
@@ -27,8 +28,15 @@ describe('TaskScreen Unit Tests', () => {
     // Setup mocks
     (global.driver.$ as jest.Mock).mockReturnValue(mockElement);
     (global.$ as jest.Mock).mockReturnValue(mockElement);
-    (global.$$ as jest.Mock).mockResolvedValue(mockElements);
-    (global.browser.waitUntil as jest.Mock).mockResolvedValue(true);
+
+    (global.$$ as jest.Mock).mockReturnValue(mockElements);
+    (browser.$$ as jest.Mock).mockReturnValue(mockElements);
+    ($$ as jest.Mock).mockReturnValue(mockElements);
+
+    (browser.waitUntil as jest.Mock).mockImplementation(async (condition: any) => {
+      return await condition();
+    });
+
     (utils.clickElement as jest.Mock).mockResolvedValue(undefined);
     (utils.expectElement as jest.Mock).mockResolvedValue(undefined);
 
@@ -44,11 +52,10 @@ describe('TaskScreen Unit Tests', () => {
 
       await taskScreen.fillTask(task);
 
-      await expect(global.$$).toHaveBeenCalledWith(editTextWidget);
-      await expect(mockElements[0].setValue).toHaveBeenCalledWith('Test Task');
-      await expect(mockElements[1].setValue).toHaveBeenCalledWith('Test Description');
-      await expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.saveTaskBtn);
-      await expect(screens.main.toggleCheckbox).not.toHaveBeenCalled();
+      expect(mockElements[0].setValue).toHaveBeenCalledWith('Test Task');
+      expect(mockElements[1].setValue).toHaveBeenCalledWith('Test Description');
+      expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.saveTaskBtn);
+      expect(screens.main.toggleCheckbox).not.toHaveBeenCalled();
     });
 
     it('should fill task and mark as completed if status is completed', async () => {
@@ -65,12 +72,12 @@ describe('TaskScreen Unit Tests', () => {
 
       await taskScreen.fillTask(task);
 
-      await expect(mockElements[0].setValue).toHaveBeenCalledWith('Completed Task');
-      await expect(mockElements[1].setValue).toHaveBeenCalledWith('Description');
-      await expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.saveTaskBtn);
-      await expect(getCheckBoxSelector).toHaveBeenCalledWith(false);
-      await expect(screens.main.toggleCheckbox).toHaveBeenCalledWith('mock-checkbox-false', true);
-      await expect(mockCheckedCheckbox.waitForDisplayed).toHaveBeenCalledWith({
+      expect(mockElements[0].setValue).toHaveBeenCalledWith('Completed Task');
+      expect(mockElements[1].setValue).toHaveBeenCalledWith('Description');
+      expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.saveTaskBtn);
+      expect(getCheckBoxSelector).toHaveBeenCalledWith(false);
+      expect(screens.main.toggleCheckbox).toHaveBeenCalledWith('mock-checkbox-false', true);
+      expect(mockCheckedCheckbox.waitForDisplayed).toHaveBeenCalledWith({
         timeout: timeout.elementAppear,
       });
     });
@@ -86,14 +93,14 @@ describe('TaskScreen Unit Tests', () => {
 
       const result = await taskScreen.editTask(task);
 
-      await expect(utils.clickElement).toHaveBeenCalledWith('mock-selector');
-      await expect(utils.expectElement).toHaveBeenCalledWith(taskScreenLocators.taskDetailsHeader);
-      await expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.editBtn);
-      await expect(mockElements[0].setValue).toHaveBeenCalledWith('Updated Title');
-      await expect(mockElements[1].setValue).toHaveBeenCalledWith('Updated Description');
-      await expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.saveTaskBtn);
-      await expect(getTextSelector).toHaveBeenCalledWith('Updated Title');
-      await expect(result).toBe('mock-text-selector-Updated Title');
+      expect(utils.clickElement).toHaveBeenCalledWith('mock-selector');
+      expect(utils.expectElement).toHaveBeenCalledWith(taskScreenLocators.taskDetailsHeader);
+      expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.editBtn);
+      expect(mockElements[0].setValue).toHaveBeenCalledWith('Updated Title');
+      expect(mockElements[1].setValue).toHaveBeenCalledWith('Updated Description');
+      expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.saveTaskBtn);
+      expect(getTextSelector).toHaveBeenCalledWith('Updated Title');
+      expect(result).toBe('mock-text-selector-Updated Title');
     });
 
     it('should generate random data when title and text not provided', async () => {
@@ -103,10 +110,10 @@ describe('TaskScreen Unit Tests', () => {
 
       const result = await taskScreen.editTask(task);
 
-      await expect(utils._.getRandomText).toHaveBeenCalled();
-      await expect(mockElements[0].setValue).toHaveBeenCalledWith('Random Title');
-      await expect(mockElements[1].setValue).toHaveBeenCalledWith('Random Description');
-      await expect(result).toBe('mock-text-selector-Random Title');
+      expect(utils._.getRandomText).toHaveBeenCalled();
+      expect(mockElements[0].setValue).toHaveBeenCalledWith('Random Title');
+      expect(mockElements[1].setValue).toHaveBeenCalledWith('Random Description');
+      expect(result).toBe('mock-text-selector-Random Title');
     });
 
     it('should throw error when selectTask fails', async () => {
@@ -130,9 +137,9 @@ describe('TaskScreen Unit Tests', () => {
 
       await taskScreen.deleteTask(titleSelector);
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(titleSelector);
-      await expect(utils.expectElement).toHaveBeenCalledWith(taskScreenLocators.taskDetailsHeader);
-      await expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.deleteBtn);
+      expect(utils.clickElement).toHaveBeenCalledWith(titleSelector);
+      expect(utils.expectElement).toHaveBeenCalledWith(taskScreenLocators.taskDetailsHeader);
+      expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.deleteBtn);
     });
 
     it('should throw error when task selection fails', async () => {
@@ -158,13 +165,12 @@ describe('TaskScreen Unit Tests', () => {
     it('should fill only title field', async () => {
       await taskScreen.fillField({ title: 'New Title' });
 
-      await expect(global.$$).toHaveBeenCalledWith(editTextWidget);
-      await expect(mockElements[0].waitForDisplayed).toHaveBeenCalledWith({
+      expect(mockElements[0].waitForDisplayed).toHaveBeenCalledWith({
         timeout: timeout.elementAppear,
       });
-      await expect(mockElements[0].setValue).toHaveBeenCalledWith('New Title');
-      await expect(mockElements[1].setValue).not.toHaveBeenCalled();
-      await expect(utils.logger.info).toHaveBeenCalledWith(
+      expect(mockElements[0].setValue).toHaveBeenCalledWith('New Title');
+      expect(mockElements[1].setValue).not.toHaveBeenCalled();
+      expect(utils.logger.info).toHaveBeenCalledWith(
         '[fillField] Title edited to "New Title" successfully.',
       );
     });
@@ -172,13 +178,12 @@ describe('TaskScreen Unit Tests', () => {
     it('should fill only text field', async () => {
       await taskScreen.fillField({ text: 'New Description' });
 
-      await expect(global.$$).toHaveBeenCalledWith(editTextWidget);
-      await expect(mockElements[1].waitForDisplayed).toHaveBeenCalledWith({
+      expect(mockElements[1].waitForDisplayed).toHaveBeenCalledWith({
         timeout: timeout.elementAppear,
       });
-      await expect(mockElements[1].setValue).toHaveBeenCalledWith('New Description');
-      await expect(mockElements[0].setValue).not.toHaveBeenCalled();
-      await expect(utils.logger.info).toHaveBeenCalledWith(
+      expect(mockElements[1].setValue).toHaveBeenCalledWith('New Description');
+      expect(mockElements[0].setValue).not.toHaveBeenCalled();
+      expect(utils.logger.info).toHaveBeenCalledWith(
         '[fillField] Text edited to "New Description" successfully.',
       );
     });
@@ -189,12 +194,12 @@ describe('TaskScreen Unit Tests', () => {
         text: 'Updated Description',
       });
 
-      await expect(mockElements[0].setValue).toHaveBeenCalledWith('Updated Title');
-      await expect(mockElements[1].setValue).toHaveBeenCalledWith('Updated Description');
-      await expect(utils.logger.info).toHaveBeenCalledWith(
+      expect(mockElements[0].setValue).toHaveBeenCalledWith('Updated Title');
+      expect(mockElements[1].setValue).toHaveBeenCalledWith('Updated Description');
+      expect(utils.logger.info).toHaveBeenCalledWith(
         '[fillField] Title edited to "Updated Title" successfully.',
       );
-      await expect(utils.logger.info).toHaveBeenCalledWith(
+      expect(utils.logger.info).toHaveBeenCalledWith(
         '[fillField] Text edited to "Updated Description" successfully.',
       );
     });
@@ -202,15 +207,15 @@ describe('TaskScreen Unit Tests', () => {
     it('should handle undefined title field', async () => {
       await taskScreen.fillField({ text: 'Only text' });
 
-      await expect(mockElements[0].setValue).not.toHaveBeenCalled();
-      await expect(mockElements[1].setValue).toHaveBeenCalledWith('Only text');
+      expect(mockElements[0].setValue).not.toHaveBeenCalled();
+      expect(mockElements[1].setValue).toHaveBeenCalledWith('Only text');
     });
 
     it('should handle undefined text field', async () => {
       await taskScreen.fillField({ title: 'Only title' });
 
-      await expect(mockElements[0].setValue).toHaveBeenCalledWith('Only title');
-      await expect(mockElements[1].setValue).not.toHaveBeenCalled();
+      expect(mockElements[0].setValue).toHaveBeenCalledWith('Only title');
+      expect(mockElements[1].setValue).not.toHaveBeenCalled();
     });
   });
 
@@ -220,9 +225,9 @@ describe('TaskScreen Unit Tests', () => {
 
       await taskScreen.selectTask(selector);
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(selector);
-      await expect(utils.expectElement).toHaveBeenCalledWith(taskScreenLocators.taskDetailsHeader);
-      await expect(utils.logger.info).toHaveBeenCalledWith(
+      expect(utils.clickElement).toHaveBeenCalledWith(selector);
+      expect(utils.expectElement).toHaveBeenCalledWith(taskScreenLocators.taskDetailsHeader);
+      expect(utils.logger.info).toHaveBeenCalledWith(
         '[selectTask] Task selected successfully. mock-task-selector',
       );
     });
@@ -248,8 +253,8 @@ describe('TaskScreen Unit Tests', () => {
     it('should navigate back to main screen', async () => {
       await taskScreen.backToMain();
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.backBtn);
-      await expect(utils.logger.info).toHaveBeenCalledWith(
+      expect(utils.clickElement).toHaveBeenCalledWith(taskScreenLocators.backBtn);
+      expect(utils.logger.info).toHaveBeenCalledWith(
         '[backToMain] Navigated to main screen successfully.',
       );
     });

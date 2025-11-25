@@ -63,10 +63,10 @@ npm test
 npm run build
 
 # Then run specific test
-npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/main.test.js       # Task Management
-npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/checkbox.test.js   # Checkbox Actions
-npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/filter.test.js     # Filters
-npx wdio run wdio.conf.ts --spec ./dist/tests/e2e/navigate.test.js   # Navigation
+npx wdio run wdio.conf.ts --spec /tests/e2e/main.test.js       # Task Management
+npx wdio run wdio.conf.ts --spec /tests/e2e/checkbox.test.js   # Checkbox Actions
+npx wdio run wdio.conf.ts --spec /tests/e2e/filter.test.js     # Filters
+npx wdio run wdio.conf.ts --spec /tests/e2e/navigate.test.js   # Navigation
 ```
 
 ## CI/CD Pipeline

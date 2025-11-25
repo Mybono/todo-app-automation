@@ -1,8 +1,8 @@
 import './setup';
-import { MainScreen } from '../../screens/main.screen';
-import { taskStatuses, MockElement } from '../../types';
-import * as utils from '../../utils';
 import { createMockElement, mockFillTask, mockSelectTask } from './setup';
+import { taskStatuses, MockElement } from '../../types';
+import { MainScreen } from '../../screens/main.screen';
+import * as utils from '../../utils';
 
 // Import mocked constants
 const {
@@ -30,6 +30,10 @@ jest.mock('../../screens/screensInit', () => {
     },
   };
 });
+
+jest.mock('@wdio/globals', () => ({
+  $: (selector: string): ReturnType<typeof global.$> => global.$(selector),
+}));
 
 describe('MainScreen Unit Tests', () => {
   let mainScreen: MainScreen;
@@ -61,8 +65,8 @@ describe('MainScreen Unit Tests', () => {
 
       const result = await mainScreen.addTask(task);
 
-      await expect(utils.clickElement).toHaveBeenCalledWith(mainScreenLocators.addTaskBtn);
-      await expect(mockFillTask).toHaveBeenCalledWith({
+      expect(utils.clickElement).toHaveBeenCalledWith(mainScreenLocators.addTaskBtn);
+      expect(mockFillTask).toHaveBeenCalledWith({
         title: 'Test Task',
         text: 'Test Description',
         status: undefined,

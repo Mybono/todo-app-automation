@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {
   mainScreenLocators,
   settingsScreenLocators,
@@ -9,31 +8,109 @@ import {
   timeout,
 } from '../../constants';
 
-// Mock WebDriverIO driver globally
-global.driver = {
-  $: jest.fn(),
-  $$: jest.fn(),
-  pause: jest.fn(),
-  waitUntil: jest.fn().mockResolvedValue(true),
-  getPageSource: jest.fn().mockResolvedValue('<mock>Page Source</mock>'),
-} as any;
+// --------------------
+// Helper to create a single mock element
+// --------------------
+export function createMockElement(overrides?: Partial<any>): any {
+  return {
+    waitForDisplayed: jest.fn().mockResolvedValue(true),
+    waitUntil: jest.fn().mockResolvedValue(true),
+    click: jest.fn().mockResolvedValue(undefined),
+    isDisplayed: jest.fn().mockResolvedValue(true),
+    getAttribute: jest.fn().mockResolvedValue('false'),
+    setValue: jest.fn().mockResolvedValue(undefined),
+    getText: jest.fn().mockResolvedValue(''),
+    ...overrides,
+  };
+}
 
-// Mock browser object
-global.browser = {
-  $: jest.fn(),
-  $$: jest.fn(),
-  waitUntil: jest.fn().mockResolvedValue(true),
-} as any;
+// --------------------
+// Helper to create multiple mock elements for $$
+// --------------------
+export function createMockElements(count: number = 2): any[] {
+  const elements = Array.from({ length: count }, (_, i) =>
+    createMockElement({
+      getText: jest.fn().mockResolvedValue(`Element ${i}`),
+    }),
+  );
 
-// Mock global $ and $$ functions
-global.$ = jest.fn() as any;
-global.$$ = jest.fn() as any;
+  return elements;
+}
 
-// Create mock functions that we'll export
+// --------------------
+// Mock @wdio/globals
+// --------------------
+jest.mock('@wdio/globals', () => {
+  const mockElement = {
+    waitForDisplayed: jest.fn().mockResolvedValue(true),
+    waitUntil: jest.fn().mockResolvedValue(true),
+    click: jest.fn().mockResolvedValue(undefined),
+    isDisplayed: jest.fn().mockResolvedValue(true),
+    getAttribute: jest.fn().mockResolvedValue('false'),
+    setValue: jest.fn().mockResolvedValue(undefined),
+    getText: jest.fn().mockResolvedValue(''),
+  };
+
+  const mockElementsArray = [
+    {
+      waitForDisplayed: jest.fn().mockResolvedValue(true),
+      setValue: jest.fn().mockResolvedValue(undefined),
+      getText: jest.fn().mockResolvedValue('Element 0'),
+    },
+    {
+      waitForDisplayed: jest.fn().mockResolvedValue(true),
+      setValue: jest.fn().mockResolvedValue(undefined),
+      getText: jest.fn().mockResolvedValue('Element 1'),
+    },
+  ];
+
+  const mock$$ = jest.fn().mockReturnValue(mockElementsArray);
+
+  const mockBrowser = {
+    $: jest.fn().mockReturnValue(mockElement),
+    $$: mock$$,
+    waitUntil: jest.fn().mockImplementation(async (condition: any) => {
+      return await condition();
+    }),
+  };
+
+  const mockDriver = {
+    $: jest.fn().mockReturnValue(mockElement),
+    $$: mock$$,
+    pause: jest.fn(),
+    waitUntil: jest.fn().mockImplementation(async (condition: any) => {
+      return await condition();
+    }),
+    getPageSource: jest.fn().mockResolvedValue('<mock>Page Source</mock>'),
+  };
+
+  return {
+    $: jest.fn().mockReturnValue(mockElement),
+    $$: mock$$,
+    browser: mockBrowser,
+    driver: mockDriver,
+  };
+});
+
+// --------------------
+// Global WebDriverIO mocks
+// --------------------
+const { browser, driver, $, $$ } = require('@wdio/globals');
+
+global.driver = driver;
+global.browser = browser;
+global.$ = $;
+global.$$ = $$;
+
+// --------------------
+// Custom mock functions
+// --------------------
 export const mockFillTask = jest.fn().mockResolvedValue(undefined);
 export const mockSelectTask = jest.fn().mockResolvedValue(undefined);
 
-// Mock constants module
+// --------------------
+// Mock constants
+// --------------------
 jest.mock('../../constants', () => {
   const actualConstants = jest.requireActual('../../constants');
 
@@ -47,7 +124,9 @@ jest.mock('../../constants', () => {
   };
 });
 
-// Mock utils module
+// --------------------
+// Mock utils
+// --------------------
 jest.mock('../../utils', () => ({
   _: {
     getRandomText: jest.fn(() => ({
@@ -66,7 +145,9 @@ jest.mock('../../utils', () => ({
   },
 }));
 
-// Mock screensInit module
+// --------------------
+// Mock screensInit
+// --------------------
 jest.mock('../../screens/screensInit', () => {
   const { mockFillTask, mockSelectTask } = require('./setup');
 
@@ -85,43 +166,14 @@ jest.mock('../../screens/screensInit', () => {
   };
 });
 
+// --------------------
+// Export constants
+// --------------------
 export { mainScreenLocators, settingsScreenLocators, taskScreenLocators, push, headers, timeout };
 
-/**
- * Creates a mock element with common WebDriverIO methods
- */
-export function createMockElement(overrides?: Partial<any>): any {
-  return {
-    waitForDisplayed: jest.fn().mockResolvedValue(true),
-    click: jest.fn().mockResolvedValue(undefined),
-    isDisplayed: jest.fn().mockResolvedValue(true),
-    getAttribute: jest.fn().mockResolvedValue('false'),
-    setValue: jest.fn().mockResolvedValue(undefined),
-    getText: jest.fn().mockResolvedValue(''),
-    ...overrides,
-  };
-}
-
-/**
- * Creates an array of mock elements for $$ calls
- */
-export function createMockElements(count: number = 2): any[] {
-  const elements: any[] = [];
-  for (let i = 0; i < count; i++) {
-    elements.push({
-      waitForDisplayed: jest.fn().mockResolvedValue(true),
-      setValue: jest.fn().mockResolvedValue(undefined),
-      getText: jest.fn().mockResolvedValue(`Element ${i}`),
-      click: jest.fn().mockResolvedValue(undefined),
-    });
-  }
-
-  return elements;
-}
-
-/**
- * Resets all mocks to their default state
- */
+// --------------------
+// Reset all mocks
+// --------------------
 export function resetAllMocks(): void {
   jest.clearAllMocks();
 
@@ -132,26 +184,22 @@ export function resetAllMocks(): void {
   const mockElement = createMockElement();
   (global.driver.$ as jest.Mock).mockReturnValue(mockElement);
   (global.$ as jest.Mock).mockReturnValue(mockElement);
+  (global.browser.$ as jest.Mock).mockReturnValue(mockElement);
 
   const mockElements = createMockElements();
-  (global.$$ as jest.Mock).mockResolvedValue(mockElements);
-  (global.browser.waitUntil as jest.Mock).mockResolvedValue(true);
+  (global.driver.$$ as jest.Mock).mockReturnValue(mockElements);
+  (global.$$ as jest.Mock).mockReturnValue(mockElements);
+  (global.browser.$$ as jest.Mock).mockReturnValue(mockElements);
 
-  // Reset our custom mocks
+  (global.browser.waitUntil as jest.Mock).mockImplementation(async (condition: any) => {
+    return await condition();
+  });
+
   mockFillTask.mockClear().mockResolvedValue(undefined);
   mockSelectTask.mockClear().mockResolvedValue(undefined);
 
-  // Reset mocked functions from constants
   const constants = require('../../constants');
   constants.getTextSelector.mockClear();
   constants.getCheckBoxSelector.mockClear();
   constants.fetchSource.mockClear();
 }
-
-// Initialize with default mocks
-const mockElement = createMockElement();
-(global.driver.$ as jest.Mock).mockReturnValue(mockElement);
-(global.$ as jest.Mock).mockReturnValue(mockElement);
-
-const mockElements = createMockElements();
-(global.$$ as jest.Mock).mockResolvedValue(mockElements);

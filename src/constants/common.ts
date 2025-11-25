@@ -1,11 +1,12 @@
 import { logger } from '../utils';
+import { browser } from '@wdio/globals';
 
 export function getTextSelector(title: string): string {
   return `android=new UiSelector().className("android.widget.TextView").textContains("${title}")`;
 }
 
 export async function fetchSource(): Promise<void> {
-  const source = await driver.getPageSource();
+  const source = await browser.getPageSource();
   logger.warn('\n========== LIST WITH TASK ==========');
   logger.log(source);
   logger.warn('====================================\n');
