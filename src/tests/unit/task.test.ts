@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import './setup'; // Import shared mocks
 import { TaskScreen } from '../../screens/task.screen';
 import { taskStatuses, MockElement } from '../../types';
